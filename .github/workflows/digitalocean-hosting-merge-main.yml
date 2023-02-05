@@ -24,3 +24,7 @@ jobs:
         run: |
           npm run build acua-backend
           npm run build code-review
+      - name: Restart server applications
+        run: |
+          pm2 restart acua-main
+          pm2 restart acua-code-review
