@@ -20,8 +20,9 @@ jobs:
         run: npm ci
 
       - name: Test applications
-        run: npm test acua-backend
-        run: npm test code-review
+        run: |
+          npm test acua-backend
+          npm test code-review
 
       - name: Build applications
         run: |
