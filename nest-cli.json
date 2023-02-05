@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/acua-backend/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/acua-backend/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/acua-backend",
+  "projects": {
+    "acua-backend": {
+      "type": "application",
+      "root": "apps/acua-backend",
+      "entryFile": "main",
+      "sourceRoot": "apps/acua-backend/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/acua-backend/tsconfig.app.json"
+      }
+    },
+    "code-review": {
+      "type": "application",
+      "root": "apps/code-review",
+      "entryFile": "main",
+      "sourceRoot": "apps/code-review/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/code-review/tsconfig.app.json"
+      }
+    }
+  }
+}
