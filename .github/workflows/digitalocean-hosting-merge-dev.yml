@@ -22,9 +22,11 @@ jobs:
 
       - name: Build application
         run: |
-          npm run build acua-backend
+          npm run build main
           npm run build code-review
+          npm run build telegram-bot
       - name: Restart server applications
         run: |
           pm2 restart dev-acua-main
           pm2 restart dev-acua-code-review
+          pm2 restart dev-acua-telegram-bot

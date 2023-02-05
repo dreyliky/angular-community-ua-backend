@@ -21,10 +21,12 @@ jobs:
 
       - name: Test applications
         run: |
-          npm test acua-backend
+          npm test main
           npm test code-review
+          npm test telegram-bot
 
       - name: Build applications
         run: |
-          npm run build acua-backend
+          npm run build main
           npm run build code-review
+          npm run build telegram-bot
