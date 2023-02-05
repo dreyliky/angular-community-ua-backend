@@ -21,5 +21,6 @@ jobs:
         run: npm ci
 
       - name: Build application
-        run: npm run build acua-backend
-        run: npm run build code-review
+        run: |
+          npm run build acua-backend
+          npm run build code-review
