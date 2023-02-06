@@ -1,4 +1,4 @@
-const mongoBaseUrl = 'mongodb://164.92.193.179:27017';
+const mongoBaseUrl = 'mongodb://161.35.215.97:27017';
 const mongoUrl = process.env.PROD
     ? `${mongoBaseUrl}/acua`
     : `${mongoBaseUrl}/dev-acua`;
