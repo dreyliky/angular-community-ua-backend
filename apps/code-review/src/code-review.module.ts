@@ -3,8 +3,8 @@ import { CodeReviewController } from './code-review.controller';
 import { CodeReviewService } from './code-review.service';
 
 @Module({
-  imports: [],
-  controllers: [CodeReviewController],
-  providers: [CodeReviewService],
+    imports: [],
+    controllers: [CodeReviewController],
+    providers: [CodeReviewService]
 })
 export class CodeReviewModule {}

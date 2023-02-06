@@ -11,21 +11,21 @@ https://codememoirs.com/automatic-deployment-digitalocean-github-actions
 ### Apps [PRODUCTION]
 
 ```
-PORT=3000 pm2 start -i 0 ./dist/apps/main/main.js --name acua-main
+PORT=3000 PROD=true pm2 start -i 0 ./dist/apps/main/main.js --name acua-main
 
-PORT=3001 pm2 start -i 0 ./dist/apps/code-review/main.js --name acua-code-review
+PORT=3001 PROD=true pm2 start -i 0 ./dist/apps/code-review/main.js --name acua-code-review
 
-PORT=3002 pm2 start -i 0 ./dist/apps/telegram-bot/main.js --name acua-telegram-bot
+PORT=3002 PROD=true pm2 start -i 0 ./dist/apps/telegram-bot/main.js --name acua-telegram-bot
 ```
 
 ### Apps [DEVELOPMENT]
 
 ```
-PORT=4000 pm2 start -i 0 ./dist/apps/main/main.js --name dev-acua-main
+PORT=4000 PROD=false pm2 start -i 0 ./dist/apps/main/main.js --name dev-acua-main
 
-PORT=4001 pm2 start -i 0 ./dist/apps/code-review/main.js --name dev-acua-code-review
+PORT=4001 PROD=false pm2 start -i 0 ./dist/apps/code-review/main.js --name dev-acua-code-review
 
-PORT=4002 pm2 start -i 0 ./dist/apps/telegram-bot/main.js --name dev-acua-telegram-bot
+PORT=4002 PROD=false pm2 start -i 0 ./dist/apps/telegram-bot/main.js --name dev-acua-telegram-bot
 ```
 
 Each application will read "PORT" from `process.env.PORT` field to bootstrap itself.
