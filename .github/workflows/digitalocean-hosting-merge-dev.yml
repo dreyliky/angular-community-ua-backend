@@ -12,11 +12,8 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v2
 
-      - name: Install global dependencies
-        run: npm install -g @nestjs/cli
-
       - name: Install dependencies
-        run: /usr/bin/node --max_semi_space_size=1 --max_old_space_size=198 /usr/bin/npm ci --only=production --prefer-offline --no-audit --ignore-scripts
+        run: /usr/bin/node --max_semi_space_size=1 --max_old_space_size=198 /usr/bin/npm ci --cache .npm --only=production --no-audit --ignore-scripts
 
       - name: Build applications
         run: |
