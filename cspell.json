@@ -5,35 +5,10 @@
     ],
     "dictionaryDefinitions": [],
     "dictionaries": [],
-    "words": [
-        "autofocused",
-        "cacheable",
-        "customization",
-        "Сustomization",
-        "resizer",
-        "resizers",
-        "Typealias",
-        "typealiases",
-        "injectables",
-        "determinator"
-    ],
     "ignoreWords": [
-        "compodoc",
-        "prismjs",
-        "poemist",
-        "jasminewd",
-        "codegen",
-        "stylelist",
-        "tabindex",
-        "tablist",
-        "emsp",
-        // List of compodoc meanings:
-        "childs",
-        "ctype",
-        "rawdescription",
-        "rawtype",
-        "jsdoctag",
-        "jsdoctags"
+        "nestjs",
+        "commitlint",
+        "acua"
     ],
     "import": []
 }
