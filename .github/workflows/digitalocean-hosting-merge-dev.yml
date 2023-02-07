@@ -18,7 +18,11 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci
+        run: /usr/bin/node \
+          --max_semi_space_size=1 \
+          --max_old_space_size=198 \
+          --max_executable_size=148 \
+          /usr/bin/npm ci
 
       - name: Build applications
         run: |
