@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as TelegramBot from 'node-telegram-bot-api';
-import { TelegramBotConfigEnum } from './core/enums/telegram-bot-config.enum';
 
 @Injectable()
 export class TelegramBotService {
-    private readonly token: TelegramBotConfigEnum = TelegramBotConfigEnum['Token'];
+    private readonly TOKEN = this.configEnvService.get('TELEGRAM_BOT_TOKEN');
     private bot: TelegramBot;
 
-    constructor() {
-        this.bot = new TelegramBot(this.token, { polling: true });
+    constructor(
+        private configEnvService: ConfigService
+    ) {
+        this.initSetup();
+    }
+
+    private initSetup(): void {
+        this.bot = new TelegramBot(this.TOKEN, { polling: true });
     }
 }
