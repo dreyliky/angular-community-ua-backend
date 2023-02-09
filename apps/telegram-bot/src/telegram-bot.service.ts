@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { EnvironmentKeyEnum } from '@telegram-bot/core';
 import * as TelegramBot from 'node-telegram-bot-api';
-import { EnvironmentKeyEnum } from './core/enums/enivroment.enum';
 
 @Injectable()
 export class TelegramBotService {
