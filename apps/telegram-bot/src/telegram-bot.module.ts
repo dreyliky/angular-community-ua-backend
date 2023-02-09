@@ -5,7 +5,7 @@ import { TelegramBotService } from './telegram-bot.service';
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: [`${process.cwd()}/apps/telegram-bot/envs/.env`],
+            envFilePath: [`${__dirname}/.env`],
             isGlobal: true
         })
     ],
