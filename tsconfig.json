@@ -17,6 +17,10 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@main/*": ["apps/main/src/*"],
+      "@code-review/*": ["apps/code-review/src/*"],
+      "@telegram-bot/*": ["apps/telegram-bot/src/*"]
+    }
   }
 }
