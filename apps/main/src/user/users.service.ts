@@ -8,7 +8,7 @@ export class UsersService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {
         // FIXME: Remove
         // This is example of working with database
-        this.create();
+        // this.create();
     }
 
     // FIXME: Temp code for demonstration

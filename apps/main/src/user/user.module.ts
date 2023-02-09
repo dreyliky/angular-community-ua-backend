@@ -11,6 +11,4 @@ import { UsersService } from './users.service';
         UsersService
     ]
 })
-export class UserModule {
-    constructor(private readonly user: UsersService) {}
-}
+export class UserModule {}
