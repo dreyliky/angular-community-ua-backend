@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout dev branch
-        run: git checkout dev && git pull
+        run: git switch dev --quiet && git pull
 
       - name: Build applications
         run: |
