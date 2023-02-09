@@ -34,7 +34,13 @@
       "entryFile": "main",
       "sourceRoot": "apps/telegram-bot/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/telegram-bot/tsconfig.app.json"
+        "tsConfigPath": "apps/telegram-bot/tsconfig.app.json",
+        "assets": [
+            {
+              "include": ".env",
+              "watchAssets": true
+            }
+        ]
       }
     }
   }
