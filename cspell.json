@@ -10,5 +10,8 @@
         "commitlint",
         "acua"
     ],
-    "import": []
+    "import": [],
+    "words": [
+        "stackblitz"
+    ]
 }
