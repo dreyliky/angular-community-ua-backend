@@ -82,5 +82,8 @@
         "roots": [
             "<rootDir>/apps/"
         ]
+    },
+    "moduleNameMapper": {
+        "^acua/shared(|/.*)$": "<rootDir>/libs/shared/src/$1"
     }
 }
