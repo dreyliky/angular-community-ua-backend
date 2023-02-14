@@ -8,7 +8,8 @@
     "ignoreWords": [
         "nestjs",
         "commitlint",
-        "acua"
+        "acua",
+        "nestjs"
     ],
     "import": [],
     "words": [
