@@ -3,20 +3,20 @@ import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
 import { EnvironmentKeyEnum } from '../core/enums';
 import { TokenService } from '../token';
+import { TokenPayload } from '../token/interfaces';
 import { User, UsersService } from '../user';
 import {
     adaptTelegramResponseToUser,
     convertTelegramLoginResponseToHashRawValue
 } from './adapters';
-import { TokenPayload } from './interfaces';
 import { TelegramLoginResponseDto } from './models';
 
 @Injectable()
 export class LoginViaTelegramService {
-    private readonly botToken: string = this.configEnvService.get(EnvironmentKeyEnum.BotToken);
+    private readonly botToken: string = this.configService.get(EnvironmentKeyEnum.BotToken);
 
     constructor(
-        private readonly configEnvService: ConfigService,
+        private readonly configService: ConfigService,
         private readonly userService: UsersService,
         private readonly tokenService: TokenService
     ) {}
@@ -34,7 +34,7 @@ export class LoginViaTelegramService {
     public async login(dataResponse: TelegramLoginResponseDto): Promise<string> {
         this.validateLoginResponseDto(dataResponse);
 
-        const payload = this.tokenCreationPayload(dataResponse.id, dataResponse.username);
+        const payload = this.getTokenCreationPayload(dataResponse.id, dataResponse.username);
 
         const token = await this.tokenService.sign(payload);
         const encryptedToken = this.tokenService.encrypt(token);
@@ -46,7 +46,7 @@ export class LoginViaTelegramService {
         return token;
     }
 
-    private tokenCreationPayload(id: number, username: string): TokenPayload {
+    private getTokenCreationPayload(id: number, username: string): TokenPayload {
         return {
             tgId: id,
             username: username
