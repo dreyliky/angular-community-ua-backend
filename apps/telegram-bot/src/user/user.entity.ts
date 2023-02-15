@@ -22,7 +22,7 @@ export class User {
     public readonly auth_date: number;
 
     @Prop()
-    public readonly hash: string;
+    public readonly accessToken: string;
 }
 
 export type UserDocument = HydratedDocument<User>;

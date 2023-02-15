@@ -5,21 +5,17 @@ import { User, UserDocument } from './user.entity';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {
-        // FIXME: Remove
-        // This is example of working with database
-        // this.create();
-    }
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    public async findOne(tgId: number): Promise<any> {
+    public async findOne(tgId: number): Promise<unknown> {
         return await this.userModel.findOne({ tgId: tgId }).exec();
     }
 
-    public async update(userData: User): Promise<any> {
+    public async update(userData: User): Promise<unknown> {
         return await this.userModel.updateOne({ tgId: userData.tgId }, userData);
     }
 
-    public async createOrUpdate(userData: User): Promise<User> {
+    public async createOrUpdate(userData: User): Promise<unknown> {
         const tgId = userData.tgId;
         const user = await this.findOne(tgId);
 
@@ -30,6 +26,5 @@ export class UsersService {
         const createdUser = new this.userModel(userData);
 
         return await createdUser.save();
-
     }
 }

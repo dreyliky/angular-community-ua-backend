@@ -6,6 +6,6 @@ export enum EnvironmentKeyEnum {
     MongoPassword = 'MONGO_PASSWORD',
     MongoDatabase = 'MONGO_DB',
     BotToken = 'TELEGRAM_BOT_TOKEN',
-    JwtToken = 'JWT_TOKEN',
-    EncryptionKey = 'ENCRYPTION_KEY'
+    JwtTokenSecret = 'JWT_TOKEN_SECRET',
+    EncryptionSecret = 'ENCRYPTION_SECRET'
 }

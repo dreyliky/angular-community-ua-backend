@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from '../user';
-import { TokenModule } from './../token/token.module';
+import { TokenModule } from './../token';
+import { LoginViaTelegramService } from './login-via-telegram.service';
 import { LoginController } from './login.controller';
-import { LoginService } from './login.service';
 
 @Module({
     imports: [
@@ -10,7 +10,7 @@ import { LoginService } from './login.service';
         TokenModule
     ],
     providers: [
-        LoginService
+        LoginViaTelegramService
     ],
     controllers: [LoginController]
 })

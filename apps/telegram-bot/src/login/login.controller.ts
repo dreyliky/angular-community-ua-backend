@@ -1,18 +1,16 @@
 import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
-import { LoginService } from './login.service';
+import { LoginViaTelegramService } from './login-via-telegram.service';
 import { TelegramLoginResponseDto } from './models';
 
 @Controller('login')
 export class LoginController {
     constructor(
-        private readonly loginService: LoginService
+        private readonly loginService: LoginViaTelegramService
     ) {}
 
     @Post()
     @UsePipes(new ValidationPipe())
-    public login(@Body() loginDataResponse: TelegramLoginResponseDto): Promise<any> {
-        this.loginService.checkTelegramAuth(loginDataResponse);
-
+    public login(@Body() loginDataResponse: TelegramLoginResponseDto): Promise<string> {
         return this.loginService.login(loginDataResponse);
     }
 }
