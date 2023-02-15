@@ -4,5 +4,8 @@ export enum EnvironmentKeyEnum {
     MongoUrl = 'MONGO_URL',
     MongoUser = 'MONGO_USER',
     MongoPassword = 'MONGO_PASSWORD',
-    MongoDatabase = 'MONGO_DB'
+    MongoDatabase = 'MONGO_DB',
+    BotToken = 'TELEGRAM_BOT_TOKEN',
+    JwtTokenSecret = 'JWT_TOKEN_SECRET',
+    EncryptionSecret = 'ENCRYPTION_SECRET'
 }

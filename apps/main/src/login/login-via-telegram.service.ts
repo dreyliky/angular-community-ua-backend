@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { EnvironmentKeyEnum } from '@telegram-bot/core';
 import * as crypto from 'crypto';
+import { EnvironmentKeyEnum } from '../core/enums';
+import { TokenService } from '../token';
 import { User, UsersService } from '../user';
-import { TokenService } from './../token/token.service';
 import {
     adaptTelegramResponseToUser,
     convertTelegramLoginResponseToHashRawValue

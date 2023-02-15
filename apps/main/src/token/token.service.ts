@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { EnvironmentKeyEnum } from '@telegram-bot/core';
 import { AES } from 'crypto-js';
-import { TokenPayload } from './../login/interfaces';
+import { EnvironmentKeyEnum } from '../core/enums';
+import { TokenPayload } from '../login/interfaces';
 
 @Injectable()
 export class TokenService {
