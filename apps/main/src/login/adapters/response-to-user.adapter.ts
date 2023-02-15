@@ -3,7 +3,8 @@ import { TelegramLoginResponseDto } from '../models';
 
 export function adaptTelegramResponseToUser(
     dataResponse: TelegramLoginResponseDto,
-    encryptedToken: string): User {
+    encryptedToken: string
+): User {
     return {
         tgId: dataResponse.id,
         firstName: dataResponse.first_name,
