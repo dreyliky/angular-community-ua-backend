@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { MongoModule } from './mongo';
 import { TelegramBotController } from './telegram-bot.controller';
 import { TelegramBotService } from './telegram-bot.service';
 @Module({
@@ -7,7 +8,8 @@ import { TelegramBotService } from './telegram-bot.service';
         ConfigModule.forRoot({
             envFilePath: [`${__dirname}/.env`],
             isGlobal: true
-        })
+        }),
+        MongoModule
     ],
     controllers: [TelegramBotController],
     providers: [TelegramBotService]
