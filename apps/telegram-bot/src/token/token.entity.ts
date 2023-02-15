@@ -4,7 +4,7 @@ import { HydratedDocument } from 'mongoose';
 @Schema()
 export class Token {
     @Prop()
-    public accessToken: string;
+    public readonly accessToken: string;
 }
 
 export type TokenDocument = HydratedDocument<Token>;

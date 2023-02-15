@@ -4,25 +4,25 @@ import { HydratedDocument } from 'mongoose';
 @Schema()
 export class User {
     @Prop()
-    public tgId: number;
+    public readonly tgId: number;
 
     @Prop()
-    public firstName: string;
+    public readonly firstName: string;
 
     @Prop()
-    public lastName: string;
+    public readonly lastName: string;
 
     @Prop()
-    public username: string;
+    public readonly username: string;
 
     @Prop()
-    public photoUrl: string;
+    public readonly photoUrl: string;
 
     @Prop()
-    public auth_date: number;
+    public readonly auth_date: number;
 
     @Prop()
-    public hash: string;
+    public readonly hash: string;
 }
 
 export type UserDocument = HydratedDocument<User>;
