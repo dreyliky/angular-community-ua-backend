@@ -8,24 +8,28 @@ export interface StackblitzInfo {
     integrations: unknown;
 }
 
-export interface AppFiles {
-    [key: string]: AppFile | AppFolder;
+export interface StackblitzEntitiesDictionary {
+    [key: string]: StackblitzFile | StackblitzFolder;
 }
 
-export interface AppFolder {
+export interface StackblitzFolder {
     name: string;
-    type: string;
+    type: StackblitzEntityType;
     fullPath: string;
     lastModified: number;
 }
 
-export interface AppFile {
+export interface StackblitzFile {
     name: string;
-    type: string;
+    type: StackblitzEntityType;
     contents: string;
     fullPath: string;
     lastModified: number;
 }
+
+export type StackblitzEntity = StackblitzFile | StackblitzFolder;
+
+type StackblitzEntityType = 'file' | 'folder';
 
 interface Config {
     staticAssetHost: string;
@@ -55,7 +59,7 @@ interface Webcontainer {
 }
 
 interface Project {
-    appFiles: AppFiles;
+    appFiles: StackblitzEntitiesDictionary;
     canAdministrate: boolean;
     canChangeVisibility: boolean;
     canFork: boolean;
