@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
 import { EnvironmentKeyEnum } from './core';
-import { TelegramBotModule } from './telegram-bot.module';
 
 async function bootstrap(): Promise<void> {
-    const app = await NestFactory.create(TelegramBotModule);
+    const app = await NestFactory.create(AppModule);
 
     await app.listen(process.env[EnvironmentKeyEnum.Port]);
 }
