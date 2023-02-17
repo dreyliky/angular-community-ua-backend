@@ -223,6 +223,7 @@
                 "@typescript-eslint/no-namespace": "off",
                 "@typescript-eslint/no-inferrable-types": "off",
                 "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-misused-new": "off",
                 "@angular-eslint/no-host-metadata-property": "off",
                 "@angular-eslint/no-input-rename": "off"
             }

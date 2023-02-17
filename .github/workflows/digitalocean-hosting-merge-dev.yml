@@ -19,11 +19,14 @@ jobs:
         run: |
           npm run build main
           npm run build code-review
+          npm run build telegram-bot
       - name: Setup environment
         run: |
           cp ~/envs/3000/.env dist/apps/main/.env
           cp ~/envs/3001/.env dist/apps/code-review/.env
+          cp ~/envs/4002/.env dist/apps/telegram-bot/.env
       - name: Restart server applications
         run: |
           pm2 restart dev-acua-main
           pm2 restart dev-acua-code-review
+          pm2 restart acua-telegram-bot

@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { TelegramBotModule } from './../src/telegram-bot.module';
+import { TelegramBotModule } from '../src/app.module';
 
 describe('TelegramBotController (e2e)', () => {
     let app: INestApplication;
