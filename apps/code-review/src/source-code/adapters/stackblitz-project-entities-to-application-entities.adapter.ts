@@ -1,5 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import { ProjectEntityTypeEnum } from '../enums';
+import { isForbiddenFile } from '../helpers';
 import { StackblitzEntity, StackblitzFile } from '../interfaces';
 import { ProjectFile, ProjectFolder } from '../models';
 import { ProjectEntity } from '../types';
@@ -9,8 +10,8 @@ export function adaptStackblitzEntitiesToProjectEntities(
 ): ProjectEntity[] {
     const root: ProjectFolder = createRootFolder();
 
-    data.forEach((item) => {
-        const parts = item.fullPath.split('/');
+    data.forEach((entity) => {
+        const parts = entity.fullPath.split('/');
         let currentFolder = root;
 
         for (let i = 0; i < parts.length - 1; i++) {
@@ -19,13 +20,13 @@ export function adaptStackblitzEntitiesToProjectEntities(
             currentFolder = createChildFolder(currentFolder, folderName, folderFullPath);
         }
 
-        if (isStackblitzFile(item)) {
+        if (isStackblitzFile(entity) && !isForbiddenFile(entity.name)) {
             const fileName = parts[parts.length - 1];
             const file = createFile(
                 fileName,
-                item.fullPath,
-                item.lastModified,
-                item.contents
+                entity.fullPath,
+                entity.lastModified,
+                entity.contents
             );
 
             currentFolder.children.push(file);
