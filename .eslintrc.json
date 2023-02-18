@@ -55,7 +55,12 @@
                 "dot-location": ["error", "property"],
                 "curly": "error",
                 "no-trailing-spaces": "error",
-                "space-before-function-paren": ["error", "never"],
+                "space-before-function-paren": [
+                    "error",
+                    {
+                        "asyncArrow": "always"
+                    }
+                ],
                 "no-mixed-spaces-and-tabs": "error",
                 "array-callback-return": "error",
                 "newline-before-return": "error",
