@@ -21,14 +21,18 @@ export class TokenService {
     }
 
     public encrypt(token: string): string {
-        const encryptedKey = this.configService.get(EnvironmentKeyEnum.EncryptionSecret);
+        const encryptedKey = this.configService.get(
+            EnvironmentKeyEnum.EncryptionSecret
+        );
         const encryptedToken = AES.encrypt(token, encryptedKey);
 
         return encryptedToken.toString();
     }
 
     public decrypt(encryptedToken: string): string {
-        const encryptedKey = this.configService.get(EnvironmentKeyEnum.EncryptionSecret);
+        const encryptedKey = this.configService.get(
+            EnvironmentKeyEnum.EncryptionSecret
+        );
         const decryptedToken = AES.decrypt(encryptedToken, encryptedKey);
 
         return decryptedToken.toString();

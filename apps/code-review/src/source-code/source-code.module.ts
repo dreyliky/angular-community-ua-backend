@@ -6,16 +6,8 @@ import { SourceCodeController } from './source-code.controller';
 import { SourceCodeService } from './source-code.service';
 
 @Module({
-    imports: [
-        HttpModule
-    ],
-    controllers: [
-        SourceCodeController
-    ],
-    providers: [
-        SourceCodeService,
-        StackblitzApi,
-        StackblitzProjectParser
-    ]
+    imports: [HttpModule],
+    controllers: [SourceCodeController],
+    providers: [SourceCodeService, StackblitzApi, StackblitzProjectParser]
 })
 export class SourceCodeModule {}

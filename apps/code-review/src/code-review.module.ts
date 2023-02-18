@@ -13,8 +13,6 @@ import { SourceCodeModule } from './source-code';
         SwaggerModule,
         SourceCodeModule
     ],
-    controllers: [
-        CodeReviewController
-    ]
+    controllers: [CodeReviewController]
 })
 export class CodeReviewModule {}

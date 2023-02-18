@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from './adapters';
+import {
+    adaptStackblitzEntitiesToProjectEntities,
+    normalizeSourceUrl
+} from './adapters';
 import { StackblitzApi } from './api';
 import { validateSourceUrl } from './helpers';
 import { StackblitzProjectParser } from './parsers';
@@ -18,10 +21,9 @@ export class SourceCodeService {
 
         const stackblitzUrl = normalizeSourceUrl(sourceUrl);
 
-        return this.stackblitzApi.getStackblitzHtml(stackblitzUrl)
-            .pipe(
-                map((html) => this.stackblitzProjectParser.parse(html)),
-                map((data) => adaptStackblitzEntitiesToProjectEntities(data))
-            );
+        return this.stackblitzApi.getStackblitzHtml(stackblitzUrl).pipe(
+            map((html) => this.stackblitzProjectParser.parse(html)),
+            map((data) => adaptStackblitzEntitiesToProjectEntities(data))
+        );
     }
 }

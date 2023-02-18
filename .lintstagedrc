@@ -1,6 +1,3 @@
 {
-  "./**/*.ts": [
-    "eslint --fix",
-    "git add"
-  ]
+    "**/*.ts": ["npx prettier **/*.ts --write", "eslint --fix", "git add"]
 }
