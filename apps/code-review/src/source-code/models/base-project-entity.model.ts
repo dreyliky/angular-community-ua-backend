@@ -5,7 +5,10 @@ export abstract class BaseProjectEntity {
     @ApiProperty()
     public name: string;
 
-    @ApiProperty({ enum: ProjectEntityTypeEnum, enumName: 'ProjectEntityTypeEnum' })
+    @ApiProperty({
+        enum: ProjectEntityTypeEnum,
+        enumName: 'ProjectEntityTypeEnum'
+    })
     public type: ProjectEntityTypeEnum;
 
     @ApiProperty()

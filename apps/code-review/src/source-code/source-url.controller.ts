@@ -5,9 +5,7 @@ import { SourceUrlService } from './services';
 @ApiTags('source-url')
 @Controller('source-url')
 export class SourceUrlController {
-    constructor(
-        private readonly sourceUrlService: SourceUrlService
-    ) {}
+    constructor(private readonly sourceUrlService: SourceUrlService) {}
 
     @Get('stackblitz/normalized')
     @ApiOperation({ summary: 'Get normalized source url in stackblitz format' })
@@ -17,9 +15,7 @@ export class SourceUrlController {
         status: HttpStatus.OK,
         type: String
     })
-    public getNormalized(
-        @Query('url') sourceUrl: string
-    ): string {
+    public getNormalized(@Query('url') sourceUrl: string): string {
         return this.sourceUrlService.getNormalized(sourceUrl);
     }
 
@@ -31,9 +27,7 @@ export class SourceUrlController {
         status: HttpStatus.OK,
         type: Boolean
     })
-    public validate(
-        @Query('url') sourceUrl: string
-    ): boolean {
+    public validate(@Query('url') sourceUrl: string): boolean {
         return this.sourceUrlService.validate(sourceUrl);
     }
 }

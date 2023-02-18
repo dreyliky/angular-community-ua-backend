@@ -12,7 +12,9 @@ import { TelegramLoginResponseDto } from './models';
 
 @Injectable()
 export class LoginViaTelegramService {
-    private readonly botToken: string = this.configService.get(EnvironmentKeyEnum.BotToken);
+    private readonly botToken: string = this.configService.get(
+        EnvironmentKeyEnum.BotToken
+    );
 
     constructor(
         private readonly configService: ConfigService,
@@ -21,31 +23,42 @@ export class LoginViaTelegramService {
     ) {}
 
     public validateLoginResponseDto(data: TelegramLoginResponseDto): void {
-        const dataCheckString = convertTelegramLoginResponseToHashRawValue(data);
-        const secretKey = crypto.createHash('sha256').update(this.botToken).digest();
-        const hash = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
+        const dataCheckString =
+            convertTelegramLoginResponseToHashRawValue(data);
+        const secretKey = crypto
+            .createHash('sha256')
+            .update(this.botToken)
+            .digest();
+        const hash = crypto
+            .createHmac('sha256', secretKey)
+            .update(dataCheckString)
+            .digest('hex');
 
         if (data.hash !== hash) {
             throw new BadRequestException();
         }
     }
 
-    public async login(dataResponse: TelegramLoginResponseDto): Promise<string> {
-        this.validateLoginResponseDto(dataResponse);
+    public async login(data: TelegramLoginResponseDto): Promise<string> {
+        this.validateLoginResponseDto(data);
 
-        const payload = this.getTokenCreationPayload(dataResponse.id, dataResponse.username);
-
+        const payload = this.getTokenCreationPayload(data.id, data.username);
         const token = await this.tokenService.sign(payload);
         const encryptedToken = this.tokenService.encrypt(token);
-
-        const userData: User = adaptTelegramResponseToUser(dataResponse, encryptedToken);
+        const userData: User = adaptTelegramResponseToUser(
+            data,
+            encryptedToken
+        );
 
         await this.userService.createOrUpdate(userData);
 
         return token;
     }
 
-    private getTokenCreationPayload(id: number, username: string): TokenPayload {
+    private getTokenCreationPayload(
+        id: number,
+        username: string
+    ): TokenPayload {
         return {
             tgId: id,
             username: username

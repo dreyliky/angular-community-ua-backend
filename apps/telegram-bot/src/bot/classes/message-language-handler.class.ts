@@ -7,9 +7,7 @@ export class MessageLanguageHandler implements MessageHandler {
 
     private readonly russianLanguageRegExp = /([ыёъэ])/g;
 
-    constructor(
-        public readonly moduleRef: ModuleRef
-    ) {}
+    constructor(public readonly moduleRef: ModuleRef) {}
 
     public handle(message: TelegramBot.Message): void {
         const textAtLowerCase = message.text.toLowerCase();
@@ -20,7 +18,9 @@ export class MessageLanguageHandler implements MessageHandler {
         }
     }
 
-    private sendMessageAboutRussianLanguageForbidden(message: TelegramBot.Message): void {
+    private sendMessageAboutRussianLanguageForbidden(
+        message: TelegramBot.Message
+    ): void {
         this.bot.sendMessage(
             message.chat.id,
             `@${message.from.username}, російська мова заборонена в цій групі.`,

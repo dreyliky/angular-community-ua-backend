@@ -7,13 +7,8 @@ import { SourceCodeController } from './source-code.controller';
 import { SourceUrlController } from './source-url.controller';
 
 @Module({
-    imports: [
-        HttpModule
-    ],
-    controllers: [
-        SourceCodeController,
-        SourceUrlController
-    ],
+    imports: [HttpModule],
+    controllers: [SourceCodeController, SourceUrlController],
     providers: [
         SourceCodeService,
         SourceUrlService,

@@ -8,9 +8,7 @@ import { ProjectEntity } from './types';
 @ApiTags('source-code')
 @Controller('source-code')
 export class SourceCodeController {
-    constructor(
-        private readonly sourceCodeService: SourceCodeService
-    ) {}
+    constructor(private readonly sourceCodeService: SourceCodeService) {}
 
     @Get()
     @ApiOperation({ summary: 'Get "source code" of the project' })
@@ -21,9 +19,7 @@ export class SourceCodeController {
         type: ProjectFile
     })
     @ApiResponse({ type: ProjectFolder })
-    public get(
-        @Query('url') sourceUrl: string
-    ): Observable<ProjectEntity[]> {
+    public get(@Query('url') sourceUrl: string): Observable<ProjectEntity[]> {
         return this.sourceCodeService.get(sourceUrl);
     }
 }

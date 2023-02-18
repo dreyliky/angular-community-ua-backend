@@ -6,16 +6,18 @@ import { MessageHandler } from '../interfaces';
 export class MessageCodeReviewRequestHandler implements MessageHandler {
     private readonly bot = this.moduleRef.get(TelegramBot);
 
-    constructor(
-        public readonly moduleRef: ModuleRef
-    ) {}
+    constructor(public readonly moduleRef: ModuleRef) {}
 
     public handle(message: TelegramBot.Message): void {
         // TODO: Add real logic
-        const isProduction = (process.env[EnvironmentKeyEnum.Production] === 'true');
+        const isProduction =
+            process.env[EnvironmentKeyEnum.Production] === 'true';
 
         if (!isProduction) {
-            this.bot.deleteMessage(message.chat.id, message.message_id.toString());
+            this.bot.deleteMessage(
+                message.chat.id,
+                message.message_id.toString()
+            );
             this.bot.sendMessage(
                 message.chat.id,
                 `Користувач @${message.from.username} очікує Код-Ревью у спільноти.`,
