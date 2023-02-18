@@ -2,18 +2,21 @@ import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { StackblitzApi } from './api';
 import { StackblitzProjectParser } from './parsers';
+import { SourceCodeService, SourceUrlService } from './services';
 import { SourceCodeController } from './source-code.controller';
-import { SourceCodeService } from './source-code.service';
+import { SourceUrlController } from './source-url.controller';
 
 @Module({
     imports: [
         HttpModule
     ],
     controllers: [
-        SourceCodeController
+        SourceCodeController,
+        SourceUrlController
     ],
     providers: [
         SourceCodeService,
+        SourceUrlService,
         StackblitzApi,
         StackblitzProjectParser
     ]
