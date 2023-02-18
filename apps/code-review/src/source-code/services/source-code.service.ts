@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { map, Observable } from 'rxjs';
-import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from './adapters';
-import { StackblitzApi } from './api';
-import { validateSourceUrl } from './helpers';
-import { StackblitzProjectParser } from './parsers';
-import { ProjectEntity } from './types';
+import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from '../adapters';
+import { StackblitzApi } from '../api';
+import { validateSourceUrl } from '../helpers';
+import { StackblitzProjectParser } from '../parsers';
+import { ProjectEntity } from '../types';
 
 @Injectable()
 export class SourceCodeService {
