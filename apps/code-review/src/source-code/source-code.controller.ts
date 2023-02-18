@@ -2,7 +2,7 @@ import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { ProjectFile, ProjectFolder } from './models';
-import { SourceCodeService } from './source-code.service';
+import { SourceCodeService } from './services';
 import { ProjectEntity } from './types';
 
 @ApiTags('source-code')
