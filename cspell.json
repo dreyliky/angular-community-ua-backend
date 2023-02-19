@@ -1,9 +1,21 @@
 {
     "version": "0.2",
-    "ignorePaths": ["**/*.scss"],
+    "ignorePaths": [
+        "**/*.scss"
+    ],
     "dictionaryDefinitions": [],
     "dictionaries": [],
-    "ignoreWords": ["nestjs", "commitlint", "acua", "nestjs", "Parens"],
+    "ignoreWords": [
+        "nestjs",
+        "commitlint",
+        "acua",
+        "nestjs",
+        "Parens"
+    ],
     "import": [],
-    "words": ["stackblitz", "Ревью"]
+    "words": [
+        "languagedetect",
+        "stackblitz",
+        "Ревью"
+    ]
 }
