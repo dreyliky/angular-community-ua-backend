@@ -58,7 +58,9 @@
                 "space-before-function-paren": [
                     "error",
                     {
-                        "asyncArrow": "always"
+                        "asyncArrow": "always",
+                        "named": "never",
+                        "anonymous": "never"
                     }
                 ],
                 "no-mixed-spaces-and-tabs": "error",
