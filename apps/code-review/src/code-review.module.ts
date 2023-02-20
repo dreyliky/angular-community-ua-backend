@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { SwaggerModule } from '@nestjs/swagger';
 import { CodeReviewController } from './code-review.controller';
 import { SourceCodeModule } from './source-code';
 
@@ -9,10 +10,9 @@ import { SourceCodeModule } from './source-code';
             envFilePath: [`${__dirname}/.env`],
             isGlobal: true
         }),
+        SwaggerModule,
         SourceCodeModule
     ],
-    controllers: [
-        CodeReviewController
-    ]
+    controllers: [CodeReviewController]
 })
 export class CodeReviewModule {}

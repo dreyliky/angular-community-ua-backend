@@ -55,7 +55,14 @@
                 "dot-location": ["error", "property"],
                 "curly": "error",
                 "no-trailing-spaces": "error",
-                "space-before-function-paren": ["error", "never"],
+                "space-before-function-paren": [
+                    "error",
+                    {
+                        "asyncArrow": "always",
+                        "named": "never",
+                        "anonymous": "never"
+                    }
+                ],
                 "no-mixed-spaces-and-tabs": "error",
                 "array-callback-return": "error",
                 "newline-before-return": "error",
@@ -223,6 +230,7 @@
                 "@typescript-eslint/no-namespace": "off",
                 "@typescript-eslint/no-inferrable-types": "off",
                 "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-misused-new": "off",
                 "@angular-eslint/no-host-metadata-property": "off",
                 "@angular-eslint/no-input-rename": "off"
             }

@@ -13,8 +13,6 @@ import { MongoModule } from './mongo';
         MongoModule,
         LoginModule
     ],
-    controllers: [
-        AppController
-    ]
+    controllers: [AppController]
 })
 export class AppModule {}

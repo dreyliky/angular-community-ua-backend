@@ -9,10 +9,13 @@
         "nestjs",
         "commitlint",
         "acua",
-        "nestjs"
+        "nestjs",
+        "Parens"
     ],
     "import": [],
     "words": [
-        "stackblitz"
+        "languagedetect",
+        "stackblitz",
+        "Ревью"
     ]
 }

@@ -5,13 +5,8 @@ import { LoginViaTelegramService } from './login-via-telegram.service';
 import { LoginController } from './login.controller';
 
 @Module({
-    imports: [
-        UserModule,
-        TokenModule
-    ],
-    providers: [
-        LoginViaTelegramService
-    ],
+    imports: [UserModule, TokenModule],
+    providers: [LoginViaTelegramService],
     controllers: [LoginController]
 })
 export class LoginModule {}

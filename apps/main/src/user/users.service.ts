@@ -5,14 +5,19 @@ import { User, UserDocument } from './user.entity';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+    constructor(
+        @InjectModel(User.name) private userModel: Model<UserDocument>
+    ) {}
 
     public async findOne(tgId: number): Promise<unknown> {
         return await this.userModel.findOne({ tgId: tgId }).exec();
     }
 
     public async update(userData: User): Promise<unknown> {
-        return await this.userModel.updateOne({ tgId: userData.tgId }, userData);
+        return await this.userModel.updateOne(
+            { tgId: userData.tgId },
+            userData
+        );
     }
 
     public async createOrUpdate(userData: User): Promise<unknown> {

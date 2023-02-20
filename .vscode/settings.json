@@ -27,5 +27,7 @@
     "stylelint.config": null,
     "stylelint.validate": [
         "scss"
-    ]
+    ],
+    "cSpell.language": "en,uk",
+    "editor.formatOnSave": true
 }

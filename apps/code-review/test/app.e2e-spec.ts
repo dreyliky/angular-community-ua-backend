@@ -6,7 +6,7 @@ import { CodeReviewModule } from './../src/code-review.module';
 describe('CodeReviewController (e2e)', () => {
     let app: INestApplication;
 
-    beforeEach(async() => {
+    beforeEach(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [CodeReviewModule]
         }).compile();
