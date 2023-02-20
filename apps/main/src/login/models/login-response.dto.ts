@@ -7,7 +7,6 @@ export class TelegramLoginResponseDto {
     public readonly auth_date: number;
 
     @ApiProperty()
-    @IsNotEmpty()
     public readonly first_name: string;
 
     @ApiProperty()
@@ -19,7 +18,6 @@ export class TelegramLoginResponseDto {
     public readonly id: number;
 
     @ApiProperty()
-    @IsNotEmpty()
     public readonly last_name: string;
 
     @ApiProperty()
