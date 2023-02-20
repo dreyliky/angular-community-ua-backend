@@ -13,7 +13,6 @@ export class TelegramLoginResponseDto {
     @IsNotEmpty()
     public readonly id: number;
 
-    @IsNotEmpty()
     public readonly last_name: string;
 
     @IsNotEmpty()
