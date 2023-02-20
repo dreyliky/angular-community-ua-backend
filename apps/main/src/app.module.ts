@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { LoginModule } from './login';
 import { MongoModule } from './mongo';
+import { UserModule } from './user';
 
 @Module({
     imports: [
@@ -11,7 +12,8 @@ import { MongoModule } from './mongo';
             isGlobal: true
         }),
         MongoModule,
-        LoginModule
+        LoginModule,
+        UserModule
     ],
     controllers: [AppController]
 })
