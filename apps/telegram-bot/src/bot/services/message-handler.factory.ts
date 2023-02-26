@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
-import { EnvironmentKeyEnum as EnvironmentKey } from '@telegram-bot/core';
+import { ENVIRONMENT_KEY } from '@telegram-bot/core';
 import type { Message } from 'node-telegram-bot-api';
 import {
     MessageCodeReviewRequestHandler,
@@ -31,7 +31,7 @@ export class MessageHandlerFactory {
 
     private isAcuaGroupContext(message: Message): boolean {
         const targetChatId = this.configService.get(
-            EnvironmentKey.AcuaGroupChatId
+            ENVIRONMENT_KEY.AcuaGroupChatId
         );
 
         return message.chat.id === +targetChatId;
@@ -39,7 +39,7 @@ export class MessageHandlerFactory {
 
     private isCodeReviewRequest(message: Message): boolean {
         const targetThreadId = this.configService.get(
-            EnvironmentKey.AcuaGroupCodeReviewThreadId
+            ENVIRONMENT_KEY.AcuaGroupCodeReviewThreadId
         );
 
         return message.message_thread_id === +targetThreadId;

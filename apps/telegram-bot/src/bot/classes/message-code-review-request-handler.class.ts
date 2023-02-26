@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
-import { EnvironmentKeyEnum } from '@telegram-bot/core';
+import { ENVIRONMENT_KEY } from '@telegram-bot/core';
 import * as TelegramBot from 'node-telegram-bot-api';
 import { MessageHandler } from '../interfaces';
 
@@ -11,14 +11,14 @@ export class MessageCodeReviewRequestHandler implements MessageHandler {
     });
 
     private readonly reviewPageUrl = this.config.get(
-        EnvironmentKeyEnum.AcuaWebOverviewPageUrl
+        ENVIRONMENT_KEY.AcuaWebOverviewPageUrl
     );
 
     constructor(public readonly moduleRef: ModuleRef) {}
 
     public handle(message: TelegramBot.Message): void {
         // TODO: Add real logic
-        const isProduction = this.config.get(EnvironmentKeyEnum.Production);
+        const isProduction = this.config.get(ENVIRONMENT_KEY.Production);
 
         if (!isProduction) {
             this.bot.deleteMessage(

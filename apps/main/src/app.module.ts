@@ -1,8 +1,9 @@
+import { LoggerModule } from '@acua/shared/logger';
+import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { LoginModule } from './login';
-import { MongoModule } from './mongo';
 
 @Module({
     imports: [
@@ -10,6 +11,7 @@ import { MongoModule } from './mongo';
             envFilePath: [`${__dirname}/.env`],
             isGlobal: true
         }),
+        LoggerModule,
         MongoModule,
         LoginModule
     ],

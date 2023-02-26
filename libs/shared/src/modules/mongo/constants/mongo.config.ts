@@ -3,17 +3,17 @@ import {
     MongooseModuleAsyncOptions,
     MongooseModuleOptions
 } from '@nestjs/mongoose';
-import { EnvironmentKeyEnum } from '../../core';
+import { MONGO_ENVIRONMENT_KEY as ENVIRONMENT_KEY } from '../data';
 
 export const MONGO_CONFIG: MongooseModuleAsyncOptions = {
     useFactory: (configService: ConfigService) =>
         <MongooseModuleOptions>{
-            uri: configService.get(EnvironmentKeyEnum.MongoUrl),
+            uri: configService.get(ENVIRONMENT_KEY.MongoUrl),
             auth: {
-                username: configService.get(EnvironmentKeyEnum.MongoUser),
-                password: configService.get(EnvironmentKeyEnum.MongoPassword)
+                username: configService.get(ENVIRONMENT_KEY.MongoUser),
+                password: configService.get(ENVIRONMENT_KEY.MongoPassword)
             },
-            dbName: configService.get(EnvironmentKeyEnum.MongoDatabase),
+            dbName: configService.get(ENVIRONMENT_KEY.MongoDatabase),
             retryDelay: 1000 * 60
         },
     inject: [ConfigService]

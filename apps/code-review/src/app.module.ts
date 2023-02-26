@@ -1,7 +1,8 @@
+import { LoggerModule } from '@acua/shared/logger';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SwaggerModule } from '@nestjs/swagger';
-import { CodeReviewController } from './code-review.controller';
+import { AppController } from './app.controller';
 import { SourceCodeModule } from './source-code';
 
 @Module({
@@ -10,9 +11,10 @@ import { SourceCodeModule } from './source-code';
             envFilePath: [`${__dirname}/.env`],
             isGlobal: true
         }),
+        LoggerModule,
         SwaggerModule,
         SourceCodeModule
     ],
-    controllers: [CodeReviewController]
+    controllers: [AppController]
 })
-export class CodeReviewModule {}
+export class AppModule {}
