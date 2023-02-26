@@ -1,23 +1,18 @@
+import { HttpExceptionFilter } from '@acua/shared/logger';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { CodeReviewModule } from './code-review.module';
-import { EnvironmentKeyEnum } from './core';
+import { AppModule } from './app.module';
+import { ENVIRONMENT_KEY } from './core';
+import { setupSwagger } from './swagger';
 
 async function bootstrap(): Promise<void> {
-    const app = await NestFactory.create(CodeReviewModule, {
+    const app = await NestFactory.create(AppModule, {
         cors: { origin: '*' }
     });
 
-    const config = new DocumentBuilder()
-        .setTitle('CodeReview API')
-        .setDescription('The API for the "code-review" project.')
-        .setVersion('0.1')
-        .build();
-    const document = SwaggerModule.createDocument(app, config);
+    app.useGlobalFilters(app.get(HttpExceptionFilter));
+    setupSwagger(app);
 
-    SwaggerModule.setup('api', app, document);
-
-    await app.listen(process.env[EnvironmentKeyEnum.Port]);
+    await app.listen(process.env[ENVIRONMENT_KEY.Port]);
 }
 
 bootstrap();

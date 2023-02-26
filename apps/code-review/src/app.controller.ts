@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 
 @Controller()
-export class CodeReviewController {
+export class AppController {
     @Get()
     public getHello(): string {
         return 'code-review backend works!';

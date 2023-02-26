@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { AES } from 'crypto-js';
-import { EnvironmentKeyEnum } from '../core';
+import { ENVIRONMENT_KEY } from '../core';
 import { TokenPayload } from './interfaces';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class TokenService {
 
     public async sign(payload: TokenPayload): Promise<string> {
         const token = await this.jwtService.signAsync(payload, {
-            secret: this.configService.get(EnvironmentKeyEnum.JwtTokenSecret)
+            secret: this.configService.get(ENVIRONMENT_KEY.JwtTokenSecret)
         });
 
         return token;
@@ -22,7 +22,7 @@ export class TokenService {
 
     public encrypt(token: string): string {
         const encryptedKey = this.configService.get(
-            EnvironmentKeyEnum.EncryptionSecret
+            ENVIRONMENT_KEY.EncryptionSecret
         );
         const encryptedToken = AES.encrypt(token, encryptedKey);
 
@@ -31,7 +31,7 @@ export class TokenService {
 
     public decrypt(encryptedToken: string): string {
         const encryptedKey = this.configService.get(
-            EnvironmentKeyEnum.EncryptionSecret
+            ENVIRONMENT_KEY.EncryptionSecret
         );
         const decryptedToken = AES.decrypt(encryptedToken, encryptedKey);
 

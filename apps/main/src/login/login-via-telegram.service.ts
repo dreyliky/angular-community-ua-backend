@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
-import { EnvironmentKeyEnum } from '../core';
+import { ENVIRONMENT_KEY } from '../core';
 import { TokenPayload, TokenService } from '../token';
 import { User, UsersService } from '../user';
 import {
@@ -13,7 +13,7 @@ import { TelegramLoginResponseDto } from './models';
 @Injectable()
 export class LoginViaTelegramService {
     private readonly botToken: string = this.configService.get(
-        EnvironmentKeyEnum.BotToken
+        ENVIRONMENT_KEY.BotToken
     );
 
     constructor(
