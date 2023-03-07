@@ -1,9 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserResponseDto {
-    @ApiProperty()
-    public readonly id: string;
-
+export class UserDto {
     @ApiProperty()
     public readonly tgId: number;
 
@@ -18,10 +15,4 @@ export class UserResponseDto {
 
     @ApiProperty()
     public readonly photoUrl: string;
-
-    @ApiProperty()
-    public readonly auth_date: number;
-
-    @ApiProperty()
-    public readonly accessToken: string;
 }
