@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UnauthorizedException } from '@nestjs/common/exceptions';
+import { NotFoundException } from '@nestjs/common/exceptions';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserResponseToUserDto } from './adapters';
+import { adaptUserToUserDto } from './adapters';
 import { UserDto } from './models';
 import { User, UserDocument } from './user.entity';
 
@@ -39,11 +39,11 @@ export class UsersService {
     public async getUserByTgId(tgId: number): Promise<UserDto> {
         const userResponse = await this.userModel.find({ tgId }).exec();
 
-        if (!userResponse) {
-            throw new UnauthorizedException('User not found');
+        if (userResponse.length === 0) {
+            throw new NotFoundException('404 NotFoundException');
         }
 
-        const user = UserResponseToUserDto(userResponse[0]);
+        const user = adaptUserToUserDto(userResponse[0]);
 
         return user;
     }

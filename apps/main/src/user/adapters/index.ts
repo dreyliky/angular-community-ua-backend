@@ -1,1 +1,1 @@
-export * from './response-to-user-dto.adapter';
+export * from './adapt-user-to-dto.adapter';

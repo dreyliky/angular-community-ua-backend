@@ -1,7 +1,7 @@
 import { UserDto } from '../models';
 import { User } from '../user.entity';
 
-export function UserResponseToUserDto(user: User): UserDto {
+export function adaptUserToUserDto(user: User): UserDto {
     return {
         tgId: user.tgId,
         firstName: user.firstName,
