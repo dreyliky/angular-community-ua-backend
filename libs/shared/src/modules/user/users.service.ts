@@ -37,13 +37,13 @@ export class UsersService {
     }
 
     public async getUserByTgId(tgId: number): Promise<UserDto> {
-        const userResponse = await this.userModel.find({ tgId }).exec();
+        const userResponse = await this.findOne(tgId);
 
-        if (userResponse.length === 0) {
+        if (!userResponse) {
             throw new NotFoundException('404 NotFoundException');
         }
 
-        const user = adaptUserToUserDto(userResponse[0]);
+        const user = adaptUserToUserDto(userResponse as User);
 
         return user;
     }
