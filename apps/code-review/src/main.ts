@@ -1,4 +1,5 @@
 import { HttpExceptionFilter } from '@acua/shared/logger';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ENVIRONMENT_KEY } from './core';
@@ -8,6 +9,8 @@ async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule, {
         cors: { origin: '*' }
     });
+
+    app.useGlobalPipes(new ValidationPipe());
 
     app.useGlobalFilters(app.get(HttpExceptionFilter));
     setupSwagger(app);
