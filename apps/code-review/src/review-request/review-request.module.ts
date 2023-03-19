@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ReviewRequestController } from './review-request.controller';
 import { CodeReviewRequest, CodeReviewRequestSchema } from './schemas';
 import { ReviewRequestService } from './services';
+import { SourceUrlValidator } from './validators';
 
 @Module({
     imports: [
@@ -15,6 +16,6 @@ import { ReviewRequestService } from './services';
         UserModule
     ],
     controllers: [ReviewRequestController],
-    providers: [ReviewRequestService]
+    providers: [ReviewRequestService, SourceUrlValidator]
 })
 export class ReviewRequestModule {}

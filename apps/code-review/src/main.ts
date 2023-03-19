@@ -1,6 +1,7 @@
 import { HttpExceptionFilter } from '@acua/shared/logger';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import { ENVIRONMENT_KEY } from './core';
 import { setupSwagger } from './swagger';
@@ -11,6 +12,8 @@ async function bootstrap(): Promise<void> {
     });
 
     app.useGlobalPipes(new ValidationPipe());
+
+    useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
     app.useGlobalFilters(app.get(HttpExceptionFilter));
     setupSwagger(app);
