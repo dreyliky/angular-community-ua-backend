@@ -16,14 +16,14 @@ export class ReviewRequestService {
     ) {}
 
     public async find(): Promise<CodeReviewRequestDocument[]> {
-        return await this.codeReviewRequestModel.find().populate('userId').exec();
+        return await this.codeReviewRequestModel.find().populate('user').exec();
     }
 
     public async findOne(id: Types.ObjectId): Promise<CodeReviewRequestDocument> {
         try {
             return await this.codeReviewRequestModel.findOne({
                 _id: id
-            }).populate('userId').exec();
+            }).populate('user').exec();
         } catch {
             throw new BadRequestException();
         }
@@ -50,17 +50,17 @@ export class ReviewRequestService {
     public async create(
         reviewDataRequest: CodeReviewCreationDto,
         userTgId: number
-    ): Promise<CodeReviewRequestDocument> {
+    ): Promise<CodeReviewRequestDto> {
         const user = await this.userService.findOneByTgId(userTgId) as UserDocument;
 
         const data: CodeReviewRequest = {
-            userId: user._id,
+            user,
             ...reviewDataRequest
         };
 
-        const createdData = new this.codeReviewRequestModel(data);
+        const createdData = new this.codeReviewRequestModel(data).save();
 
-        return createdData.save();
+        return adaptCodeReviewRequestDocumentToDtoOne(await createdData);
     }
 
     public async updateOne(

@@ -15,7 +15,6 @@ import { Request } from 'express';
 import { Types } from 'mongoose';
 import { CodeReviewRequestStatusEnum } from './enums';
 import { CodeReviewCreationDto, CodeReviewRequestDto } from './models';
-import { CodeReviewRequestDocument } from './schemas';
 import { ReviewRequestService } from './services';
 
 @ApiBearerAuth()
@@ -61,7 +60,7 @@ export class ReviewRequestController {
     public create(
         @Req() req: Request,
         @Body() reviewDataRequest: CodeReviewCreationDto
-    ): Promise<CodeReviewRequestDocument> {
+    ): Promise<CodeReviewRequestDto> {
         const authorizedUser = req.user as AuthorizedUser;
 
         return this.reviewRequestService.create(reviewDataRequest, authorizedUser.tgId);

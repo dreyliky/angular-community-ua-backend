@@ -1,11 +1,11 @@
-import { adaptUserToUserDto, UserDocument } from '@acua/shared/user';
+import { adaptUserToUserDto } from '@acua/shared/user';
 import { CodeReviewRequestDto } from '../models';
 import { CodeReviewRequestDocument } from './../schemas';
 
 export function adaptCodeReviewRequestDocumentToDtoOne(
     data: CodeReviewRequestDocument
 ): CodeReviewRequestDto {
-    const user = adaptUserToUserDto(data.userId as unknown as UserDocument);
+    const user = adaptUserToUserDto(data.user);
 
     return {
         id: data._id.toString(),
