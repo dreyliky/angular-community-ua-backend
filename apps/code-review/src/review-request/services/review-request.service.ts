@@ -4,8 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { adaptCodeReviewRequestDocumentToDtoOne } from '../adapters';
 import { CodeReviewRequestStatusEnum } from '../enums';
-import { CodeReviewDataRequestDto } from '../models';
-import { CodeReviewRequestDto } from './../models';
+import { CodeReviewCreationDto, CodeReviewRequestDto } from './../models';
 import { CodeReviewRequest, CodeReviewRequestDocument } from './../schemas';
 
 @Injectable()
@@ -49,7 +48,7 @@ export class ReviewRequestService {
     }
 
     public async create(
-        reviewDataRequest: CodeReviewDataRequestDto,
+        reviewDataRequest: CodeReviewCreationDto,
         userTgId: number
     ): Promise<CodeReviewRequestDocument> {
         const user = await this.userService.findOneByTgId(userTgId) as UserDocument;

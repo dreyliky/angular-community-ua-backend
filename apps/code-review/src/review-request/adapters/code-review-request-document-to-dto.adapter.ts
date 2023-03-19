@@ -1,5 +1,4 @@
-import { UserDocument } from '@acua/shared/user';
-import { adaptUserToUserDto } from '@acua/shared/user/adapters';
+import { adaptUserToUserDto, UserDocument } from '@acua/shared/user';
 import { CodeReviewRequestDto } from '../models';
 import { CodeReviewRequestDocument } from './../schemas';
 

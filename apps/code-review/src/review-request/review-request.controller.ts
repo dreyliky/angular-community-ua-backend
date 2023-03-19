@@ -1,4 +1,4 @@
-import { AuthorizedUser } from '@acua/shared/user/interfaces';
+import { AuthorizedUser } from '@acua/shared/user';
 import {
     Body,
     Controller,
@@ -7,13 +7,14 @@ import {
     Param,
     Patch,
     Post,
-    Request,
-    UseGuards
+    Req, UseGuards
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CodeReviewRequestStatusEnum, RouteParamEnum } from './enums';
-import { CodeReviewDataRequestDto, CodeReviewRequestDto } from './models';
+import { Request } from 'express';
+import { Types } from 'mongoose';
+import { CodeReviewRequestStatusEnum } from './enums';
+import { CodeReviewCreationDto, CodeReviewRequestDto } from './models';
 import { CodeReviewRequestDocument } from './schemas';
 import { ReviewRequestService } from './services';
 
@@ -46,9 +47,9 @@ export class ReviewRequestController {
         type: 'string'
     })
     @ApiOperation({ summary: 'Get particular code review request by specifying its id as param' })
-    @Get(`:${RouteParamEnum.Id}`)
-    public findOne(@Param() params: any): Promise<CodeReviewRequestDto> {
-        return this.reviewRequestService.getOne(params[RouteParamEnum.Id]);
+    @Get(`:id`)
+    public findOne(@Param('id') id: Types.ObjectId): Promise<CodeReviewRequestDto> {
+        return this.reviewRequestService.getOne(id);
     }
 
     @ApiResponse({
@@ -58,8 +59,8 @@ export class ReviewRequestController {
     @ApiOperation({ summary: 'Create a new code review request' })
     @Post()
     public create(
-        @Request() req: any,
-        @Body() reviewDataRequest: CodeReviewDataRequestDto
+        @Req() req: Request,
+        @Body() reviewDataRequest: CodeReviewCreationDto
     ): Promise<CodeReviewRequestDocument> {
         const authorizedUser = req.user as AuthorizedUser;
 
@@ -77,11 +78,11 @@ export class ReviewRequestController {
         description: 'Changes the status of code review request (Opened - 1 | Closed - 2)',
         enum: CodeReviewRequestStatusEnum
     })
-    @Patch(`:${RouteParamEnum.Id}/status/:${RouteParamEnum.StatusId}`)
-    public async updateStatus(@Param() params: any): Promise<object> {
-        const id = params[RouteParamEnum.Id];
-        const status = params[RouteParamEnum.StatusId];
-
+    @Patch(`:id/status/:statusId`)
+    public async updateStatus(
+        @Param('id') id: Types.ObjectId,
+        @Param('statusId') status: CodeReviewRequestStatusEnum
+    ): Promise<object> {
         await this.reviewRequestService.updateOne(id, status);
 
         return {};
