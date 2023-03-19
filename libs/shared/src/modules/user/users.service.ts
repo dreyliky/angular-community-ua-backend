@@ -46,12 +46,8 @@ export class UsersService {
             throw new NotFoundException('404 NotFoundException');
         }
 
-        const user = this.getUserDto(userResponse as UserDocument);
+        const user = adaptUserToUserDto(userResponse as UserDocument);
 
         return user;
-    }
-
-    public getUserDto(userDocument: UserDocument): UserDto {
-        return adaptUserToUserDto(userDocument);
     }
 }

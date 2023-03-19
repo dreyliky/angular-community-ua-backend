@@ -6,6 +6,7 @@ export function setupSwagger(app: INestApplication): void {
         .setTitle('CodeReview API')
         .setDescription('The API for the "code-review" project.')
         .setVersion('0.1')
+        .addBearerAuth()
         .build();
 
     const document = SwaggerModule.createDocument(app, config);
