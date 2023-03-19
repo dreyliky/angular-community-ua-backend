@@ -52,7 +52,7 @@ export class ReviewRequestController {
     }
 
     @ApiResponse({
-        description: `Returns raw code review request`,
+        description: `Returns created code review request`,
         status: HttpStatus.CREATED
     })
     @ApiOperation({ summary: 'Create a new code review request' })
