@@ -1,7 +1,7 @@
 import { UserDocument } from '@acua/shared/user';
 import { adaptUserToUserDto } from '@acua/shared/user/adapters';
 import { CodeReviewRequestDto } from '../models';
-import { CodeReviewRequestDocument } from './../schemas/code-review-request.schema';
+import { CodeReviewRequestDocument } from './../schemas';
 
 export function adaptCodeReviewRequestDocumentToDtoOne(
     data: CodeReviewRequestDocument
