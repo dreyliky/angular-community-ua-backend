@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppController } from './app.controller';
+import { ReviewRequestModule } from './review-request';
 import { SourceCodeModule } from './source-code';
 
 @Module({
@@ -13,7 +14,8 @@ import { SourceCodeModule } from './source-code';
         }),
         LoggerModule,
         SwaggerModule,
-        SourceCodeModule
+        SourceCodeModule,
+        ReviewRequestModule
     ],
     controllers: [AppController]
 })

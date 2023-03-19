@@ -1,9 +1,9 @@
+import { User, UsersService } from '@acua/shared/user';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as crypto from 'crypto';
 import { ENVIRONMENT_KEY } from '../core';
 import { TokenPayload, TokenService } from '../token';
-import { User, UsersService } from '../user';
 import {
     adaptTelegramResponseToUser,
     convertTelegramLoginResponseToHashRawValue
