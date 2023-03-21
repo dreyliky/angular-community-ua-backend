@@ -1,5 +1,9 @@
 import { UserDocument, UsersService } from '@acua/shared/user';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { adaptCodeReviewRequestDocumentToDtoOne } from '../adapters';
@@ -19,11 +23,16 @@ export class ReviewRequestService {
         return await this.codeReviewRequestModel.find().populate('user').exec();
     }
 
-    public async findOne(id: Types.ObjectId): Promise<CodeReviewRequestDocument> {
+    public async findOne(
+        id: Types.ObjectId
+    ): Promise<CodeReviewRequestDocument> {
         try {
-            return await this.codeReviewRequestModel.findOne({
-                _id: id
-            }).populate('user').exec();
+            return await this.codeReviewRequestModel
+                .findOne({
+                    _id: id
+                })
+                .populate('user')
+                .exec();
         } catch {
             throw new BadRequestException();
         }
@@ -42,8 +51,8 @@ export class ReviewRequestService {
     }
 
     public async get(): Promise<CodeReviewRequestDto[]> {
-        return (await this.find()).map(
-            (dataDocument) => adaptCodeReviewRequestDocumentToDtoOne(dataDocument)
+        return (await this.find()).map((dataDocument) =>
+            adaptCodeReviewRequestDocumentToDtoOne(dataDocument)
         );
     }
 
@@ -51,7 +60,9 @@ export class ReviewRequestService {
         reviewDataRequest: CodeReviewCreationDto,
         userTgId: number
     ): Promise<CodeReviewRequestDto> {
-        const user = await this.userService.findOneByTgId(userTgId) as UserDocument;
+        const user = (await this.userService.findOneByTgId(
+            userTgId
+        )) as UserDocument;
 
         const data: CodeReviewRequest = {
             user,
@@ -73,6 +84,8 @@ export class ReviewRequestService {
             throw new NotFoundException();
         }
 
-        return await this.codeReviewRequestModel.updateOne({ _id: id }, { status: status }).exec();
+        return await this.codeReviewRequestModel
+            .updateOne({ _id: id }, { status: status })
+            .exec();
     }
 }

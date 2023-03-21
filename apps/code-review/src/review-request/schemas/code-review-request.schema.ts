@@ -28,4 +28,5 @@ export class CodeReviewRequest {
 
 export type CodeReviewRequestDocument = HydratedDocument<CodeReviewRequest>;
 
-export const CodeReviewRequestSchema = SchemaFactory.createForClass(CodeReviewRequest);
+export const CodeReviewRequestSchema =
+    SchemaFactory.createForClass(CodeReviewRequest);

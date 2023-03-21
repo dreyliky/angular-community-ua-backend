@@ -7,10 +7,17 @@ import {
     Param,
     Patch,
     Post,
-    Req, UseGuards
+    Req,
+    UseGuards
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiParam,
+    ApiResponse,
+    ApiTags
+} from '@nestjs/swagger';
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { CodeReviewRequestStatusEnum } from './enums';
@@ -45,9 +52,14 @@ export class ReviewRequestController {
         description: 'Specifies which code review request to retrieve',
         type: 'string'
     })
-    @ApiOperation({ summary: 'Get particular code review request by specifying its id as param' })
+    @ApiOperation({
+        summary:
+            'Get particular code review request by specifying its id as param'
+    })
     @Get(`:id`)
-    public findOne(@Param('id') id: Types.ObjectId): Promise<CodeReviewRequestDto> {
+    public findOne(
+        @Param('id') id: Types.ObjectId
+    ): Promise<CodeReviewRequestDto> {
         return this.reviewRequestService.getOne(id);
     }
 
@@ -63,9 +75,13 @@ export class ReviewRequestController {
     ): Promise<CodeReviewRequestDto> {
         const authorizedUser = req.user as AuthorizedUser;
 
-        return this.reviewRequestService.create(reviewDataRequest, authorizedUser.tgId);
+        return this.reviewRequestService.create(
+            reviewDataRequest,
+            authorizedUser.tgId
+        );
     }
 
+    // eslint-disable-next-line max-lines-per-function
     @ApiOperation({ summary: 'Update code review request status' })
     @ApiParam({
         name: 'id',
@@ -74,7 +90,8 @@ export class ReviewRequestController {
     })
     @ApiParam({
         name: 'statusId',
-        description: 'Changes the status of code review request (Opened - 1 | Closed - 2)',
+        description:
+            'Changes the status of code review request (Opened - 1 | Closed - 2)',
         enum: CodeReviewRequestStatusEnum
     })
     @Patch(`:id/status/:statusId`)
