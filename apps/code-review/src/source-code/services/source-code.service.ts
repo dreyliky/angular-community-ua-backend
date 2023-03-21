@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
+import { map, Observable, retry } from 'rxjs';
 import {
     adaptStackblitzEntitiesToProjectEntities,
     normalizeSourceUrl
@@ -23,7 +23,8 @@ export class SourceCodeService {
 
         return this.stackblitzApi.getStackblitzHtml(stackblitzUrl).pipe(
             map((html) => this.stackblitzProjectParser.parse(html)),
-            map((data) => adaptStackblitzEntitiesToProjectEntities(data))
+            map((data) => adaptStackblitzEntitiesToProjectEntities(data)),
+            retry({ delay: 700, count: 10 })
         );
     }
 }
