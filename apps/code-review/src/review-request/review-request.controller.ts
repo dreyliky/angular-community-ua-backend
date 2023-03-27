@@ -1,4 +1,3 @@
-import { AuthorizedUser } from '@acua/shared/user';
 import {
     Body,
     Controller,
@@ -7,10 +6,8 @@ import {
     Param,
     Patch,
     Post,
-    Req,
-    UseGuards
+    Req
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import {
     ApiBearerAuth,
     ApiOperation,
@@ -26,7 +23,7 @@ import { ReviewRequestService } from './services';
 
 @ApiBearerAuth()
 @ApiTags('review-request')
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('review-request')
 export class ReviewRequestController {
     constructor(private readonly reviewRequestService: ReviewRequestService) {}
@@ -38,7 +35,7 @@ export class ReviewRequestController {
     })
     @ApiOperation({ summary: 'Get list of code review requests' })
     @Get()
-    public find(): Promise<CodeReviewRequestDto[]> {
+    public get(): Promise<CodeReviewRequestDto[]> {
         return this.reviewRequestService.get();
     }
 
@@ -57,7 +54,7 @@ export class ReviewRequestController {
             'Get particular code review request by specifying its id as param'
     })
     @Get(`:id`)
-    public findOne(
+    public getOne(
         @Param('id') id: Types.ObjectId
     ): Promise<CodeReviewRequestDto> {
         return this.reviewRequestService.getOne(id);
@@ -72,12 +69,10 @@ export class ReviewRequestController {
     public create(
         @Req() req: Request,
         @Body() reviewDataRequest: CodeReviewCreationDto
-    ): Promise<CodeReviewRequestDto> {
-        const authorizedUser = req.user as AuthorizedUser;
-
+    ): Promise<unknown> {
         return this.reviewRequestService.create(
             reviewDataRequest,
-            authorizedUser.tgId
+            672489459
         );
     }
 

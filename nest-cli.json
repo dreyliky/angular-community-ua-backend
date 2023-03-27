@@ -63,6 +63,21 @@
             "compilerOptions": {
                 "tsConfigPath": "libs/shared/tsconfig.lib.json"
             }
+        },
+        "m-user": {
+            "type": "application",
+            "root": "apps/m-user",
+            "entryFile": "main",
+            "sourceRoot": "apps/m-user/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/m-user/tsconfig.app.json",
+                "assets": [
+                    {
+                        "include": ".env",
+                        "watchAssets": true
+                    }
+                ]
+            }
         }
     }
 }

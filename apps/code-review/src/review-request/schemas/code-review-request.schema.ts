@@ -1,5 +1,5 @@
-import { User } from '@acua/shared/user';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { User } from 'apps/m-user/src/schemas';
 import { IsNotEmpty } from 'class-validator';
 import { HydratedDocument, now, SchemaTypes } from 'mongoose';
 import { CodeReviewRequestStatusEnum as ReviewStatus } from '../enums';

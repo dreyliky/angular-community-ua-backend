@@ -3,10 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { adaptUserToUserDto } from './adapters';
 import { UserDto } from './models';
-import { User, UserDocument } from './user.entity';
+import { User, UserDocument } from './schemas';
 
 @Injectable()
-export class UsersService {
+export class MUserService {
     constructor(
         @InjectModel(User.name) private userModel: Model<UserDocument>
     ) {}

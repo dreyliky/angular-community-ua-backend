@@ -1,5 +1,5 @@
-import { UserDto } from '@acua/shared/user';
 import { ApiProperty } from '@nestjs/swagger';
+import { UserDto } from 'apps/m-user/src/models';
 import { CodeReviewRequestStatusEnum } from '../enums';
 
 export class CodeReviewRequestDto {

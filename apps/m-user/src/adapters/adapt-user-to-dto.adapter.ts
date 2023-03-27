@@ -1,5 +1,5 @@
 import { UserDto } from '../models';
-import { User } from '../user.entity';
+import { User } from '../schemas';
 
 export function adaptUserToUserDto(user: User): UserDto {
     return {
