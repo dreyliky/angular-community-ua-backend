@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { AES } from 'crypto-js';
-import { ENVIRONMENT_KEY } from '../core';
+import { ENVIRONMENT_KEY } from './data';
 import { TokenPayload } from './interfaces';
 
 @Injectable()
-export class TokenService {
+export class MTokenService {
     constructor(
         private readonly configService: ConfigService,
         private readonly jwtService: JwtService

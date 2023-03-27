@@ -78,6 +78,21 @@
                     }
                 ]
             }
+        },
+        "m-token": {
+            "type": "application",
+            "root": "apps/m-token",
+            "entryFile": "main",
+            "sourceRoot": "apps/m-token/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/m-token/tsconfig.app.json",
+                "assets": [
+                    {
+                        "include": ".env",
+                        "watchAssets": true
+                    }
+                ]
+            }
         }
     }
 }
