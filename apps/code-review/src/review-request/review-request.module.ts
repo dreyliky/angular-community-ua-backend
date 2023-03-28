@@ -1,6 +1,6 @@
+import { M_TOKEN_PROVIDER, M_USER_PROVIDER } from '@acua/shared';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'apps/m-user/src/schemas';
 import { ReviewRequestController } from './review-request.controller';
@@ -14,15 +14,14 @@ import { SourceUrlValidator } from './validators';
             { name: User.name, schema: UserSchema },
             { name: CodeReviewRequest.name, schema: CodeReviewRequestSchema }
         ]),
-        ClientsModule.register([
-            { name: 'M-USER', transport: Transport.TCP }
-        ]),
         MongoModule
     ],
     controllers: [ReviewRequestController],
     providers: [
         ReviewRequestService,
-        SourceUrlValidator
+        SourceUrlValidator,
+        M_TOKEN_PROVIDER,
+        M_USER_PROVIDER
     ]
 })
 export class ReviewRequestModule {}

@@ -1,3 +1,4 @@
+import { ServiceAuthorizedUser } from '@acua/shared';
 import {
     Body,
     Controller,
@@ -6,7 +7,8 @@ import {
     Param,
     Patch,
     Post,
-    Req
+    Req,
+    UseGuards
 } from '@nestjs/common';
 import {
     ApiBearerAuth,
@@ -18,12 +20,13 @@ import {
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { CodeReviewRequestStatusEnum } from './enums';
+import { AuthGuard } from './guards';
 import { CodeReviewCreationDto, CodeReviewRequestDto } from './models';
 import { ReviewRequestService } from './services';
 
 @ApiBearerAuth()
 @ApiTags('review-request')
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard)
 @Controller('review-request')
 export class ReviewRequestController {
     constructor(private readonly reviewRequestService: ReviewRequestService) {}
@@ -70,9 +73,11 @@ export class ReviewRequestController {
         @Req() req: Request,
         @Body() reviewDataRequest: CodeReviewCreationDto
     ): Promise<unknown> {
+        const user = req.user as ServiceAuthorizedUser;
+
         return this.reviewRequestService.create(
             reviewDataRequest,
-            672489459
+            user.tgId
         );
     }
 

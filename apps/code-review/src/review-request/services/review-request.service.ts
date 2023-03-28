@@ -1,3 +1,4 @@
+import { ServiceUserDto } from '@acua/shared';
 import {
     BadRequestException,
     Inject,
@@ -50,16 +51,17 @@ export class ReviewRequestService {
             throw new NotFoundException('404 NotFoundException');
         }
 
-        const data = adaptCodeReviewRequestDocumentToDtoOne(dataDocument, this.mUserClient);
+        const data = this.getCodeReviewRequestDto(dataDocument);
 
-        return await data;
+        return data;
     }
 
-    public async get(): Promise<any> {
+    public async get(): Promise<CodeReviewRequestDto[]> {
+        const dataDocuments = await this.find();
 
-        /* return (await this.find()).map((dataDocument) =>
-            adaptCodeReviewRequestDocumentToDtoOne(dataDocument, this.mUserClient);
-        );*/
+        return await Promise.all(
+            dataDocuments.map((dataDocument) => this.getCodeReviewRequestDto(dataDocument))
+        );
     }
 
     public async create(
@@ -91,5 +93,15 @@ export class ReviewRequestService {
         return await this.codeReviewRequestModel
             .updateOne({ _id: id }, { status: status })
             .exec();
+    }
+
+    public async getCodeReviewRequestDto(
+        dataDocument: CodeReviewRequestDocument
+    ): Promise<CodeReviewRequestDto> {
+        const user: ServiceUserDto = await firstValueFrom(
+            this.mUserClient.send('adapt_user_to_dto_one', dataDocument.user)
+        );
+
+        return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);
     }
 }
