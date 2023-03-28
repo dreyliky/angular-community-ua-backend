@@ -1,9 +1,10 @@
-import { User, UsersService } from '@acua/shared/user';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { ServiceTokenPayload, ServiceUser } from '@acua/shared';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ClientProxy } from '@nestjs/microservices';
 import * as crypto from 'crypto';
+import { firstValueFrom } from 'rxjs';
 import { ENVIRONMENT_KEY } from '../core';
-import { TokenPayload, TokenService } from '../token';
 import {
     adaptTelegramResponseToUser,
     convertTelegramLoginResponseToHashRawValue
@@ -18,8 +19,8 @@ export class LoginViaTelegramService {
 
     constructor(
         private readonly configService: ConfigService,
-        private readonly userService: UsersService,
-        private readonly tokenService: TokenService
+        @Inject('M-TOKEN') private readonly mTokenClient: ClientProxy,
+        @Inject('M-USER') private readonly mUserClient: ClientProxy
     ) {}
 
     public validateLoginResponseDto(data: TelegramLoginResponseDto): void {
@@ -43,14 +44,18 @@ export class LoginViaTelegramService {
         this.validateLoginResponseDto(data);
 
         const payload = this.getTokenCreationPayload(data.id, data.username);
-        const token = await this.tokenService.sign(payload);
-        const encryptedToken = this.tokenService.encrypt(token);
-        const userData: User = adaptTelegramResponseToUser(
+        const token: string = await firstValueFrom(
+            this.mTokenClient.send('sign_token', payload)
+        );
+        const encryptedToken: string = await firstValueFrom(
+            this.mTokenClient.send('encrypt_token', token)
+        );
+        const userData: ServiceUser = adaptTelegramResponseToUser(
             data,
             encryptedToken
         );
 
-        await this.userService.createOrUpdate(userData);
+        await firstValueFrom(this.mUserClient.send('create_user', userData));
 
         return token;
     }
@@ -58,7 +63,7 @@ export class LoginViaTelegramService {
     private getTokenCreationPayload(
         id: number,
         username: string
-    ): TokenPayload {
+    ): ServiceTokenPayload {
         return {
             tgId: id,
             username: username
