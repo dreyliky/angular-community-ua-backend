@@ -5,8 +5,6 @@ export const ENVIRONMENT_KEY = {
     ...LOGGER_ENVIRONMENT_KEY,
     ...MONGO_ENVIRONMENT_KEY,
     Port: 'PORT',
-    MUserPort: 'M_USER_PORT',
-    MTokenPort: 'M_TOKEN_PORT',
     Production: 'PROD',
     BotToken: 'TELEGRAM_BOT_TOKEN',
     JwtTokenSecret: 'JWT_TOKEN_SECRET',
