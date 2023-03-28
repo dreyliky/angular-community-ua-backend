@@ -1,9 +1,9 @@
+import { ServiceTokenPayload } from '@acua/shared';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { AES } from 'crypto-js';
 import { ENVIRONMENT_KEY } from './data';
-import { TokenPayload } from './interfaces';
 
 @Injectable()
 export class MTokenService {
@@ -12,7 +12,7 @@ export class MTokenService {
         private readonly jwtService: JwtService
     ) {}
 
-    public async sign(payload: TokenPayload): Promise<string> {
+    public async sign(payload: ServiceTokenPayload): Promise<string> {
         const token = await this.jwtService.signAsync(payload, {
             secret: this.configService.get(ENVIRONMENT_KEY.JwtTokenSecret)
         });
@@ -36,5 +36,27 @@ export class MTokenService {
         const decryptedToken = AES.decrypt(encryptedToken, encryptedKey);
 
         return decryptedToken.toString();
+    }
+
+    public decode(token: string): Pick<ServiceTokenPayload, 'tgId'> {
+        const tokenPayload = this.jwtService.decode(token) as ServiceTokenPayload;
+
+        return {
+            tgId: tokenPayload.tgId
+        };
+    }
+
+    public async verify(token: string | null): Promise<any> {
+        await this.jwtService.verifyAsync(token, {
+            secret: this.configService.get(ENVIRONMENT_KEY.JwtTokenSecret)
+        });
+    }
+
+    public extractToken(bearerToken: string): string | null {
+        if (bearerToken && bearerToken.split(' ')[0] === 'Bearer') {
+            return bearerToken.split(' ')[1];
+        }
+
+        return null;
     }
 }

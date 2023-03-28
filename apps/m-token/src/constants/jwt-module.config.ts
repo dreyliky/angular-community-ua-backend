@@ -2,5 +2,6 @@ import { JwtModuleOptions } from '@nestjs/jwt';
 import { ENVIRONMENT_KEY } from '../data';
 
 export const JWT_MODULE_CONFIG: JwtModuleOptions = {
-    secret: process.env[ENVIRONMENT_KEY.JwtTokenSecret]
+    secret: process.env[ENVIRONMENT_KEY.JwtTokenSecret],
+    signOptions: { expiresIn: '1d' }
 };
