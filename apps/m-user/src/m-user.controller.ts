@@ -29,16 +29,4 @@ export class MUserController {
     public async adaptUserToDtoOne(userDocument: User): Promise<UserDto> {
         return adaptUserToUserDto(userDocument);
     }
-
-    /*
-    @Get('me')
-    @ApiTags('users')
-    @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
-    public async get(@Req() request: Request): Promise<UserDto> {
-        const authorizedUser = request.user as AuthorizedUser;
-
-        return await this.usersService.getUserByTgId(authorizedUser.tgId);
-    }
-     */
 }
