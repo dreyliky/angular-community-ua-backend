@@ -1,4 +1,4 @@
-import { ServiceUser, ServiceUserDto } from '@acua/shared';
+import { ServiceUser, ServiceUserDto, UserMicroservicePattersEnum } from '@acua/shared';
 import { USER_MICROSERVICE_TOKEN } from '@acua/shared/user-microservice';
 import {
     BadRequestException,
@@ -16,7 +16,10 @@ import { CodeReviewRequest, CodeReviewRequestDocument } from './../schemas';
 
 @Injectable()
 export class ReviewRequestService {
-    public userMicroservice = this.moduleRef.get(USER_MICROSERVICE_TOKEN, { strict: false });
+    public readonly userMicroservice = this.moduleRef.get(
+        USER_MICROSERVICE_TOKEN,
+        { strict: false }
+    );
 
     constructor(
         @InjectModel(CodeReviewRequest.name)
@@ -70,7 +73,7 @@ export class ReviewRequestService {
         userTgId: number
     ): Promise<unknown> {
         const user: ServiceUser = await firstValueFrom(
-            this.userMicroservice.send('user_by_tg_id', userTgId)
+            this.userMicroservice.send(UserMicroservicePattersEnum.GetByTgId, userTgId)
         );
 
         const data: CodeReviewRequest = {
@@ -102,7 +105,11 @@ export class ReviewRequestService {
         dataDocument: CodeReviewRequestDocument
     ): Promise<CodeReviewRequestDto> {
         const user: ServiceUserDto = await firstValueFrom(
-            this.userMicroservice.send('adapt_user_to_dto_one', dataDocument.user)
+            this.userMicroservice.send(
+                UserMicroservicePattersEnum.AdaptToUserDto,
+                dataDocument.user
+            )
+
         );
 
         return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);
