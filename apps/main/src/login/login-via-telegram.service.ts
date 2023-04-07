@@ -1,4 +1,9 @@
-import { ServiceTokenPayload, ServiceUser } from '@acua/shared';
+import {
+    ServiceTokenPayload,
+    ServiceUser,
+    TokenMicroservicePatternsEnum,
+    UserMicroservicePattersEnum
+} from '@acua/shared';
 import { TOKEN_MICROSERVICE_TOKEN } from '@acua/shared/token-microservice';
 import { USER_MICROSERVICE_TOKEN } from '@acua/shared/user-microservice';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -56,17 +61,18 @@ export class LoginViaTelegramService {
 
         const payload = this.getTokenCreationPayload(data.id, data.username);
         const token: string = await firstValueFrom(
-            this.tokenMicroservice.send('sign_token', payload)
+            this.tokenMicroservice.send(TokenMicroservicePatternsEnum.Sign, payload)
         );
         const encryptedToken: string = await firstValueFrom(
-            this.tokenMicroservice.send('encrypt_token', token)
+            this.tokenMicroservice.send(TokenMicroservicePatternsEnum.Encrypt, token)
         );
         const userData: ServiceUser = adaptTelegramResponseToUser(
             data,
             encryptedToken
         );
 
-        await firstValueFrom(this.userMicroservice.send('create_user', userData));
+        await firstValueFrom(this.userMicroservice.send(
+            UserMicroservicePattersEnum.Create, userData));
 
         return token;
     }
