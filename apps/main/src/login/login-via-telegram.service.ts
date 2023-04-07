@@ -1,7 +1,9 @@
 import { ServiceTokenPayload, ServiceUser } from '@acua/shared';
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { TOKEN_MICROSERVICE_TOKEN } from '@acua/shared/token-microservice';
+import { USER_MICROSERVICE_TOKEN } from '@acua/shared/user-microservice';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ClientProxy } from '@nestjs/microservices';
+import { ModuleRef } from '@nestjs/core';
 import * as crypto from 'crypto';
 import { firstValueFrom } from 'rxjs';
 import { ENVIRONMENT_KEY } from '../core';
@@ -17,10 +19,19 @@ export class LoginViaTelegramService {
         ENVIRONMENT_KEY.BotToken
     );
 
+    private readonly userMicroservice = this.moduleRef.get(
+        USER_MICROSERVICE_TOKEN,
+        { strict: false }
+    );
+
+    private readonly tokenMicroservice = this.moduleRef.get(
+        TOKEN_MICROSERVICE_TOKEN,
+        { strict: false }
+    );
+
     constructor(
         private readonly configService: ConfigService,
-        @Inject('M-TOKEN') private readonly mTokenClient: ClientProxy,
-        @Inject('M-USER') private readonly mUserClient: ClientProxy
+        private readonly moduleRef: ModuleRef
     ) {}
 
     public validateLoginResponseDto(data: TelegramLoginResponseDto): void {
@@ -45,17 +56,17 @@ export class LoginViaTelegramService {
 
         const payload = this.getTokenCreationPayload(data.id, data.username);
         const token: string = await firstValueFrom(
-            this.mTokenClient.send('sign_token', payload)
+            this.tokenMicroservice.send('sign_token', payload)
         );
         const encryptedToken: string = await firstValueFrom(
-            this.mTokenClient.send('encrypt_token', token)
+            this.tokenMicroservice.send('encrypt_token', token)
         );
         const userData: ServiceUser = adaptTelegramResponseToUser(
             data,
             encryptedToken
         );
 
-        await firstValueFrom(this.mUserClient.send('create_user', userData));
+        await firstValueFrom(this.userMicroservice.send('create_user', userData));
 
         return token;
     }
