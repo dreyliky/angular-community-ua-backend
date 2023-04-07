@@ -6,7 +6,7 @@ import { AES } from 'crypto-js';
 import { ENVIRONMENT_KEY } from './data';
 
 @Injectable()
-export class MTokenService {
+export class AppService {
     constructor(
         private readonly configService: ConfigService,
         private readonly jwtService: JwtService

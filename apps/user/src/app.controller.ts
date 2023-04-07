@@ -2,13 +2,13 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { Types } from 'mongoose';
 import { adaptUserToUserDto } from './adapters';
-import { MUserService } from './m-user.service';
+import { AppService } from './app.service';
 import { UserDto } from './models';
 import { User } from './schemas';
 
 @Controller()
-export class MUserController {
-    constructor(private readonly mUserService: MUserService) {}
+export class AppController {
+    constructor(private readonly mUserService: AppService) {}
 
     @MessagePattern('user_by_id')
     public async getUserById(id: Types.ObjectId): Promise<unknown> {

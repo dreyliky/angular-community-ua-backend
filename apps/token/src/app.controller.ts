@@ -1,11 +1,11 @@
 import { ServiceTokenPayload } from '@acua/shared';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { MTokenService } from './m-token.service';
+import { AppService } from './app.service';
 
 @Controller()
-export class MTokenController {
-    constructor(private readonly mTokenService: MTokenService) {}
+export class AppController {
+    constructor(private readonly mTokenService: AppService) {}
 
     @MessagePattern('sign_token')
     public sign(payload: ServiceTokenPayload): Promise<string> {

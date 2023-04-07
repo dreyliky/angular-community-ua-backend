@@ -1,14 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { MUserModule } from './../src/m-user.module';
+import { MTokenModule } from '../src/app.module';
 
-describe('MUserController (e2e)', () => {
+describe('MTokenController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [MUserModule],
+      imports: [MTokenModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

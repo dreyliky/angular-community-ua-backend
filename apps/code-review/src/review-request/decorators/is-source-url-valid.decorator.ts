@@ -1,5 +1,5 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
-import { SourceUrlValidator } from '../validators/source-url.validator';
+import { SourceUrlValidator } from '../validators';
 
 export function isSourceUrlValid(
     validationOptions?: ValidationOptions

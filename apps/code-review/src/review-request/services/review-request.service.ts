@@ -1,11 +1,11 @@
-import { ServiceUserDto } from '@acua/shared';
+import { ServiceUser, ServiceUserDto } from '@acua/shared';
+import { USER_MICROSERVICE_TOKEN } from '@acua/shared/user-microservice';
 import {
     BadRequestException,
-    Inject,
     Injectable,
     NotFoundException
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ModuleRef } from '@nestjs/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
@@ -16,11 +16,12 @@ import { CodeReviewRequest, CodeReviewRequestDocument } from './../schemas';
 
 @Injectable()
 export class ReviewRequestService {
+    public userMicroservice = this.moduleRef.get(USER_MICROSERVICE_TOKEN, { strict: false });
+
     constructor(
         @InjectModel(CodeReviewRequest.name)
         private readonly codeReviewRequestModel: Model<CodeReviewRequestDocument>,
-        @Inject('M-USER')
-        private mUserClient: ClientProxy
+        private readonly moduleRef: ModuleRef
     ) {}
 
     public async find(): Promise<CodeReviewRequestDocument[]> {
@@ -68,7 +69,9 @@ export class ReviewRequestService {
         reviewDataRequest: CodeReviewCreationDto,
         userTgId: number
     ): Promise<unknown> {
-        const user = await firstValueFrom(this.mUserClient.send('user_by_tg_id', userTgId));
+        const user: ServiceUser = await firstValueFrom(
+            this.userMicroservice.send('user_by_tg_id', userTgId)
+        );
 
         const data: CodeReviewRequest = {
             user,
@@ -99,7 +102,7 @@ export class ReviewRequestService {
         dataDocument: CodeReviewRequestDocument
     ): Promise<CodeReviewRequestDto> {
         const user: ServiceUserDto = await firstValueFrom(
-            this.mUserClient.send('adapt_user_to_dto_one', dataDocument.user)
+            this.userMicroservice.send('adapt_user_to_dto_one', dataDocument.user)
         );
 
         return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);

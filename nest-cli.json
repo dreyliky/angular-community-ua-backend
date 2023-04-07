@@ -64,13 +64,13 @@
                 "tsConfigPath": "libs/shared/tsconfig.lib.json"
             }
         },
-        "m-user": {
+        "user": {
             "type": "application",
-            "root": "apps/m-user",
+            "root": "apps/user",
             "entryFile": "main",
-            "sourceRoot": "apps/m-user/src",
+            "sourceRoot": "apps/user/src",
             "compilerOptions": {
-                "tsConfigPath": "apps/m-user/tsconfig.app.json",
+                "tsConfigPath": "apps/user/tsconfig.app.json",
                 "assets": [
                     {
                         "include": ".env",
@@ -79,13 +79,13 @@
                 ]
             }
         },
-        "m-token": {
+        "token": {
             "type": "application",
-            "root": "apps/m-token",
+            "root": "apps/token",
             "entryFile": "main",
-            "sourceRoot": "apps/m-token/src",
+            "sourceRoot": "apps/token/src",
             "compilerOptions": {
-                "tsConfigPath": "apps/m-token/tsconfig.app.json",
+                "tsConfigPath": "apps/token/tsconfig.app.json",
                 "assets": [
                     {
                         "include": ".env",

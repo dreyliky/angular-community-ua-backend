@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { JWT_MODULE_CONFIG } from './constants';
-import { MTokenController } from './m-token.controller';
-import { MTokenService } from './m-token.service';
 
 @Module({
     imports: [
@@ -13,7 +13,7 @@ import { MTokenService } from './m-token.service';
         }),
         JwtModule.register(JWT_MODULE_CONFIG)
     ],
-    controllers: [MTokenController],
-    providers: [MTokenService]
+    controllers: [AppController],
+    providers: [AppService]
 })
-export class MTokenModule {}
+export class AppModule {}

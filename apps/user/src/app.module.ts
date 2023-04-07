@@ -3,8 +3,8 @@ import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MUserController } from './m-user.controller';
-import { MUserService } from './m-user.service';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { User, UserSchema } from './schemas';
 
 @Module({
@@ -17,7 +17,7 @@ import { User, UserSchema } from './schemas';
         MongoModule,
         LoggerModule
     ],
-    controllers: [MUserController],
-    providers: [MUserService]
+    controllers: [AppController],
+    providers: [AppService]
 })
-export class MUserModule {}
+export class AppModule {}

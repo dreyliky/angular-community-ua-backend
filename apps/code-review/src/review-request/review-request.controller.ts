@@ -1,4 +1,4 @@
-import { ServiceAuthorizedUser } from '@acua/shared';
+import { AuthGuard, ServiceAuthorizedUser } from '@acua/shared';
 import {
     Body,
     Controller,
@@ -20,7 +20,6 @@ import {
 import { Request } from 'express';
 import { Types } from 'mongoose';
 import { CodeReviewRequestStatusEnum } from './enums';
-import { AuthGuard } from './guards';
 import { CodeReviewCreationDto, CodeReviewRequestDto } from './models';
 import { ReviewRequestService } from './services';
 

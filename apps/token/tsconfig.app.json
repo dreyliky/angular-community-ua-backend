@@ -2,7 +2,7 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "declaration": false,
-        "outDir": "../../dist/apps/m-token"
+        "outDir": "../../dist/apps/token"
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]

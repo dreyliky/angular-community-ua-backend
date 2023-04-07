@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { AppModule } from './app.module';
 import { ENVIRONMENT_KEY } from './data';
-import { MUserModule } from './m-user.module';
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-        MUserModule,
+        AppModule,
         {
             transport: Transport.TCP,
             options: {
@@ -17,5 +17,4 @@ async function bootstrap(): Promise<void> {
 
     await app.listen();
 }
-
 bootstrap();
