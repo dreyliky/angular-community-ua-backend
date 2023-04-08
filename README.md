@@ -45,6 +45,29 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Running projects
+
+```bash
+# code-review
+$ npm run start:dev:code-review
+
+# main
+$ npm run start:dev:main
+
+# telegram-bot
+$ npm run start:dev:telegram-bot
+```
+
+## Running microservices
+
+```bash
+# user microservice
+$ npm run start:dev user
+
+# token microservice
+$ npm run start:dev token
+```
+
 ## Test
 
 ```bash
@@ -64,9 +87,9 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+-   Website - [https://nestjs.com](https://nestjs.com/)
+-   Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
