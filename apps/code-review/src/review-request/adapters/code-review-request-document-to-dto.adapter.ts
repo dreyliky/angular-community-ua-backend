@@ -1,10 +1,10 @@
-import { ServiceUserDto } from '@acua/shared';
+import { UserDto } from '@acua/shared';
 import { CodeReviewRequestDto } from '../models';
 import { CodeReviewRequestDocument } from './../schemas';
 
 export function adaptCodeReviewRequestDocumentToDtoOne(
     data: CodeReviewRequestDocument,
-    user: ServiceUserDto
+    user: UserDto
 ): CodeReviewRequestDto {
     return {
         id: data._id.toString(),

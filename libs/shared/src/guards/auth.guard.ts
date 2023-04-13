@@ -1,5 +1,4 @@
-import { ServiceTokenPayload } from '@acua/shared';
-import { TOKEN_MICROSERVICE_TOKEN } from '@acua/shared/token-microservice';
+import { TOKEN_MICROSERVICE } from '@acua/shared/token-microservice';
 import {
     CanActivate,
     ExecutionContext,
@@ -8,11 +7,12 @@ import {
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { firstValueFrom } from 'rxjs';
+import { TokenPayload } from '../interfaces';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
     private readonly tokenMicroservice = this.moduleRef.get(
-        TOKEN_MICROSERVICE_TOKEN,
+        TOKEN_MICROSERVICE,
         { strict: false }
     );
 
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
 
-        const tokenPayload: ServiceTokenPayload = await firstValueFrom(
+        const tokenPayload: TokenPayload = await firstValueFrom(
             this.tokenMicroservice.send('decode_token', request.headers.authorization)
         );
 

@@ -1,11 +1,11 @@
 import {
-    ServiceTokenPayload,
-    ServiceUser,
     TokenMicroservicePatternsEnum,
+    TokenPayload,
+    User,
     UserMicroservicePattersEnum
 } from '@acua/shared';
-import { TOKEN_MICROSERVICE_TOKEN } from '@acua/shared/token-microservice';
-import { USER_MICROSERVICE_TOKEN } from '@acua/shared/user-microservice';
+import { TOKEN_MICROSERVICE } from '@acua/shared/token-microservice';
+import { USER_MICROSERVICE } from '@acua/shared/user-microservice';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
@@ -25,12 +25,12 @@ export class LoginViaTelegramService {
     );
 
     private readonly userMicroservice = this.moduleRef.get(
-        USER_MICROSERVICE_TOKEN,
+        USER_MICROSERVICE,
         { strict: false }
     );
 
     private readonly tokenMicroservice = this.moduleRef.get(
-        TOKEN_MICROSERVICE_TOKEN,
+        TOKEN_MICROSERVICE,
         { strict: false }
     );
 
@@ -66,7 +66,7 @@ export class LoginViaTelegramService {
         const encryptedToken: string = await firstValueFrom(
             this.tokenMicroservice.send(TokenMicroservicePatternsEnum.Encrypt, token)
         );
-        const userData: ServiceUser = adaptTelegramResponseToUser(
+        const userData: User = adaptTelegramResponseToUser(
             data,
             encryptedToken
         );
@@ -80,7 +80,7 @@ export class LoginViaTelegramService {
     private getTokenCreationPayload(
         id: number,
         username: string
-    ): ServiceTokenPayload {
+    ): TokenPayload {
         return {
             tgId: id,
             username: username

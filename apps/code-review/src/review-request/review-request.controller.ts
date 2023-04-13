@@ -1,4 +1,4 @@
-import { AuthGuard, ServiceAuthorizedUser } from '@acua/shared';
+import { AuthGuard, AuthorizedUser } from '@acua/shared';
 import {
     Body,
     Controller,
@@ -72,7 +72,7 @@ export class ReviewRequestController {
         @Req() req: Request,
         @Body() reviewDataRequest: CodeReviewCreationDto
     ): Promise<unknown> {
-        const user = req.user as ServiceAuthorizedUser;
+        const user = req.user as AuthorizedUser;
 
         return this.reviewRequestService.create(
             reviewDataRequest,

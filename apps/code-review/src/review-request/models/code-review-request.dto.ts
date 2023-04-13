@@ -1,4 +1,4 @@
-import { ServiceUserDto } from '@acua/shared';
+import { UserDto } from '@acua/shared';
 import { ApiProperty } from '@nestjs/swagger';
 import { CodeReviewRequestStatusEnum } from '../enums';
 
@@ -7,7 +7,7 @@ export class CodeReviewRequestDto {
     public readonly id: string;
 
     @ApiProperty()
-    public readonly user: ServiceUserDto;
+    public readonly user: UserDto;
 
     @ApiProperty()
     public readonly title: string;

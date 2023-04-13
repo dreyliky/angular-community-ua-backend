@@ -1,10 +1,10 @@
-import { ServiceUser } from '@acua/shared';
+import { User } from '@acua/shared';
 import { TelegramLoginResponseDto } from '../models';
 
 export function adaptTelegramResponseToUser(
     dataResponse: TelegramLoginResponseDto,
     encryptedToken: string
-): ServiceUser {
+): User {
     return {
         tgId: dataResponse.id,
         firstName: dataResponse.first_name,

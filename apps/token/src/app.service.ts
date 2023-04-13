@@ -1,4 +1,4 @@
-import { ServiceTokenPayload } from '@acua/shared';
+import { TokenPayload } from '@acua/shared';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -12,7 +12,7 @@ export class AppService {
         private readonly jwtService: JwtService
     ) {}
 
-    public async sign(payload: ServiceTokenPayload): Promise<string> {
+    public async sign(payload: TokenPayload): Promise<string> {
         const token = await this.jwtService.signAsync(payload, {
             secret: this.configService.get(ENVIRONMENT_KEY.JwtTokenSecret)
         });
@@ -38,8 +38,8 @@ export class AppService {
         return decryptedToken.toString();
     }
 
-    public decode(token: string): Pick<ServiceTokenPayload, 'tgId'> {
-        const tokenPayload = this.jwtService.decode(token) as ServiceTokenPayload;
+    public decode(token: string): Pick<TokenPayload, 'tgId'> {
+        const tokenPayload = this.jwtService.decode(token) as TokenPayload;
 
         return {
             tgId: tokenPayload.tgId

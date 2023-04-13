@@ -1,4 +1,4 @@
-export interface ServiceUserDto {
+export interface UserDto {
     readonly tgId: number;
     readonly firstName: string;
     readonly lastName: string;

@@ -9,21 +9,21 @@ import { User } from './schemas';
 
 @Controller()
 export class AppController {
-    constructor(private readonly mUserService: AppService) {}
+    constructor(private readonly appService: AppService) {}
 
     @MessagePattern(UserMicroservicePattersEnum.GetById)
     public async getUserById(id: Types.ObjectId): Promise<unknown> {
-        return this.mUserService.findOneById(id);
+        return this.appService.findOneById(id);
     }
 
     @MessagePattern(UserMicroservicePattersEnum.GetByTgId)
     public async getUserByTgId(tgId: number): Promise<unknown> {
-        return this.mUserService.findOneByTgId(tgId);
+        return this.appService.findOneByTgId(tgId);
     }
 
     @MessagePattern(UserMicroservicePattersEnum.Create)
     public async createOrUpdateUser(userData: User): Promise<unknown> {
-        return this.mUserService.createOrUpdate(userData);
+        return this.appService.createOrUpdate(userData);
     }
 
     @MessagePattern(UserMicroservicePattersEnum.AdaptToUserDto)

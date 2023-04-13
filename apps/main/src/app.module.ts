@@ -1,3 +1,4 @@
+import { MICROSERVICE_ENVIRONMENT_KEY } from '@acua/shared';
 import { LoggerModule } from '@acua/shared/logger';
 import { MongoModule } from '@acua/shared/mongo';
 import { TokenMicroserviceModule } from '@acua/shared/token-microservice';
@@ -17,12 +18,12 @@ import { LoginModule } from './login';
         MongoModule,
         LoginModule,
         UserMicroserviceModule.forRoot({
-            host: process.env['M_USER_HOST'],
-            port: +process.env['M_USER_PORT']
+            host: process.env[MICROSERVICE_ENVIRONMENT_KEY.UserHost],
+            port: +process.env[MICROSERVICE_ENVIRONMENT_KEY.UserPort]
         }),
         TokenMicroserviceModule.forRoot({
-            host: process.env['M_TOKEN_HOST'],
-            port: +process.env['M_TOKEN_PORT']
+            host: process.env[MICROSERVICE_ENVIRONMENT_KEY.TokenHost],
+            port: +process.env[MICROSERVICE_ENVIRONMENT_KEY.TokenPort]
         })
     ],
     controllers: [AppController]
