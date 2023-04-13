@@ -9,7 +9,7 @@ async function bootstrap(): Promise<void> {
         {
             transport: Transport.TCP,
             options: {
-                host: '0.0.0.0',
+                host: process.env[ENVIRONMENT_KEY.Host],
                 port: +process.env[ENVIRONMENT_KEY.Port]
             }
         }
