@@ -1,11 +1,18 @@
-import { UserDocument, UsersService } from '@acua/shared/user';
+import {
+    CommandEnum as M_UserCommand,
+    USER_MICROSERVICE,
+    User,
+    UserDto
+} from '@acua/shared/m-user';
 import {
     BadRequestException,
     Injectable,
     NotFoundException
 } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { firstValueFrom } from 'rxjs';
 import { adaptCodeReviewRequestDocumentToDtoOne } from '../adapters';
 import { CodeReviewRequestStatusEnum } from '../enums';
 import { CodeReviewCreationDto, CodeReviewRequestDto } from './../models';
@@ -13,10 +20,14 @@ import { CodeReviewRequest, CodeReviewRequestDocument } from './../schemas';
 
 @Injectable()
 export class ReviewRequestService {
+    public readonly userMicroservice = this.moduleRef.get(USER_MICROSERVICE, {
+        strict: false
+    });
+
     constructor(
         @InjectModel(CodeReviewRequest.name)
         private readonly codeReviewRequestModel: Model<CodeReviewRequestDocument>,
-        private readonly userService: UsersService
+        private readonly moduleRef: ModuleRef
     ) {}
 
     public async find(): Promise<CodeReviewRequestDocument[]> {
@@ -45,33 +56,37 @@ export class ReviewRequestService {
             throw new NotFoundException('404 NotFoundException');
         }
 
-        const data = adaptCodeReviewRequestDocumentToDtoOne(dataDocument);
+        const data = this.getCodeReviewRequestDto(dataDocument);
 
         return data;
     }
 
     public async get(): Promise<CodeReviewRequestDto[]> {
-        return (await this.find()).map((dataDocument) =>
-            adaptCodeReviewRequestDocumentToDtoOne(dataDocument)
+        const dataDocuments = await this.find();
+
+        return await Promise.all(
+            dataDocuments.map((dataDocument) =>
+                this.getCodeReviewRequestDto(dataDocument)
+            )
         );
     }
 
     public async create(
         reviewDataRequest: CodeReviewCreationDto,
         userTgId: number
-    ): Promise<CodeReviewRequestDto> {
-        const user = (await this.userService.findOneByTgId(
-            userTgId
-        )) as UserDocument;
+    ): Promise<unknown> {
+        const user: User = await firstValueFrom(
+            this.userMicroservice.send(M_UserCommand.GetByTgId, userTgId)
+        );
 
         const data: CodeReviewRequest = {
             user,
             ...reviewDataRequest
         };
 
-        const createdData = new this.codeReviewRequestModel(data).save();
+        const createdData = new this.codeReviewRequestModel(data);
 
-        return adaptCodeReviewRequestDocumentToDtoOne(await createdData);
+        return createdData.save();
     }
 
     public async updateOne(
@@ -87,5 +102,18 @@ export class ReviewRequestService {
         return await this.codeReviewRequestModel
             .updateOne({ _id: id }, { status: status })
             .exec();
+    }
+
+    public async getCodeReviewRequestDto(
+        dataDocument: CodeReviewRequestDocument
+    ): Promise<CodeReviewRequestDto> {
+        const user: UserDto = await firstValueFrom(
+            this.userMicroservice.send(
+                M_UserCommand.AdaptToUserDto,
+                dataDocument.user
+            )
+        );
+
+        return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);
     }
 }

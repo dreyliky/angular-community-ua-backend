@@ -24,9 +24,13 @@ jobs:
           npm test main
           npm test code-review
           npm test telegram-bot
+          npm test m-token
+          npm test m-user
 
       - name: Build applications
         run: |
           npm run build main
           npm run build code-review
           npm run build telegram-bot
+          npm run build m-token
+          npm run build m-user

@@ -11,8 +11,8 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginViaTelegramService } from './login-via-telegram.service';
 import { TelegramLoginResponseDto } from './models';
 
-@ApiTags('login')
 @Controller('login')
+@ApiTags('Login')
 export class LoginController {
     constructor(private readonly loginService: LoginViaTelegramService) {}
 
@@ -37,9 +37,7 @@ export class LoginController {
         type: HttpExceptionDto
     })
     @UsePipes(new ValidationPipe())
-    public login(
-        @Body() loginDataResponse: TelegramLoginResponseDto
-    ): Promise<string> {
-        return this.loginService.login(loginDataResponse);
+    public login(@Body() data: TelegramLoginResponseDto): Promise<string> {
+        return this.loginService.login(data);
     }
 }

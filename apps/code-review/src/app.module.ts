@@ -1,4 +1,6 @@
 import { LoggerModule } from '@acua/shared/logger';
+import { TokenMicroserviceModule } from '@acua/shared/m-token';
+import { UserMicroserviceModule } from '@acua/shared/m-user';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SwaggerModule } from '@nestjs/swagger';
@@ -15,7 +17,9 @@ import { SourceCodeModule } from './source-code';
         LoggerModule,
         SwaggerModule,
         SourceCodeModule,
-        ReviewRequestModule
+        ReviewRequestModule,
+        UserMicroserviceModule,
+        TokenMicroserviceModule
     ],
     controllers: [AppController]
 })

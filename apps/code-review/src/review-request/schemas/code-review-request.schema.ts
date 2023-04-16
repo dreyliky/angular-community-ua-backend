@@ -1,12 +1,12 @@
-import { User } from '@acua/shared/user';
+import { User } from '@acua/shared/m-user';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsNotEmpty } from 'class-validator';
-import { HydratedDocument, now, SchemaTypes } from 'mongoose';
+import { HydratedDocument, SchemaTypes, now } from 'mongoose';
 import { CodeReviewRequestStatusEnum as ReviewStatus } from '../enums';
 
 @Schema()
 export class CodeReviewRequest {
-    @Prop({ type: SchemaTypes.ObjectId, ref: User.name })
+    @Prop({ type: SchemaTypes.ObjectId, ref: 'User' })
     public user?: User;
 
     @Prop()

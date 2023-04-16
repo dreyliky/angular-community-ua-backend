@@ -63,6 +63,36 @@
             "compilerOptions": {
                 "tsConfigPath": "libs/shared/tsconfig.lib.json"
             }
+        },
+        "m-user": {
+            "type": "application",
+            "root": "apps/m-user",
+            "entryFile": "main",
+            "sourceRoot": "apps/m-user/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/m-user/tsconfig.app.json",
+                "assets": [
+                    {
+                        "include": ".env",
+                        "watchAssets": true
+                    }
+                ]
+            }
+        },
+        "m-token": {
+            "type": "application",
+            "root": "apps/m-token",
+            "entryFile": "main",
+            "sourceRoot": "apps/m-token/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/m-token/tsconfig.app.json",
+                "assets": [
+                    {
+                        "include": ".env",
+                        "watchAssets": true
+                    }
+                ]
+            }
         }
     }
 }

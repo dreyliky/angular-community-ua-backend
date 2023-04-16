@@ -1,9 +1,12 @@
 import { LoggerModule } from '@acua/shared/logger';
+import { TokenMicroserviceModule } from '@acua/shared/m-token';
+import { UserMicroserviceModule } from '@acua/shared/m-user';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { LoginModule } from './login';
+import { UsersModule } from './users';
 
 @Module({
     imports: [
@@ -13,7 +16,10 @@ import { LoginModule } from './login';
         }),
         LoggerModule,
         MongoModule,
-        LoginModule
+        LoginModule,
+        UsersModule,
+        UserMicroserviceModule,
+        TokenMicroserviceModule
     ],
     controllers: [AppController]
 })
