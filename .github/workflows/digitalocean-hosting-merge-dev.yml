@@ -34,5 +34,5 @@ jobs:
           pm2 restart dev-acua-main
           pm2 restart dev-acua-code-review
           pm2 restart acua-telegram-bot
-          pm2 restart acua-m-token
-          pm2 restart acua-m-user
+          pm2 restart dev-acua-m-token
+          pm2 restart dev-acua-m-user
