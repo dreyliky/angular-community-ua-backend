@@ -1,4 +1,4 @@
-import { UserDto } from '@acua/shared';
+import { UserDto } from '@acua/shared/m-user';
 import { ApiProperty } from '@nestjs/swagger';
 import { CodeReviewRequestStatusEnum } from '../enums';
 

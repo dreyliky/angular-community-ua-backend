@@ -1,5 +1,9 @@
-import { User, UserDto, UserMicroservicePattersEnum } from '@acua/shared';
-import { USER_MICROSERVICE } from '@acua/shared/user-microservice';
+import {
+    CommandEnum as M_UserCommand,
+    USER_MICROSERVICE,
+    User,
+    UserDto
+} from '@acua/shared/m-user';
 import {
     BadRequestException,
     Injectable,
@@ -16,10 +20,9 @@ import { CodeReviewRequest, CodeReviewRequestDocument } from './../schemas';
 
 @Injectable()
 export class ReviewRequestService {
-    public readonly userMicroservice = this.moduleRef.get(
-        USER_MICROSERVICE,
-        { strict: false }
-    );
+    public readonly userMicroservice = this.moduleRef.get(USER_MICROSERVICE, {
+        strict: false
+    });
 
     constructor(
         @InjectModel(CodeReviewRequest.name)
@@ -28,9 +31,7 @@ export class ReviewRequestService {
     ) {}
 
     public async find(): Promise<CodeReviewRequestDocument[]> {
-        return await this.codeReviewRequestModel.find()
-            .populate('user')
-            .exec();
+        return await this.codeReviewRequestModel.find().populate('user').exec();
     }
 
     public async findOne(
@@ -64,7 +65,9 @@ export class ReviewRequestService {
         const dataDocuments = await this.find();
 
         return await Promise.all(
-            dataDocuments.map((dataDocument) => this.getCodeReviewRequestDto(dataDocument))
+            dataDocuments.map((dataDocument) =>
+                this.getCodeReviewRequestDto(dataDocument)
+            )
         );
     }
 
@@ -73,7 +76,7 @@ export class ReviewRequestService {
         userTgId: number
     ): Promise<unknown> {
         const user: User = await firstValueFrom(
-            this.userMicroservice.send(UserMicroservicePattersEnum.GetByTgId, userTgId)
+            this.userMicroservice.send(M_UserCommand.GetByTgId, userTgId)
         );
 
         const data: CodeReviewRequest = {
@@ -106,10 +109,9 @@ export class ReviewRequestService {
     ): Promise<CodeReviewRequestDto> {
         const user: UserDto = await firstValueFrom(
             this.userMicroservice.send(
-                UserMicroservicePattersEnum.AdaptToUserDto,
+                M_UserCommand.AdaptToUserDto,
                 dataDocument.user
             )
-
         );
 
         return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);

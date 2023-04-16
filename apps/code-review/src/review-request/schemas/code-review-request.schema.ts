@@ -1,4 +1,4 @@
-import { User } from '@acua/shared';
+import { User } from '@acua/shared/m-user';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsNotEmpty } from 'class-validator';
 import { HydratedDocument, SchemaTypes, now } from 'mongoose';

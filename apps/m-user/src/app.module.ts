@@ -1,12 +1,11 @@
 import { LoggerModule } from '@acua/shared/logger';
-import { TokenMicroserviceModule } from '@acua/shared/m-token';
-import { UserMicroserviceModule } from '@acua/shared/m-user';
+import { User, UserSchema } from '@acua/shared/m-user/schemas';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
-import { LoginModule } from './login';
-import { UsersModule } from './users';
+import { AppService } from './app.service';
 
 @Module({
     imports: [
@@ -14,13 +13,11 @@ import { UsersModule } from './users';
             envFilePath: [`${__dirname}/.env`],
             isGlobal: true
         }),
-        LoggerModule,
+        MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
         MongoModule,
-        LoginModule,
-        UsersModule,
-        UserMicroserviceModule,
-        TokenMicroserviceModule
+        LoggerModule
     ],
-    controllers: [AppController]
+    controllers: [AppController],
+    providers: [AppService]
 })
 export class AppModule {}

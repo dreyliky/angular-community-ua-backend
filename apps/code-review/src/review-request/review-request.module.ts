@@ -1,8 +1,8 @@
-import { AuthGuard } from '@acua/shared';
+import { AuthGuard } from '@acua/shared/m-token';
+import { User, UserSchema } from '@acua/shared/m-user/schemas';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from 'apps/user/src/schemas';
 import { ReviewRequestController } from './review-request.controller';
 import { CodeReviewRequest, CodeReviewRequestSchema } from './schemas';
 import { ReviewRequestService } from './services';
@@ -17,10 +17,6 @@ import { SourceUrlValidator } from './validators';
         MongoModule
     ],
     controllers: [ReviewRequestController],
-    providers: [
-        ReviewRequestService,
-        SourceUrlValidator,
-        AuthGuard
-    ]
+    providers: [ReviewRequestService, SourceUrlValidator, AuthGuard]
 })
 export class ReviewRequestModule {}

@@ -1,4 +1,4 @@
-import { UserDto } from '@acua/shared';
+import { UserDto } from '@acua/shared/m-user';
 import { CodeReviewRequestDto } from '../models';
 import { CodeReviewRequestDocument } from './../schemas';
 

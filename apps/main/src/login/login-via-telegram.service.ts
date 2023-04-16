@@ -1,14 +1,17 @@
 import {
-    TokenMicroservicePatternsEnum,
-    TokenPayload,
-    User,
-    UserMicroservicePattersEnum
-} from '@acua/shared';
-import { TOKEN_MICROSERVICE } from '@acua/shared/token-microservice';
-import { USER_MICROSERVICE } from '@acua/shared/user-microservice';
+    CommandEnum as M_TokenCommand,
+    TOKEN_MICROSERVICE,
+    TokenPayload
+} from '@acua/shared/m-token';
+import {
+    CommandEnum as M_UserCommand,
+    USER_MICROSERVICE,
+    User
+} from '@acua/shared/m-user';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
+import { ClientProxy } from '@nestjs/microservices';
 import * as crypto from 'crypto';
 import { firstValueFrom } from 'rxjs';
 import { ENVIRONMENT_KEY } from '../core';
@@ -24,12 +27,12 @@ export class LoginViaTelegramService {
         ENVIRONMENT_KEY.BotToken
     );
 
-    private readonly userMicroservice = this.moduleRef.get(
+    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(
         USER_MICROSERVICE,
         { strict: false }
     );
 
-    private readonly tokenMicroservice = this.moduleRef.get(
+    private readonly tokenMicroservice = this.moduleRef.get<ClientProxy>(
         TOKEN_MICROSERVICE,
         { strict: false }
     );
@@ -56,34 +59,29 @@ export class LoginViaTelegramService {
         }
     }
 
+    // eslint-disable-next-line max-lines-per-function
     public async login(data: TelegramLoginResponseDto): Promise<string> {
         this.validateLoginResponseDto(data);
 
-        const payload = this.getTokenCreationPayload(data.id, data.username);
+        const payload: TokenPayload = {
+            tgId: data.id,
+            username: data.username
+        };
         const token: string = await firstValueFrom(
-            this.tokenMicroservice.send(TokenMicroservicePatternsEnum.Sign, payload)
+            this.tokenMicroservice.send(M_TokenCommand.Sign, payload)
         );
         const encryptedToken: string = await firstValueFrom(
-            this.tokenMicroservice.send(TokenMicroservicePatternsEnum.Encrypt, token)
+            this.tokenMicroservice.send(M_TokenCommand.Encrypt, token)
         );
         const userData: User = adaptTelegramResponseToUser(
             data,
             encryptedToken
         );
 
-        await firstValueFrom(this.userMicroservice.send(
-            UserMicroservicePattersEnum.Create, userData));
+        await firstValueFrom(
+            this.userMicroservice.send(M_UserCommand.Create, userData)
+        );
 
         return token;
-    }
-
-    private getTokenCreationPayload(
-        id: number,
-        username: string
-    ): TokenPayload {
-        return {
-            tgId: id,
-            username: username
-        };
     }
 }

@@ -1,4 +1,5 @@
-import { AuthGuard, AuthorizedUser } from '@acua/shared';
+import { JwtAuthGuard } from '@acua/shared/m-token';
+import { AuthorizedUser } from '@acua/shared/m-user';
 import {
     Body,
     Controller,
@@ -25,8 +26,8 @@ import { ReviewRequestService } from './services';
 
 @ApiBearerAuth()
 @ApiTags('review-request')
-@UseGuards(AuthGuard)
-@Controller('review-request')
+@UseGuards(JwtAuthGuard)
+@Controller('review-requests')
 export class ReviewRequestController {
     constructor(private readonly reviewRequestService: ReviewRequestService) {}
 
@@ -74,10 +75,7 @@ export class ReviewRequestController {
     ): Promise<unknown> {
         const user = req.user as AuthorizedUser;
 
-        return this.reviewRequestService.create(
-            reviewDataRequest,
-            user.tgId
-        );
+        return this.reviewRequestService.create(reviewDataRequest, user.tgId);
     }
 
     // eslint-disable-next-line max-lines-per-function
