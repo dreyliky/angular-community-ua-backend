@@ -4,9 +4,7 @@ import { LoginController } from './login.controller';
 
 @Module({
     imports: [],
-    providers: [
-        LoginViaTelegramService
-    ],
+    providers: [LoginViaTelegramService],
     controllers: [LoginController]
 })
 export class LoginModule {}
