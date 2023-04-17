@@ -29,6 +29,12 @@ jobs:
           cp ~/envs/4002/.env dist/apps/telegram-bot/.env
           cp ~/envs/5001/.env dist/apps/m-token/.env
           cp ~/envs/5002/.env dist/apps/m-user/.env
+      - name: Setup SSL
+        run: |
+          cp ~/cert/certificate.crt dist/apps/main/certificate.crt
+          cp ~/cert/private.key dist/apps/main/private.key
+          cp ~/cert/certificate.crt dist/apps/code-review/certificate.crt
+          cp ~/cert/private.key dist/apps/code-review/private.key
       - name: Restart server applications
         run: |
           pm2 restart dev-acua-main
