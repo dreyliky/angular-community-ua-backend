@@ -1,8 +1,6 @@
-import { TelegramLoginResponseDto } from '../models';
+import { TelegramLoginDto } from '../models';
 
-export function convertTelegramLoginResponseToHashRawValue(
-    data: TelegramLoginResponseDto
-): string {
+export function convertTelegramLoginResponseToHashRawValue(data: TelegramLoginDto): string {
     const dataCheckArr = [];
 
     for (const [key, value] of Object.entries(data)) {

@@ -1,15 +1,8 @@
 import { HttpExceptionDto } from '@acua/shared';
-import {
-    Body,
-    Controller,
-    HttpStatus,
-    Post,
-    UsePipes,
-    ValidationPipe
-} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginViaTelegramService } from './login-via-telegram.service';
-import { TelegramLoginResponseDto } from './models';
+import { LoginResponseDto, TelegramLoginDto } from './models';
 
 @Controller('login')
 @ApiTags('Login')
@@ -24,7 +17,7 @@ export class LoginController {
     @ApiResponse({
         description: `Returns Bearer Token`,
         status: HttpStatus.OK,
-        type: String
+        type: LoginResponseDto
     })
     @ApiResponse({
         description: `Invalid data passed (fields don't match with hash)`,
@@ -37,7 +30,7 @@ export class LoginController {
         type: HttpExceptionDto
     })
     @UsePipes(new ValidationPipe())
-    public login(@Body() data: TelegramLoginResponseDto): Promise<string> {
+    public login(@Body() data: TelegramLoginDto): Promise<LoginResponseDto> {
         return this.loginService.login(data);
     }
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
-export class TelegramLoginResponseDto {
+export class TelegramLoginDto {
     @ApiProperty()
     @IsNotEmpty()
     public readonly auth_date: number;

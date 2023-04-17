@@ -1,8 +1,8 @@
 import { User } from '@acua/shared/m-user';
-import { TelegramLoginResponseDto } from '../models';
+import { TelegramLoginDto } from '../models';
 
 export function adaptTelegramResponseToUser(
-    dataResponse: TelegramLoginResponseDto,
+    dataResponse: TelegramLoginDto,
     encryptedToken: string
 ): User {
     return {
