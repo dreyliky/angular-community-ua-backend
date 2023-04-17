@@ -8,18 +8,11 @@ https://codememoirs.com/automatic-deployment-digitalocean-github-actions
 
 `~/actions-runner/_work/angular-community-ua-backend/angular-community-ua-backend`
 
-### Apps
+### Run process on the server
 
 ```
-PORT=3000 PROD=true pm2 start -i 0 ./dist/apps/main/main.js --name acua-main &
-PORT=3001 PROD=true pm2 start -i 0 ./dist/apps/code-review/main.js --name acua-code-review &
-PORT=3002 PROD=true pm2 start -i 0 ./dist/apps/telegram-bot/main.js --name acua-telegram-bot &
-PORT=4000 PROD=false pm2 start -i 0 ./dist/apps/main/main.js --name dev-acua-main &
-PORT=4001 PROD=false pm2 start -i 0 ./dist/apps/code-review/main.js --name dev-acua-code-review &
-PORT=4002 PROD=false pm2 start -i 0 ./dist/apps/telegram-bot/main.js --name dev-acua-telegram-bot
+pm2 start -i 0 ./dist/apps/main/main.js --name dev-acua-main
 ```
-
-Each application will read "PORT" from `process.env.PORT` field to bootstrap itself.
 
 ### Github workflow
 
@@ -29,9 +22,19 @@ Scripts at:
 After Github Actions triggering yml file will run commands to restart apps via *pm2*, example:
 
 ```
-pm2 restart acua-main
+pm2 restart dev-acua-main
 ```
 
-Where `acua-main` is name of the app.
+Where `dev-acua-main` is name of the app.
 
 Depending on workflow script will be restarted apps of *prod* or *dev* environment.
+
+### SSL
+
+Згенерував сертифікат тут:
+
+https://manage.sslforfree.com
+
+Після чого, на сервері закинув його в root/cert.
+В yml конфігу для CD прописані команди копіювання сертифікату в проєкти.
+В проєктах, коли ENV VAR PROD=TRUE - читається сертифікат для проєктів.
