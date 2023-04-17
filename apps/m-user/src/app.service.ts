@@ -7,9 +7,7 @@ import { adaptUserToUserDto } from './adapters';
 
 @Injectable()
 export class AppService {
-    constructor(
-        @InjectModel(User.name) private userModel: Model<UserDocument>
-    ) {}
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
     public async getById(id: Types.ObjectId): Promise<UserDto> {
         const userDocument = await this.userModel.findOne({ _id: id }).exec();
@@ -22,9 +20,7 @@ export class AppService {
     }
 
     public async getByTgId(tgId: number): Promise<UserDto> {
-        const userDocument = await this.userModel
-            .findOne({ tgId: tgId })
-            .exec();
+        const userDocument = await this.userModel.findOne({ tgId: tgId }).exec();
 
         if (!userDocument) {
             throw new NotFoundException();
@@ -34,10 +30,7 @@ export class AppService {
     }
 
     public async update(userData: User): Promise<unknown> {
-        return await this.userModel.updateOne(
-            { tgId: userData.tgId },
-            userData
-        );
+        return await this.userModel.updateOne({ tgId: userData.tgId }, userData);
     }
 
     public async createOrUpdate(userData: User): Promise<unknown> {

@@ -4,11 +4,7 @@ import {
     User,
     UserDto
 } from '@acua/shared/m-user';
-import {
-    BadRequestException,
-    Injectable,
-    NotFoundException
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -34,9 +30,7 @@ export class ReviewRequestService {
         return await this.codeReviewRequestModel.find().populate('user').exec();
     }
 
-    public async findOne(
-        id: Types.ObjectId
-    ): Promise<CodeReviewRequestDocument> {
+    public async findOne(id: Types.ObjectId): Promise<CodeReviewRequestDocument> {
         try {
             return await this.codeReviewRequestModel
                 .findOne({
@@ -65,9 +59,7 @@ export class ReviewRequestService {
         const dataDocuments = await this.find();
 
         return await Promise.all(
-            dataDocuments.map((dataDocument) =>
-                this.getCodeReviewRequestDto(dataDocument)
-            )
+            dataDocuments.map((dataDocument) => this.getCodeReviewRequestDto(dataDocument))
         );
     }
 
@@ -99,19 +91,14 @@ export class ReviewRequestService {
             throw new NotFoundException();
         }
 
-        return await this.codeReviewRequestModel
-            .updateOne({ _id: id }, { status: status })
-            .exec();
+        return await this.codeReviewRequestModel.updateOne({ _id: id }, { status: status }).exec();
     }
 
     public async getCodeReviewRequestDto(
         dataDocument: CodeReviewRequestDocument
     ): Promise<CodeReviewRequestDto> {
         const user: UserDto = await firstValueFrom(
-            this.userMicroservice.send(
-                M_UserCommand.AdaptToUserDto,
-                dataDocument.user
-            )
+            this.userMicroservice.send(M_UserCommand.AdaptToUserDto, dataDocument.user)
         );
 
         return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);

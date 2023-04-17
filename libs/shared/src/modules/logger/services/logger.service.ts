@@ -12,9 +12,7 @@ export class LoggerService {
 
     private readonly parameters: transports.HttpTransportOptions = {
         host: this.host,
-        path:
-            `/api/v2/logs?dd-api-key=${this.apiKey}` +
-            `&ddsource=nodejs&service=${this.appName}`,
+        path: `/api/v2/logs?dd-api-key=${this.apiKey}&ddsource=nodejs&service=${this.appName}`,
         ssl: true
     };
 

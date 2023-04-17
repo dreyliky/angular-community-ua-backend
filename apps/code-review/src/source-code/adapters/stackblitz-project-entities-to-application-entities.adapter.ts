@@ -17,11 +17,7 @@ export function adaptStackblitzEntitiesToProjectEntities(
         for (let i = 0; i < parts.length - 1; i++) {
             const folderName = parts[i];
             const folderFullPath = parts.slice(0, i + 1).join('/');
-            currentFolder = createChildFolder(
-                currentFolder,
-                folderName,
-                folderFullPath
-            );
+            currentFolder = createChildFolder(currentFolder, folderName, folderFullPath);
         }
 
         if (isStackblitzFile(entity) && !isForbiddenFile(entity.name)) {
@@ -50,14 +46,9 @@ function createRootFolder(): ProjectFolder {
     };
 }
 
-function createChildFolder(
-    parent: ProjectFolder,
-    name: string,
-    fullPath: string
-): ProjectFolder {
+function createChildFolder(parent: ProjectFolder, name: string, fullPath: string): ProjectFolder {
     let childFolder = parent.children.find(
-        (child) =>
-            child.name === name && child.type === ProjectEntityTypeEnum.Folder
+        (child) => child.name === name && child.type === ProjectEntityTypeEnum.Folder
     );
 
     if (!childFolder) {

@@ -9,15 +9,13 @@ export function validateSourceUrl(url: string): void {
 }
 
 export function isStackblitzUrl(url: string): boolean {
-    const stackblitzUrlRegex =
-        /^https:\/\/stackblitz\.com\/edit\/[a-zA-Z0-9-]+$/;
+    const stackblitzUrlRegex = /^https:\/\/stackblitz\.com\/edit\/[a-zA-Z0-9-]+$/;
 
     return stackblitzUrlRegex.test(url);
 }
 
 export function isGithubUrl(url: string): boolean {
-    const githubUrlRegex =
-        /^https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/;
+    const githubUrlRegex = /^https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/;
 
     return githubUrlRegex.test(url);
 }

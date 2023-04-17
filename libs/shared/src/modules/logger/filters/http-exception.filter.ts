@@ -12,8 +12,7 @@ export class HttpExceptionFilter extends BaseExceptionFilter {
     public catch(exception: HttpException, host: ArgumentsHost): void {
         const context = host.switchToHttp();
         const request = context.getRequest<Request>();
-        const status =
-            exception instanceof HttpException ? exception.getStatus() : 500;
+        const status = exception instanceof HttpException ? exception.getStatus() : 500;
         const message = JSON.stringify({
             status,
             message: exception.message,

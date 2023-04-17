@@ -9,11 +9,6 @@ import { SourceUrlController } from './source-url.controller';
 @Module({
     imports: [HttpModule],
     controllers: [SourceCodeController, SourceUrlController],
-    providers: [
-        SourceCodeService,
-        SourceUrlService,
-        StackblitzApi,
-        StackblitzProjectParser
-    ]
+    providers: [SourceCodeService, SourceUrlService, StackblitzApi, StackblitzProjectParser]
 })
 export class SourceCodeModule {}

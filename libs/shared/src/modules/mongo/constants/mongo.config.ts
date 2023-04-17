@@ -1,8 +1,5 @@
 import { ConfigService } from '@nestjs/config';
-import {
-    MongooseModuleAsyncOptions,
-    MongooseModuleOptions
-} from '@nestjs/mongoose';
+import { MongooseModuleAsyncOptions, MongooseModuleOptions } from '@nestjs/mongoose';
 import { MONGO_ENVIRONMENT_KEY as ENVIRONMENT_KEY } from '../data';
 
 export const MONGO_CONFIG: MongooseModuleAsyncOptions = {

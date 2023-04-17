@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-    ValidatorConstraint,
-    ValidatorConstraintInterface
-} from 'class-validator';
+import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import { isGithubUrl, isStackblitzUrl } from '../../source-code';
 
 @ValidatorConstraint({ async: false })

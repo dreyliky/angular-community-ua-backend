@@ -1,9 +1,4 @@
-import {
-    CanActivate,
-    ExecutionContext,
-    Injectable,
-    UnauthorizedException
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
@@ -14,10 +9,9 @@ import { TOKEN_MICROSERVICE } from '../tokens';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-    private readonly tokenMicroservice = this.moduleRef.get<ClientProxy>(
-        TOKEN_MICROSERVICE,
-        { strict: false }
-    );
+    private readonly tokenMicroservice = this.moduleRef.get<ClientProxy>(TOKEN_MICROSERVICE, {
+        strict: false
+    });
 
     constructor(private readonly moduleRef: ModuleRef) {}
 

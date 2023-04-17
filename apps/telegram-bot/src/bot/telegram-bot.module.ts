@@ -4,10 +4,6 @@ import { MessageHandlerFactory } from './services';
 import { TelegramBotService } from './telegram-bot.service';
 
 @Module({
-    providers: [
-        TelegramBotService,
-        MessageHandlerFactory,
-        TELEGRAM_BOT_PROVIDER
-    ]
+    providers: [TelegramBotService, MessageHandlerFactory, TELEGRAM_BOT_PROVIDER]
 })
 export class TelegramBotModule {}

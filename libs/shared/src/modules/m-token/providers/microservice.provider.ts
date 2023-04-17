@@ -8,12 +8,8 @@ export const TOKEN_MICROSERVICE_PROVIDER: Provider = {
     useFactory: () =>
         ClientProxyFactory.create({
             options: {
-                host: process.env[
-                    M_TOKEN_ENVIRONMENT_KEY.TokenMicroserviceHost
-                ],
-                port: +process.env[
-                    M_TOKEN_ENVIRONMENT_KEY.TokenMicroservicePort
-                ]
+                host: process.env[M_TOKEN_ENVIRONMENT_KEY.TokenMicroserviceHost],
+                port: +process.env[M_TOKEN_ENVIRONMENT_KEY.TokenMicroservicePort]
             },
             transport: Transport.TCP
         })

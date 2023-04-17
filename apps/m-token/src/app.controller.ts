@@ -23,9 +23,7 @@ export class AppController {
     }
 
     @MessagePattern(CommandEnum.Decode)
-    public async decode(
-        bearerToken: string
-    ): Promise<Pick<TokenPayload, 'tgId'> | null> {
+    public async decode(bearerToken: string): Promise<Pick<TokenPayload, 'tgId'> | null> {
         const token = this.appService.extractToken(bearerToken);
 
         if (!token) {

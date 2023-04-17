@@ -30,17 +30,13 @@ export class MessageHandlerFactory {
     }
 
     private isAcuaGroupContext(message: Message): boolean {
-        const targetChatId = this.configService.get(
-            ENVIRONMENT_KEY.AcuaGroupChatId
-        );
+        const targetChatId = this.configService.get(ENVIRONMENT_KEY.AcuaGroupChatId);
 
         return message.chat.id === +targetChatId;
     }
 
     private isCodeReviewRequest(message: Message): boolean {
-        const targetThreadId = this.configService.get(
-            ENVIRONMENT_KEY.AcuaGroupCodeReviewThreadId
-        );
+        const targetThreadId = this.configService.get(ENVIRONMENT_KEY.AcuaGroupCodeReviewThreadId);
 
         return message.message_thread_id === +targetThreadId;
     }

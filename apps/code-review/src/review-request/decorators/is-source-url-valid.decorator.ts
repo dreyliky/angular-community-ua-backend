@@ -1,9 +1,7 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
 import { SourceUrlValidator } from '../validators';
 
-export function isSourceUrlValid(
-    validationOptions?: ValidationOptions
-): PropertyDecorator {
+export function isSourceUrlValid(validationOptions?: ValidationOptions): PropertyDecorator {
     return (target: Object, propertyKey: string) => {
         registerDecorator({
             target: target.constructor,

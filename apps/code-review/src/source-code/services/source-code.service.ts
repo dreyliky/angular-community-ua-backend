@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { map, Observable, retry } from 'rxjs';
-import {
-    adaptStackblitzEntitiesToProjectEntities,
-    normalizeSourceUrl
-} from '../adapters';
+import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from '../adapters';
 import { StackblitzApi } from '../api';
 import { validateSourceUrl } from '../helpers';
 import { StackblitzProjectParser } from '../parsers';

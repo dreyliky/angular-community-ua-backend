@@ -1,19 +1,9 @@
 import { JwtAuthGuard } from '@acua/shared/m-token';
-import {
-    AuthorizedUser,
-    CommandEnum,
-    USER_MICROSERVICE,
-    UserDto
-} from '@acua/shared/m-user';
+import { AuthorizedUser, CommandEnum, USER_MICROSERVICE, UserDto } from '@acua/shared/m-user';
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
-import {
-    ApiBearerAuth,
-    ApiOperation,
-    ApiResponse,
-    ApiTags
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpStatusCode } from 'axios';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
@@ -21,10 +11,9 @@ import { Observable } from 'rxjs';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(
-        USER_MICROSERVICE,
-        { strict: false }
-    );
+    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(USER_MICROSERVICE, {
+        strict: false
+    });
 
     constructor(private readonly moduleRef: ModuleRef) {}
 

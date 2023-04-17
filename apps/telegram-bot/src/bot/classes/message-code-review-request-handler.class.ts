@@ -10,9 +10,7 @@ export class MessageCodeReviewRequestHandler implements MessageHandler {
         strict: false
     });
 
-    private readonly reviewPageUrl = this.config.get(
-        ENVIRONMENT_KEY.AcuaWebOverviewPageUrl
-    );
+    private readonly reviewPageUrl = this.config.get(ENVIRONMENT_KEY.AcuaWebOverviewPageUrl);
 
     constructor(public readonly moduleRef: ModuleRef) {}
 
@@ -21,10 +19,7 @@ export class MessageCodeReviewRequestHandler implements MessageHandler {
         const isProduction = this.config.get(ENVIRONMENT_KEY.Production);
 
         if (!isProduction) {
-            this.bot.deleteMessage(
-                message.chat.id,
-                message.message_id.toString()
-            );
+            this.bot.deleteMessage(message.chat.id, message.message_id.toString());
             this.sendMessageAboutReviewRequest(message);
         }
     }
@@ -40,9 +35,7 @@ export class MessageCodeReviewRequestHandler implements MessageHandler {
         );
     }
 
-    private createKeyboardWithAppLink(
-        reviewRequestId: string
-    ): TelegramBot.InlineKeyboardMarkup {
+    private createKeyboardWithAppLink(reviewRequestId: string): TelegramBot.InlineKeyboardMarkup {
         return {
             inline_keyboard: [
                 [
