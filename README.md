@@ -1,8 +1,16 @@
+# Проєкт для українськомовної Angular спільноти в Telegram
+
+https://t.me/angular_community_ua
+
 ## Встановлення залежностей
 
 ```bash
 $ npm install
 ```
+
+## Отримання Environment Variables
+
+Звернутися до @dreyliky.
 
 ## Запуск проєктів
 
