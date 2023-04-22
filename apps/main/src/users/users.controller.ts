@@ -1,21 +1,15 @@
+import { AuthorizedRequest } from '@acua/shared';
 import { JwtAuthGuard } from '@acua/shared/m-token';
-import { AuthorizedUser, CommandEnum, USER_MICROSERVICE, UserDto } from '@acua/shared/m-user';
+import { UserDto } from '@acua/shared/m-user';
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
-import { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpStatusCode } from 'axios';
-import { Request } from 'express';
-import { Observable } from 'rxjs';
+import { UsersService } from './services';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(USER_MICROSERVICE, {
-        strict: false
-    });
-
-    constructor(private readonly moduleRef: ModuleRef) {}
+    constructor(private readonly usersService: UsersService) {}
 
     @Get('me')
     @ApiOperation({
@@ -28,9 +22,7 @@ export class UsersController {
     })
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
-    public getMe(@Req() request: Request): Observable<UserDto> {
-        const user = request.user as AuthorizedUser;
-
-        return this.userMicroservice.send(CommandEnum.GetByTgId, user.tgId);
+    public getMe(@Req() request: AuthorizedRequest): Promise<UserDto> {
+        return this.usersService.getMe(request.user.tgId);
     }
 }

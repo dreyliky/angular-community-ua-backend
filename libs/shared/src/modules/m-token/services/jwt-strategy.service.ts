@@ -19,6 +19,10 @@ export class JwtAuthGuard implements CanActivate {
         const request = context.switchToHttp().getRequest<Request>();
         const token = request.headers?.authorization;
 
+        if (!token) {
+            throw new UnauthorizedException();
+        }
+
         const data: AuthorizedUser = await firstValueFrom(
             this.tokenMicroservice.send(CommandEnum.Decode, token)
         );
