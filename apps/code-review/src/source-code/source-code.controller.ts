@@ -5,7 +5,7 @@ import { ProjectFile, ProjectFolder } from './models';
 import { SourceCodeService } from './services';
 import { ProjectEntity } from './types';
 
-@ApiTags('source-code')
+@ApiTags('Source Code')
 @Controller('source-code')
 export class SourceCodeController {
     constructor(private readonly sourceCodeService: SourceCodeService) {}

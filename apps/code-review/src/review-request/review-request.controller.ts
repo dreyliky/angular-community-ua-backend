@@ -19,7 +19,7 @@ import { CodeReviewCreationDto, CodeReviewRequestDto } from './models';
 import { ReviewRequestService } from './services';
 
 @ApiBearerAuth()
-@ApiTags('review-request')
+@ApiTags('Review Requests')
 @UseGuards(JwtAuthGuard)
 @Controller('review-requests')
 export class ReviewRequestController {

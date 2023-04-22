@@ -2,7 +2,7 @@ import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SourceUrlService } from './services';
 
-@ApiTags('source-url')
+@ApiTags('Source Url')
 @Controller('source-url')
 export class SourceUrlController {
     constructor(private readonly sourceUrlService: SourceUrlService) {}
