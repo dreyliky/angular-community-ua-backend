@@ -1,5 +1,5 @@
+import { AuthorizedRequest } from '@acua/shared';
 import { JwtAuthGuard } from '@acua/shared/m-token';
-import { AuthorizedUser } from '@acua/shared/m-user';
 import {
     Body,
     Controller,
@@ -12,15 +12,11 @@ import {
     UseGuards
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
-import { Types } from 'mongoose';
 import { CodeReviewRequestStatusEnum } from './enums';
 import { CodeReviewCreationDto, CodeReviewRequestDto } from './models';
 import { ReviewRequestService } from './services';
 
-@ApiBearerAuth()
-@ApiTags('review-request')
-@UseGuards(JwtAuthGuard)
+@ApiTags('Review Requests')
 @Controller('review-requests')
 export class ReviewRequestController {
     constructor(private readonly reviewRequestService: ReviewRequestService) {}
@@ -32,7 +28,7 @@ export class ReviewRequestController {
     })
     @ApiOperation({ summary: 'Get list of code review requests' })
     @Get()
-    public get(): Promise<CodeReviewRequestDto[]> {
+    public getAll(): Promise<CodeReviewRequestDto[]> {
         return this.reviewRequestService.get();
     }
 
@@ -50,7 +46,7 @@ export class ReviewRequestController {
         summary: 'Get particular code review request by specifying its id as param'
     })
     @Get(`:id`)
-    public getOne(@Param('id') id: Types.ObjectId): Promise<CodeReviewRequestDto> {
+    public getOne(@Param('id') id: string): Promise<CodeReviewRequestDto> {
         return this.reviewRequestService.getOne(id);
     }
 
@@ -60,16 +56,15 @@ export class ReviewRequestController {
     })
     @ApiOperation({ summary: 'Create a new code review request' })
     @Post()
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     public create(
-        @Req() req: Request,
+        @Req() request: AuthorizedRequest,
         @Body() reviewDataRequest: CodeReviewCreationDto
     ): Promise<unknown> {
-        const user = req.user as AuthorizedUser;
-
-        return this.reviewRequestService.create(reviewDataRequest, user.tgId);
+        return this.reviewRequestService.create(reviewDataRequest, request.user);
     }
 
-    // eslint-disable-next-line max-lines-per-function
     @ApiOperation({ summary: 'Update code review request status' })
     @ApiParam({
         name: 'id',
@@ -82,8 +77,10 @@ export class ReviewRequestController {
         enum: CodeReviewRequestStatusEnum
     })
     @Patch(`:id/status/:statusId`)
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     public async updateStatus(
-        @Param('id') id: Types.ObjectId,
+        @Param('id') id: string,
         @Param('statusId') status: CodeReviewRequestStatusEnum
     ): Promise<object> {
         await this.reviewRequestService.updateOne(id, status);

@@ -1,32 +1,30 @@
-import { UserDto } from '@acua/shared/m-user';
 import { User, UserDocument } from '@acua/shared/m-user/schemas';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { adaptUserToUserDto } from './adapters';
 
 @Injectable()
 export class AppService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    public async getById(id: Types.ObjectId): Promise<UserDto> {
+    public async getById(id: Types.ObjectId): Promise<User> {
         const userDocument = await this.userModel.findOne({ _id: id }).exec();
 
         if (!userDocument) {
             throw new NotFoundException();
         }
 
-        return adaptUserToUserDto(userDocument);
+        return userDocument;
     }
 
-    public async getByTgId(tgId: number): Promise<UserDto> {
+    public async getByTgId(tgId: number): Promise<User> {
         const userDocument = await this.userModel.findOne({ tgId: tgId }).exec();
 
         if (!userDocument) {
             throw new NotFoundException();
         }
 
-        return adaptUserToUserDto(userDocument);
+        return userDocument;
     }
 
     public async update(userData: User): Promise<unknown> {

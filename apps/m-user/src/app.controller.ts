@@ -11,12 +11,12 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @MessagePattern(CommandEnum.GetById)
-    public async getUserById(id: Types.ObjectId): Promise<UserDto> {
+    public async getUserById(id: Types.ObjectId): Promise<User> {
         return this.appService.getById(id);
     }
 
     @MessagePattern(CommandEnum.GetByTgId)
-    public async getUserByTgId(tgId: number): Promise<UserDto> {
+    public async getUserByTgId(tgId: number): Promise<User> {
         return this.appService.getByTgId(tgId);
     }
 
@@ -25,8 +25,8 @@ export class AppController {
         return this.appService.createOrUpdate(userData);
     }
 
-    @MessagePattern(CommandEnum.AdaptToUserDto)
-    public async adaptUserToDtoOne(userDocument: User): Promise<UserDto> {
+    @MessagePattern(CommandEnum.AdaptToDto)
+    public async adaptUserToDto(userDocument: User): Promise<UserDto> {
         return adaptUserToUserDto(userDocument);
     }
 }

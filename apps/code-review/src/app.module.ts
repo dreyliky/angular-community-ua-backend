@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppController } from './app.controller';
+import { CommentsModule } from './comments';
 import { ReviewRequestModule } from './review-request';
 import { SourceCodeModule } from './source-code';
 
@@ -19,7 +20,8 @@ import { SourceCodeModule } from './source-code';
         SourceCodeModule,
         ReviewRequestModule,
         UserMicroserviceModule,
-        TokenMicroserviceModule
+        TokenMicroserviceModule,
+        CommentsModule
     ],
     controllers: [AppController]
 })

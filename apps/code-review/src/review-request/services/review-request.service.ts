@@ -1,13 +1,15 @@
 import {
+    AuthorizedUser,
     CommandEnum as M_UserCommand,
     USER_MICROSERVICE,
-    User,
     UserDto
 } from '@acua/shared/m-user';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { User } from '@acua/shared/m-user/schemas';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
+import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
 import { adaptCodeReviewRequestDocumentToDtoOne } from '../adapters';
 import { CodeReviewRequestStatusEnum } from '../enums';
@@ -16,7 +18,7 @@ import { CodeReviewRequest, CodeReviewRequestDocument } from './../schemas';
 
 @Injectable()
 export class ReviewRequestService {
-    public readonly userMicroservice = this.moduleRef.get(USER_MICROSERVICE, {
+    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(USER_MICROSERVICE, {
         strict: false
     });
 
@@ -30,7 +32,7 @@ export class ReviewRequestService {
         return await this.codeReviewRequestModel.find().populate('user').exec();
     }
 
-    public async findOne(id: Types.ObjectId): Promise<CodeReviewRequestDocument> {
+    public async findOne(id: string): Promise<CodeReviewRequestDocument> {
         try {
             return await this.codeReviewRequestModel
                 .findOne({
@@ -39,15 +41,15 @@ export class ReviewRequestService {
                 .populate('user')
                 .exec();
         } catch {
-            throw new BadRequestException();
+            throw new NotFoundException(`ReviewRequest with id ${id} not found.`);
         }
     }
 
-    public async getOne(id: Types.ObjectId): Promise<CodeReviewRequestDto> {
+    public async getOne(id: string): Promise<CodeReviewRequestDto> {
         const dataDocument = await this.findOne(id);
 
         if (!dataDocument) {
-            throw new NotFoundException('404 NotFoundException');
+            throw new NotFoundException();
         }
 
         const data = this.getCodeReviewRequestDto(dataDocument);
@@ -65,14 +67,13 @@ export class ReviewRequestService {
 
     public async create(
         reviewDataRequest: CodeReviewCreationDto,
-        userTgId: number
+        user: AuthorizedUser
     ): Promise<unknown> {
-        const user: User = await firstValueFrom(
-            this.userMicroservice.send(M_UserCommand.GetByTgId, userTgId)
+        const userDocument = await firstValueFrom(
+            this.userMicroservice.send<User>(M_UserCommand.GetByTgId, user.tgId)
         );
-
         const data: CodeReviewRequest = {
-            user,
+            user: userDocument,
             ...reviewDataRequest
         };
 
@@ -81,24 +82,21 @@ export class ReviewRequestService {
         return createdData.save();
     }
 
-    public async updateOne(
-        id: Types.ObjectId,
-        status: CodeReviewRequestStatusEnum
-    ): Promise<unknown> {
+    public async updateOne(id: string, status: CodeReviewRequestStatusEnum): Promise<unknown> {
         const data = await this.findOne(id);
 
         if (!data) {
             throw new NotFoundException();
         }
 
-        return await this.codeReviewRequestModel.updateOne({ _id: id }, { status: status }).exec();
+        return await this.codeReviewRequestModel.updateOne({ _id: id }, { status }).exec();
     }
 
     public async getCodeReviewRequestDto(
         dataDocument: CodeReviewRequestDocument
     ): Promise<CodeReviewRequestDto> {
         const user: UserDto = await firstValueFrom(
-            this.userMicroservice.send(M_UserCommand.AdaptToUserDto, dataDocument.user)
+            this.userMicroservice.send(M_UserCommand.AdaptToDto, dataDocument.user)
         );
 
         return adaptCodeReviewRequestDocumentToDtoOne(dataDocument, user);

@@ -9,7 +9,6 @@ import { LoginResponseDto, TelegramLoginDto } from './models';
 export class LoginController {
     constructor(private readonly loginService: LoginViaTelegramService) {}
 
-    // eslint-disable-next-line max-lines-per-function
     @Post()
     @ApiOperation({
         summary: 'Login to App via Telegram Login Widget Response'
