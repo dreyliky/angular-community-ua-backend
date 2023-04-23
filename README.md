@@ -14,6 +14,9 @@ $ npm install
 
 ## Запуск проєктів
 
+Рекомендується в VSCode Explorer натиснути на іконку з трьома крапочками і обрати пункт "NPM Scripts".
+Після чого, можна буде бачити команди NPM в UI VSCode і швидко запускати їх.
+
 ```bash
 # code-review
 $ npm run start:dev:code-review
@@ -29,8 +32,8 @@ $ npm run start:dev:telegram-bot
 
 ```bash
 # user microservice
-$ npm run start:dev m-user
+$ npm run start:dev:m-user
 
 # token microservice
-$ npm run start:dev m-token
+$ npm run start:dev:m-token
 ```
