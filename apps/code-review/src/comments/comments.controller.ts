@@ -15,7 +15,14 @@ import {
     UsePipes,
     ValidationPipe
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiParam,
+    ApiQuery,
+    ApiResponse,
+    ApiTags
+} from '@nestjs/swagger';
 import { CommentAmountDictionaryDto } from './interfaces';
 import { CommentCreationDto, CommentDto, CommentEditingDto } from './models';
 import { CommentDocumentService, CommentDtoService } from './services';
@@ -29,17 +36,18 @@ export class CommentsController {
         private readonly commentDocumentService: CommentDocumentService
     ) {}
 
+    @Get(`:id/comments`)
     @ApiOperation({ summary: 'Get all comments of request review' })
     @ApiResponse({
         status: HttpStatus.OK,
         type: CommentDto,
         isArray: true
     })
-    @Get(`:id/comments`)
     public getAll(@Param('id') reviewRequestId: string): Promise<CommentDto[]> {
         return this.commentDtoService.getAll(reviewRequestId);
     }
 
+    @Get(`:id/comments/within-line-of-code`)
     @ApiOperation({
         summary: 'Returns comments of request review on specific file and line of code'
     })
@@ -50,7 +58,6 @@ export class CommentsController {
     })
     @ApiQuery({ name: 'fileFullPath', description: 'Full Path to the file', type: String })
     @ApiQuery({ name: 'lineNumber', description: 'Line of the Code', type: Number })
-    @Get(`:id/comments/within-line-of-code`)
     public getAllPerFileLine(
         @Param('id') reviewRequestId: string,
         @RequiredQuery('fileFullPath') fileFullPath: string,
@@ -59,27 +66,27 @@ export class CommentsController {
         return this.commentDtoService.getAllPerFileLine(reviewRequestId, fileFullPath, lineNumber);
     }
 
+    @Get(`:id/comments/amount`)
     @ApiOperation({ summary: 'Get amount of comments per line of code in each file' })
     @ApiResponse({
         status: HttpStatus.OK,
         schema: COMMENT_AMOUNT_RESPONSE_EXAMPLE
     })
-    @Get(`:id/comments/amount`)
     public getDictionaryAmount(
         @Param('id') reviewRequestId: string
     ): Promise<CommentAmountDictionaryDto> {
         return this.commentDtoService.getDictionaryAmount(reviewRequestId);
     }
 
+    @Post(`:id/comments`)
+    @UseGuards(JwtAuthGuard)
+    @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true, whitelist: true }))
     @ApiOperation({ summary: 'Creates comment per line of code in concrete file' })
     @ApiResponse({
         status: HttpStatus.OK,
         type: CreationResponseDto
     })
-    @Post(`:id/comments`)
     @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @UsePipes(new ValidationPipe())
     public create(
         @Req() request: AuthorizedRequest,
         @Param('id') reviewRequestId: string,
@@ -88,14 +95,17 @@ export class CommentsController {
         return this.commentDtoService.create(creationDto, reviewRequestId, request.user);
     }
 
+    @Patch(`:id/comments/:commentId`)
+    @UseGuards(JwtAuthGuard)
+    @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true, whitelist: true }))
     @ApiOperation({ summary: 'Edits comment per line of code in concrete file' })
     @ApiResponse({
         status: HttpStatus.OK,
         type: Boolean
     })
-    @Patch(`:id/comments/:commentId`)
+    @ApiParam({ name: 'id', type: String })
+    @ApiParam({ name: 'commentId', type: String })
     @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
     public async edit(
         @Req() request: AuthorizedRequest,
         @Param('id') reviewRequestId: string,
@@ -112,14 +122,16 @@ export class CommentsController {
         return true;
     }
 
+    @Delete(`:id/comments/:commentId`)
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: 'Deletes comment per line of code in concrete file' })
     @ApiResponse({
         status: HttpStatus.OK,
         type: Boolean
     })
+    @ApiParam({ name: 'id', type: String })
+    @ApiParam({ name: 'commentId', type: String })
     @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Delete(`:id/comments/:commentId`)
     public async delete(
         @Req() request: AuthorizedRequest,
         @Param('commentId') commentId: string

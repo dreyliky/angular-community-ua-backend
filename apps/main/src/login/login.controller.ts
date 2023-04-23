@@ -10,6 +10,7 @@ export class LoginController {
     constructor(private readonly loginService: LoginViaTelegramService) {}
 
     @Post()
+    @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true, whitelist: true }))
     @ApiOperation({
         summary: 'Login to App via Telegram Login Widget Response'
     })
@@ -28,7 +29,6 @@ export class LoginController {
         status: HttpStatus.INTERNAL_SERVER_ERROR,
         type: HttpExceptionDto
     })
-    @UsePipes(new ValidationPipe())
     public login(@Body() data: TelegramLoginDto): Promise<LoginResponseDto> {
         return this.loginService.login(data);
     }

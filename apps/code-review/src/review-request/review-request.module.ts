@@ -3,9 +3,14 @@ import { User, UserSchema } from '@acua/shared/m-user/schemas';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ReviewRequestSourceCodeController } from './controllers';
 import { ReviewRequestController } from './review-request.controller';
 import { ReviewRequest, ReviewRequestSchema } from './schemas';
-import { ReviewRequestDocumentService, ReviewRequestDtoService } from './services';
+import {
+    ReviewRequestDocumentService,
+    ReviewRequestDtoService,
+    ReviewRequestSourceCodeService
+} from './services';
 import { SourceUrlValidator } from './validators';
 
 @Module({
@@ -16,10 +21,11 @@ import { SourceUrlValidator } from './validators';
         ]),
         MongoModule
     ],
-    controllers: [ReviewRequestController],
+    controllers: [ReviewRequestController, ReviewRequestSourceCodeController],
     providers: [
         ReviewRequestDocumentService,
         ReviewRequestDtoService,
+        ReviewRequestSourceCodeService,
         SourceUrlValidator,
         AuthGuard
     ]
