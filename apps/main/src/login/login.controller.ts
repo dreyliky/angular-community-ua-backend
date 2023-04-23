@@ -10,7 +10,7 @@ export class LoginController {
     constructor(private readonly loginService: LoginViaTelegramService) {}
 
     @Post()
-    @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true, whitelist: true }))
+    @UsePipes(new ValidationPipe())
     @ApiOperation({
         summary: 'Login to App via Telegram Login Widget Response'
     })
