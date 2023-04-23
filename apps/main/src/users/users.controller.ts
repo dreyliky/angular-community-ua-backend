@@ -12,6 +12,7 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     @Get('me')
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({
         summary: 'Get user data who sent the request.'
     })
@@ -21,7 +22,6 @@ export class UsersController {
         type: UserDto
     })
     @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
     public getMe(@Req() request: AuthorizedRequest): Promise<UserDto> {
         return this.usersService.getMe(request.user.tgId);
     }

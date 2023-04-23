@@ -21,7 +21,7 @@ export class SourceCodeService {
         return this.stackblitzApi.getStackblitzHtml(stackblitzUrl).pipe(
             map((html) => this.stackblitzProjectParser.parse(html)),
             map((data) => adaptStackblitzEntitiesToProjectEntities(data)),
-            retry({ delay: 700, count: 10 })
+            retry({ delay: 1000, count: 10 })
         );
     }
 }

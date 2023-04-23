@@ -1,14 +1,31 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { StackblitzApi } from './api';
 import { StackblitzProjectParser } from './parsers';
-import { SourceCodeService, SourceUrlService } from './services';
+import { SourceCode, SourceCodeSchema } from './schemas';
+import {
+    SourceCodeDocumentService,
+    SourceCodeDtoService,
+    SourceCodeService,
+    SourceUrlService
+} from './services';
 import { SourceCodeController } from './source-code.controller';
 import { SourceUrlController } from './source-url.controller';
 
 @Module({
-    imports: [HttpModule],
+    imports: [
+        HttpModule,
+        MongooseModule.forFeature([{ name: SourceCode.name, schema: SourceCodeSchema }])
+    ],
     controllers: [SourceCodeController, SourceUrlController],
-    providers: [SourceCodeService, SourceUrlService, StackblitzApi, StackblitzProjectParser]
+    providers: [
+        SourceCodeService,
+        SourceUrlService,
+        SourceCodeDtoService,
+        SourceCodeDocumentService,
+        StackblitzApi,
+        StackblitzProjectParser
+    ]
 })
 export class SourceCodeModule {}
