@@ -21,7 +21,7 @@ export class Comment {
     public readonly message: string;
 
     @Prop({ default: now() })
-    public readonly date: string;
+    public readonly date: Date;
 }
 
 export type CommentDocument = HydratedDocument<Comment>;

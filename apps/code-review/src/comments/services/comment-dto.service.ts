@@ -17,6 +17,14 @@ export class CommentDtoService {
         return adaptCommentDocumentsToAmountDictionary(commentDocuments);
     }
 
+    public async getAll(reviewRequestId: string): Promise<CommentDto[]> {
+        const commentDocuments = await this.commentDocumentService.getAll(reviewRequestId);
+
+        return commentDocuments.map((commentDocument) =>
+            plainToInstance(CommentDto, commentDocument.toObject())
+        );
+    }
+
     public async getAllPerFileLine(
         reviewRequestId: string,
         fileFullPath: string,

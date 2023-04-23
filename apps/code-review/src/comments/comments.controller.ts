@@ -15,7 +15,7 @@ import {
     UsePipes,
     ValidationPipe
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CommentAmountDictionaryDto } from './interfaces';
 import { CommentCreationDto, CommentDto, CommentEditingDto } from './models';
 import { CommentDocumentService, CommentDtoService } from './services';
@@ -29,12 +29,28 @@ export class CommentsController {
         private readonly commentDocumentService: CommentDocumentService
     ) {}
 
+    @ApiOperation({ summary: 'Get all comments of request review' })
     @ApiResponse({
-        description: `Returns array of the comments of request review`,
-        status: HttpStatus.OK
+        status: HttpStatus.OK,
+        type: CommentDto,
+        isArray: true
     })
-    @ApiOperation({ summary: 'Get list of code review requests' })
     @Get(`:id/comments`)
+    public getAll(@Param('id') reviewRequestId: string): Promise<CommentDto[]> {
+        return this.commentDtoService.getAll(reviewRequestId);
+    }
+
+    @ApiOperation({
+        summary: 'Returns comments of request review on specific file and line of code'
+    })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        type: CommentDto,
+        isArray: true
+    })
+    @ApiQuery({ name: 'fileFullPath', description: 'Full Path to the file', type: String })
+    @ApiQuery({ name: 'lineNumber', description: 'Line of the Code', type: Number })
+    @Get(`:id/comments/within-line-of-code`)
     public getAllPerFileLine(
         @Param('id') reviewRequestId: string,
         @RequiredQuery('fileFullPath') fileFullPath: string,
@@ -43,12 +59,11 @@ export class CommentsController {
         return this.commentDtoService.getAllPerFileLine(reviewRequestId, fileFullPath, lineNumber);
     }
 
+    @ApiOperation({ summary: 'Get amount of comments per line of code in each file' })
     @ApiResponse({
-        description: `Returns amount of comments per line of codes in each project file`,
         status: HttpStatus.OK,
         schema: COMMENT_AMOUNT_RESPONSE_EXAMPLE
     })
-    @ApiOperation({ summary: 'Get amount of comments per line of code in each file' })
     @Get(`:id/comments/amount`)
     public getDictionaryAmount(
         @Param('id') reviewRequestId: string
@@ -56,11 +71,11 @@ export class CommentsController {
         return this.commentDtoService.getDictionaryAmount(reviewRequestId);
     }
 
-    @ApiResponse({
-        description: `Creates comment per line of code in concrete file`,
-        status: HttpStatus.OK
-    })
     @ApiOperation({ summary: 'Creates comment per line of code in concrete file' })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        type: CreationResponseDto
+    })
     @Post(`:id/comments`)
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
@@ -73,11 +88,11 @@ export class CommentsController {
         return this.commentDtoService.create(creationDto, reviewRequestId, request.user);
     }
 
-    @ApiResponse({
-        description: `Edits comment per line of code in concrete file`,
-        status: HttpStatus.OK
-    })
     @ApiOperation({ summary: 'Edits comment per line of code in concrete file' })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        type: Boolean
+    })
     @Patch(`:id/comments/:commentId`)
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
@@ -97,11 +112,11 @@ export class CommentsController {
         return true;
     }
 
-    @ApiResponse({
-        description: `Deletes comment per line of code in concrete file`,
-        status: HttpStatus.OK
-    })
     @ApiOperation({ summary: 'Deletes comment per line of code in concrete file' })
+    @ApiResponse({
+        status: HttpStatus.OK,
+        type: Boolean
+    })
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @Delete(`:id/comments/:commentId`)
