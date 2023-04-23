@@ -1,1 +1,1 @@
-export * from './code-review-request.schema';
+export * from './review-request.schema';

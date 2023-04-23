@@ -1,1 +1,1 @@
-export * from './code-review-request-document-to-dto.adapter';
+export * from './review-request-document-to-dto.adapter';

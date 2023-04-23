@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { isSourceUrlValid } from '../decorators';
 
-export class CodeReviewCreationDto {
+export class ReviewRequestCreationDto {
     @ApiProperty()
     @IsNotEmpty()
     public readonly title: string;

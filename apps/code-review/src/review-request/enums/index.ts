@@ -1,1 +1,1 @@
-export * from './code-review-request-status.enum';
+export * from './review-request-status.enum';

@@ -1,2 +1,2 @@
-export * from './code-review-creation.dto';
-export * from './code-review-request.dto';
+export * from './review-request-creation.dto';
+export * from './review-request.dto';

@@ -10,7 +10,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
-import { ReviewRequestService } from '../../review-request/services';
+import { ReviewRequestDocumentService } from '../../review-request/services';
 import { adaptCommentCreationDtoToSchema } from '../adapters';
 import { CommentCreationDto, CommentEditingDto } from '../models';
 import { Comment, CommentDocument } from '../schemas';
@@ -21,7 +21,7 @@ export class CommentDocumentService {
         strict: false
     });
 
-    private readonly reviewRequestService = this.moduleRef.get(ReviewRequestService, {
+    private readonly reviewRequestService = this.moduleRef.get(ReviewRequestDocumentService, {
         strict: false
     });
 
@@ -57,7 +57,7 @@ export class CommentDocumentService {
         const userDocument = await firstValueFrom(
             this.userMicroservice.send<User>(M_UserCommand.GetByTgId, userTgId)
         );
-        const reviewRequestDocument = await this.reviewRequestService.findOne(reviewRequestId);
+        const reviewRequestDocument = await this.reviewRequestService.get(reviewRequestId);
         const comment = adaptCommentCreationDtoToSchema(data, reviewRequestDocument, userDocument);
         const commentModel = new this.commentModel(comment);
 

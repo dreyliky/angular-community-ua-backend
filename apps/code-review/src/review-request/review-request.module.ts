@@ -4,19 +4,24 @@ import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReviewRequestController } from './review-request.controller';
-import { CodeReviewRequest, CodeReviewRequestSchema } from './schemas';
-import { ReviewRequestService } from './services';
+import { ReviewRequest, ReviewRequestSchema } from './schemas';
+import { ReviewRequestDocumentService, ReviewRequestDtoService } from './services';
 import { SourceUrlValidator } from './validators';
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: User.name, schema: UserSchema },
-            { name: CodeReviewRequest.name, schema: CodeReviewRequestSchema }
+            { name: ReviewRequest.name, schema: ReviewRequestSchema }
         ]),
         MongoModule
     ],
     controllers: [ReviewRequestController],
-    providers: [ReviewRequestService, SourceUrlValidator, AuthGuard]
+    providers: [
+        ReviewRequestDocumentService,
+        ReviewRequestDtoService,
+        SourceUrlValidator,
+        AuthGuard
+    ]
 })
 export class ReviewRequestModule {}
