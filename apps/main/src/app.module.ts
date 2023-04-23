@@ -4,7 +4,6 @@ import { UserMicroserviceModule } from '@acua/shared/m-user';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { LoginModule } from './login';
 import { UsersModule } from './users';
 
@@ -20,7 +19,6 @@ import { UsersModule } from './users';
         UsersModule,
         UserMicroserviceModule,
         TokenMicroserviceModule
-    ],
-    controllers: [AppController]
+    ]
 })
 export class AppModule {}
