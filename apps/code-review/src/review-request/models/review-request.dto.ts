@@ -17,10 +17,6 @@ export class ReviewRequestDto {
 
     @Expose()
     @ApiProperty()
-    public readonly title: string;
-
-    @Expose()
-    @ApiProperty()
     public readonly description: string;
 
     @Expose()

@@ -5,10 +5,6 @@ import { isSourceUrlValid } from '../decorators';
 export class ReviewRequestCreationDto {
     @ApiProperty()
     @IsNotEmpty()
-    public readonly title: string;
-
-    @ApiProperty()
-    @IsNotEmpty()
     public readonly description: string;
 
     @ApiProperty()

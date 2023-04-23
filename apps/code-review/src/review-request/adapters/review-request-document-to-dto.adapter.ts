@@ -9,7 +9,6 @@ export function adaptReviewRequestDocumentToDto(
     return {
         id: data._id.toString(),
         user: user,
-        title: data.title,
         description: data.description,
         status: data.status,
         sourceUrl: data.sourceUrl,
