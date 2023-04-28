@@ -5,7 +5,10 @@ import { StackblitzFile, StackblitzFolder, StackblitzInfo } from '../interfaces'
 export class StackblitzProjectParser {
     /** Stackblitz info inside script tag which described by this RegExp */
     private readonly regExp = /<script type="application\/json" data-redux-store="">(.*)<\/script>/;
-    private readonly stackblitzErrorPatterns = ['public-status error', 'public-section__error'];
+    private readonly stackblitzDivCssErrorClasses = [
+        'public-status error',
+        'public-section__error'
+    ];
 
     public parse(stackblitzProjectHtml: string): Array<StackblitzFile | StackblitzFolder> {
         this.validateStackblitzPageErrors(stackblitzProjectHtml);
@@ -19,9 +22,12 @@ export class StackblitzProjectParser {
     }
 
     private validateStackblitzPageErrors(stackblitzProjectHtml: string): void {
-        const withErrors = this.stackblitzErrorPatterns.some(
-            (errorPattern) => stackblitzProjectHtml.indexOf(errorPattern) !== -1
-        );
+        const withErrors = this.stackblitzDivCssErrorClasses.some((errorClass) => {
+            // Wrapper below fixes incorrect error result when project sourceUrl is THIS BACKEND PROJECT :)
+            const errorSelector = `class="${errorClass}"`;
+
+            return stackblitzProjectHtml.indexOf(errorSelector) !== -1;
+        });
 
         if (withErrors) {
             throw new NotFoundException(`Can't resolve project information.`);

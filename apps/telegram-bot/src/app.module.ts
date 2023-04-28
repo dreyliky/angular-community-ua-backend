@@ -1,5 +1,4 @@
 import { LoggerModule } from '@acua/shared/logger';
-import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TelegramBotModule } from '@telegram-bot/bot';
@@ -11,7 +10,6 @@ import { TelegramBotModule } from '@telegram-bot/bot';
             isGlobal: true
         }),
         LoggerModule,
-        MongoModule,
         TelegramBotModule
     ]
 })
