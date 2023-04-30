@@ -38,6 +38,10 @@ export class ReviewRequestDocumentService {
         return this.codeReviewRequestModel.find().populate('user').exec();
     }
 
+    public getAllWithStatus(status: ReviewRequestStatusEnum): Promise<ReviewRequestDocument[]> {
+        return this.codeReviewRequestModel.find({ status }).populate('user').exec();
+    }
+
     public async getAllMy(userTgId: number): Promise<LeanDocument<ReviewRequest>[]> {
         const user = await firstValueFrom(
             this.userMicroservice.send<UserDocument>(M_UserCommand.GetByTgId, userTgId)

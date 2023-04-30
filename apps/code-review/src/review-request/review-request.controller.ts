@@ -58,6 +58,27 @@ export class ReviewRequestController {
         return this.reviewRequestDtoService.getAllMy(request.user.tgId);
     }
 
+    @Get(`/status/:status`)
+    @ApiOperation({
+        summary: 'Get all review requests with specific status'
+    })
+    @ApiResponse({
+        description: `Returns code review requests`,
+        status: HttpStatus.OK,
+        type: ReviewRequestDto,
+        isArray: true
+    })
+    @ApiParam({
+        name: 'status',
+        description: 'Status type to filter review requests by',
+        enum: ReviewRequestStatusEnum
+    })
+    public getAllWithStatus(
+        @Param('status') status: ReviewRequestStatusEnum
+    ): Promise<ReviewRequestDto[]> {
+        return this.reviewRequestDtoService.getAllWithStatus(status);
+    }
+
     @Get(`:id`)
     @ApiOperation({
         summary: 'Get particular code review request by specifying its id as param'

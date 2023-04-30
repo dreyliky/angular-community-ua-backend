@@ -20,7 +20,7 @@ export class ReviewRequestDto {
     public readonly description: string;
 
     @Expose()
-    @ApiProperty()
+    @ApiProperty({ enum: ReviewRequestStatusEnum })
     public readonly status: ReviewRequestStatusEnum;
 
     @Expose()

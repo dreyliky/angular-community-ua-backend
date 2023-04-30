@@ -2,6 +2,7 @@ import { CreationResponseDto } from '@acua/shared';
 import { AuthorizedUser } from '@acua/shared/m-user';
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { ReviewRequestStatusEnum } from '../enums';
 import { ReviewRequestCreationDto, ReviewRequestDto } from '../models';
 import { ReviewRequestDocumentService } from './review-request-document.service';
 
@@ -17,6 +18,14 @@ export class ReviewRequestDtoService {
 
     public async getAll(): Promise<ReviewRequestDto[]> {
         const dataDocuments = await this.reviewRequestDocumentService.getAll();
+
+        return dataDocuments.map((dataDocument) =>
+            plainToInstance(ReviewRequestDto, dataDocument.toObject())
+        );
+    }
+
+    public async getAllWithStatus(status: ReviewRequestStatusEnum): Promise<ReviewRequestDto[]> {
+        const dataDocuments = await this.reviewRequestDocumentService.getAllWithStatus(status);
 
         return dataDocuments.map((dataDocument) =>
             plainToInstance(ReviewRequestDto, dataDocument.toObject())
