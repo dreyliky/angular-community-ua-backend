@@ -8,7 +8,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { Document, LeanDocument, Model } from 'mongoose';
+import { Document, FilterQuery, LeanDocument, Model, Query } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
 import { ReviewRequestStatusEnum } from '../enums';
 import { ReviewRequestCreationDto } from '../models';
@@ -35,20 +35,18 @@ export class ReviewRequestDocumentService {
     }
 
     public getAll(): Promise<ReviewRequestDocument[]> {
-        return this.codeReviewRequestModel.find().populate('user').exec();
+        return this.find().exec();
     }
 
     public getAllWithStatus(status: ReviewRequestStatusEnum): Promise<ReviewRequestDocument[]> {
-        return this.codeReviewRequestModel.find({ status }).populate('user').exec();
+        return this.find({ status }).exec();
     }
 
     public async getAllMy(userTgId: number): Promise<LeanDocument<ReviewRequest>[]> {
         const user = await firstValueFrom(
             this.userMicroservice.send<UserDocument>(M_UserCommand.GetByTgId, userTgId)
         );
-        const reviewRequestDocuments = await this.codeReviewRequestModel
-            .find({ user: user._id })
-            .lean();
+        const reviewRequestDocuments = await this.find({ user: user._id }).lean().exec();
 
         reviewRequestDocuments.forEach((document) => (document.user = user));
 
@@ -74,5 +72,9 @@ export class ReviewRequestDocumentService {
         await this.get(id);
 
         return this.codeReviewRequestModel.updateOne({ _id: id }, { status }).exec();
+    }
+
+    private find(filters?: FilterQuery<ReviewRequest>): Query<any, ReviewRequestDocument> {
+        return this.codeReviewRequestModel.find(filters).populate('user').sort({ date: 'desc' });
     }
 }
