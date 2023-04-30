@@ -3,7 +3,7 @@ import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { ReviewRequest } from '../../review-request/schemas';
 import { ProjectEntity } from '../types';
 
-@Schema({ collection: 'source-code' })
+@Schema({ collection: 'cr-source-code' })
 export class SourceCode {
     @Prop({ type: SchemaTypes.ObjectId, ref: ReviewRequest.name })
     public readonly reviewRequest: ReviewRequest;

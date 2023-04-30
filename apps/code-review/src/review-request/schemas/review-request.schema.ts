@@ -4,7 +4,7 @@ import { IsNotEmpty } from 'class-validator';
 import { HydratedDocument, SchemaTypes, now } from 'mongoose';
 import { ReviewRequestStatusEnum as ReviewStatus } from '../enums';
 
-@Schema({ collection: 'review-requests' })
+@Schema({ collection: 'cr-review-requests' })
 export class ReviewRequest {
     @Prop({ type: SchemaTypes.ObjectId, ref: User.name })
     public user?: User;

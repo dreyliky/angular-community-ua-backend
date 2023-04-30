@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes, now } from 'mongoose';
 import { ReviewRequest } from '../../review-request/schemas';
 
-@Schema()
+@Schema({ collection: 'cr-review-request-comments' })
 export class Comment {
     @Prop({ type: SchemaTypes.ObjectId, ref: User.name })
     public reviewer: User;
