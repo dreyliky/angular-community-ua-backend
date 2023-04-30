@@ -7,7 +7,7 @@ import { Model, Types } from 'mongoose';
 export class AppService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    public async getById(id: Types.ObjectId): Promise<User> {
+    public async getById(id: Types.ObjectId): Promise<UserDocument> {
         const userDocument = await this.userModel.findOne({ _id: id }).exec();
 
         if (!userDocument) {
@@ -17,7 +17,7 @@ export class AppService {
         return userDocument;
     }
 
-    public async getByTgId(tgId: number): Promise<User> {
+    public async getByTgId(tgId: number): Promise<UserDocument> {
         const userDocument = await this.userModel.findOne({ tgId: tgId }).exec();
 
         if (!userDocument) {

@@ -3,12 +3,12 @@ import {
     CommandEnum as M_UserCommand,
     USER_MICROSERVICE
 } from '@acua/shared/m-user';
-import { User } from '@acua/shared/m-user/schemas';
+import { User, UserDocument } from '@acua/shared/m-user/schemas';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
-import { Document, Model } from 'mongoose';
+import { Document, LeanDocument, Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
 import { ReviewRequestStatusEnum } from '../enums';
 import { ReviewRequestCreationDto } from '../models';
@@ -36,6 +36,19 @@ export class ReviewRequestDocumentService {
 
     public getAll(): Promise<ReviewRequestDocument[]> {
         return this.codeReviewRequestModel.find().populate('user').exec();
+    }
+
+    public async getAllMy(userTgId: number): Promise<LeanDocument<ReviewRequest>[]> {
+        const user = await firstValueFrom(
+            this.userMicroservice.send<UserDocument>(M_UserCommand.GetByTgId, userTgId)
+        );
+        const reviewRequestDocuments = await this.codeReviewRequestModel
+            .find({ user: user._id })
+            .lean();
+
+        reviewRequestDocuments.forEach((document) => (document.user = user));
+
+        return reviewRequestDocuments;
     }
 
     public async create(

@@ -42,6 +42,22 @@ export class ReviewRequestController {
         return this.reviewRequestDtoService.getAll();
     }
 
+    @Get(`/my`)
+    @UseGuards(JwtAuthGuard)
+    @ApiOperation({
+        summary: 'Get all review requests of authorized user'
+    })
+    @ApiResponse({
+        description: `Returns code review requests`,
+        status: HttpStatus.OK,
+        type: ReviewRequestDto,
+        isArray: true
+    })
+    @ApiBearerAuth()
+    public getAllMy(@Req() request: AuthorizedRequest): Promise<ReviewRequestDto[]> {
+        return this.reviewRequestDtoService.getAllMy(request.user.tgId);
+    }
+
     @Get(`:id`)
     @ApiOperation({
         summary: 'Get particular code review request by specifying its id as param'

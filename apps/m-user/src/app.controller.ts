@@ -1,5 +1,5 @@
 import { CommandEnum, UserDto } from '@acua/shared/m-user';
-import { User } from '@acua/shared/m-user/schemas';
+import { User, UserDocument } from '@acua/shared/m-user/schemas';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { Types } from 'mongoose';
@@ -11,12 +11,12 @@ export class AppController {
     constructor(private readonly appService: AppService) {}
 
     @MessagePattern(CommandEnum.GetById)
-    public async getUserById(id: Types.ObjectId): Promise<User> {
+    public async getUserById(id: Types.ObjectId): Promise<UserDocument> {
         return this.appService.getById(id);
     }
 
     @MessagePattern(CommandEnum.GetByTgId)
-    public async getUserByTgId(tgId: number): Promise<User> {
+    public async getUserByTgId(tgId: number): Promise<UserDocument> {
         return this.appService.getByTgId(tgId);
     }
 
