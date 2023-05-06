@@ -5,10 +5,7 @@ import { StackblitzFile, StackblitzFolder, StackblitzInfo } from '../interfaces'
 export class StackblitzProjectParser {
     /** Stackblitz info inside script tag which described by this RegExp */
     private readonly regExp = /<script type="application\/json" data-redux-store="">(.*)<\/script>/;
-    private readonly stackblitzDivCssErrorClasses = [
-        'public-status error',
-        'public-section__error'
-    ];
+    private readonly stackblitzDivCssErrorClasses = ['mock_ui-preview-panel'];
 
     public parse(stackblitzProjectHtml: string): Array<StackblitzFile | StackblitzFolder> {
         this.validateStackblitzPageErrors(stackblitzProjectHtml);
@@ -30,7 +27,7 @@ export class StackblitzProjectParser {
         });
 
         if (withErrors) {
-            throw new NotFoundException(`Can't resolve project information.`);
+            throw new NotFoundException();
         }
     }
 }
