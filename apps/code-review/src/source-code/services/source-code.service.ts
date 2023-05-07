@@ -2,7 +2,7 @@ import { HttpStatus, Injectable, NotFoundException, RequestTimeoutException } fr
 import { Observable, map, retry, throwError, timer } from 'rxjs';
 import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from '../adapters';
 import { StackblitzApi } from '../api';
-import { validateSourceUrl } from '../helpers';
+import { sortProjectEntitiesRecursively, validateSourceUrl } from '../helpers';
 import { StackblitzProjectParser } from '../parsers';
 import { ProjectEntity } from '../types';
 
@@ -24,6 +24,7 @@ export class SourceCodeService {
         return this.stackblitzApi.getStackblitzHtml(stackblitzUrl).pipe(
             map((html) => this.stackblitzProjectParser.parse(html)),
             map((data) => adaptStackblitzEntitiesToProjectEntities(data)),
+            map((data) => sortProjectEntitiesRecursively(data)),
             retry({
                 delay: (error, retryCount) => {
                     // Error might be from parser or from stackblitz (status in different fields)
