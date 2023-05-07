@@ -66,8 +66,8 @@ export class CommentsController {
         return this.commentDtoService.getAllPerFileLine(reviewRequestId, fileFullPath, lineNumber);
     }
 
-    @Get(`:id/comments/amount`)
-    @ApiOperation({ summary: 'Get amount of comments per line of code in each file' })
+    @Get(`:id/comments/amount-per-files`)
+    @ApiOperation({ summary: 'Get amount of comments per each file' })
     @ApiResponse({
         status: HttpStatus.OK,
         schema: COMMENT_AMOUNT_RESPONSE_EXAMPLE
