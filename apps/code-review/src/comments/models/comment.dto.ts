@@ -21,4 +21,12 @@ export class CommentDto {
     @Expose()
     @ApiProperty()
     public readonly date: string;
+
+    @Expose()
+    @ApiProperty()
+    public readonly fileFullPath: string;
+
+    @Expose()
+    @ApiProperty()
+    public readonly lineNumber: number;
 }
