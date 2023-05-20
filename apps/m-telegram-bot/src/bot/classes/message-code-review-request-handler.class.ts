@@ -15,13 +15,8 @@ export class MessageCodeReviewRequestHandler implements MessageHandler {
     constructor(public readonly moduleRef: ModuleRef) {}
 
     public handle(message: TelegramBot.Message): void {
-        // TODO: Add real logic
-        const isProduction = this.config.get(ENVIRONMENT_KEY.Production);
-
-        if (!isProduction) {
-            this.bot.deleteMessage(message.chat.id, message.message_id.toString());
-            this.sendMessageAboutReviewRequest(message);
-        }
+        this.bot.deleteMessage(message.chat.id, message.message_id.toString());
+        this.sendMessageAboutReviewRequest(message);
     }
 
     private sendMessageAboutReviewRequest(message: TelegramBot.Message): void {

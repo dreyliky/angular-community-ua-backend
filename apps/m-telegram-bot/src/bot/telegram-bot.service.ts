@@ -13,7 +13,6 @@ export class TelegramBotService {
 
     private initMessageObserver(): void {
         this.bot.addListener('message', (message: TelegramBot.Message) => {
-            console.log(message);
             const messageHandler = this.messageHandlerFactory.create(message);
 
             messageHandler.handle(message);
