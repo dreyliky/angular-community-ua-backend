@@ -1,7 +1,7 @@
 import { LoggerModule } from '@acua/shared/logger';
+import { TelegramBotModule } from '@m-telegram-bot/bot';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { TelegramBotModule } from '@telegram-bot/bot';
 
 @Module({
     imports: [

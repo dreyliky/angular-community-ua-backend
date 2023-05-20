@@ -1,6 +1,6 @@
+import { ENVIRONMENT_KEY } from '@m-telegram-bot/core';
 import { Provider } from '@nestjs/common/interfaces';
 import { ConfigService } from '@nestjs/config';
-import { ENVIRONMENT_KEY } from '@telegram-bot/core';
 import * as TelegramBot from 'node-telegram-bot-api';
 
 export const TELEGRAM_BOT_PROVIDER: Provider = {

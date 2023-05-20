@@ -1,7 +1,7 @@
+import { ENVIRONMENT_KEY } from '@m-telegram-bot/core';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
-import { ENVIRONMENT_KEY } from '@telegram-bot/core';
 import type { Message } from 'node-telegram-bot-api';
 import {
     MessageCodeReviewRequestHandler,

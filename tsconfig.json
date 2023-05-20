@@ -20,7 +20,7 @@
         "paths": {
             "@main/*": ["apps/main/src/*"],
             "@code-review/*": ["apps/code-review/src/*"],
-            "@telegram-bot/*": ["apps/telegram-bot/src/*"],
+            "@m-telegram-bot/*": ["apps/m-telegram-bot/src/*"],
             "@acua/shared": ["libs/shared/src"],
             "@acua/shared/*": ["libs/shared/src/modules/*"]
         }

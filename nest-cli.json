@@ -40,21 +40,6 @@
                 ]
             }
         },
-        "telegram-bot": {
-            "type": "application",
-            "root": "apps/telegram-bot",
-            "entryFile": "main",
-            "sourceRoot": "apps/telegram-bot/src",
-            "compilerOptions": {
-                "tsConfigPath": "apps/telegram-bot/tsconfig.app.json",
-                "assets": [
-                    {
-                        "include": ".env",
-                        "watchAssets": true
-                    }
-                ]
-            }
-        },
         "shared": {
             "type": "library",
             "root": "libs/shared",
@@ -86,6 +71,21 @@
             "sourceRoot": "apps/m-token/src",
             "compilerOptions": {
                 "tsConfigPath": "apps/m-token/tsconfig.app.json",
+                "assets": [
+                    {
+                        "include": ".env",
+                        "watchAssets": true
+                    }
+                ]
+            }
+        },
+        "m-telegram-bot": {
+            "type": "application",
+            "root": "apps/m-telegram-bot",
+            "entryFile": "main",
+            "sourceRoot": "apps/m-telegram-bot/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/m-telegram-bot/tsconfig.app.json",
                 "assets": [
                     {
                         "include": ".env",

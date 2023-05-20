@@ -10,7 +10,7 @@
         "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
         "start:dev:code-review": "nest start code-review --watch",
         "start:dev:main": "nest start main --watch",
-        "start:dev:telegram-bot": "nest start telegram-bot --watch",
+        "start:dev:m-telegram-bot": "nest start m-telegram-bot --watch",
         "start:dev:m-user": "nest start m-user --watch",
         "start:dev:m-token": "nest start m-token --watch",
         "lint": "eslint **/*.ts",

@@ -23,9 +23,6 @@ $ npm run start:dev:code-review
 
 # main
 $ npm run start:dev:main
-
-# telegram-bot
-$ npm run start:dev:telegram-bot
 ```
 
 ## Запуск мікро-сервісів
@@ -36,4 +33,7 @@ $ npm run start:dev:m-user
 
 # token microservice
 $ npm run start:dev:m-token
+
+# telegram-bot microservice
+$ npm run start:dev:m-telegram-bot
 ```

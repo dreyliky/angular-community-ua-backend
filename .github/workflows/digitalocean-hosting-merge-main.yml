@@ -24,13 +24,13 @@ jobs:
         run: |
           npm run build main
           npm run build code-review
-          npm run build telegram-bot
+          npm run build m-telegram-bot
           npm run build m-token
           npm run build m-user
       - name: Restart server applications
         run: |
           pm2 restart acua-main
           pm2 restart acua-code-review
-          pm2 restart acua-telegram-bot
+          pm2 restart acua-m-telegram-bot
           pm2 restart acua-m-token
           pm2 restart acua-m-user
