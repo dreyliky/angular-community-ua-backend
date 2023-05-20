@@ -4,7 +4,7 @@ import {
     USER_MICROSERVICE
 } from '@acua/shared/m-user';
 import { User, UserDocument } from '@acua/shared/m-user/schemas';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
@@ -71,8 +71,16 @@ export class ReviewRequestDocumentService {
         return createdModel.save();
     }
 
-    public async edit(id: string, data: ReviewRequestUpdateDto): Promise<unknown> {
-        await this.get(id);
+    public async edit(
+        id: string,
+        user: AuthorizedUser,
+        data: ReviewRequestUpdateDto
+    ): Promise<unknown> {
+        const reviewRequest = await this.get(id);
+
+        if (reviewRequest.user.tgId !== user.tgId) {
+            throw new ForbiddenException();
+        }
 
         return this.codeReviewRequestModel.updateOne({ _id: id }, data).exec();
     }

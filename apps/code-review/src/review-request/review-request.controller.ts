@@ -130,9 +130,10 @@ export class ReviewRequestController {
     @ApiBearerAuth()
     public async edit(
         @Param('id') id: string,
-        @Body() data: ReviewRequestUpdateDto
+        @Body() data: ReviewRequestUpdateDto,
+        @Req() request: AuthorizedRequest
     ): Promise<boolean> {
-        await this.reviewRequestDocumentService.edit(id, data);
+        await this.reviewRequestDocumentService.edit(id, request.user, data);
 
         return true;
     }
