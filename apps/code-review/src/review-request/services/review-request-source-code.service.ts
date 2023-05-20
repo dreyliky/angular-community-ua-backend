@@ -1,3 +1,5 @@
+import { CreationResponseDto } from '@acua/shared';
+import { AuthorizedUser } from '@acua/shared/m-user';
 import { Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { firstValueFrom } from 'rxjs';
@@ -7,7 +9,9 @@ import {
     SourceCodeService
 } from '../../source-code/services';
 import { ProjectEntity } from '../../source-code/types';
+import { ReviewRequestCreationDto } from '../models';
 import { ReviewRequestDocumentService } from './review-request-document.service';
+import { ReviewRequestDtoService } from './review-request-dto.service';
 
 @Injectable()
 export class ReviewRequestSourceCodeService {
@@ -25,6 +29,7 @@ export class ReviewRequestSourceCodeService {
 
     constructor(
         private readonly moduleRef: ModuleRef,
+        private readonly reviewRequestDtoService: ReviewRequestDtoService,
         private readonly reviewRequestDocumentService: ReviewRequestDocumentService
     ) {}
 
@@ -32,11 +37,15 @@ export class ReviewRequestSourceCodeService {
         return this.sourceCodeDtoService.get(reviewRequestId);
     }
 
-    public async downloadAndSaveToDb(reviewRequestId: string): Promise<unknown> {
-        const reviewRequestDocument = await this.reviewRequestDocumentService.get(reviewRequestId);
-        const sourceUrl = reviewRequestDocument.sourceUrl;
-        const sourceCode = await firstValueFrom(this.sourceCodeService.get(sourceUrl));
+    public async downloadAndSaveToDb(
+        user: AuthorizedUser,
+        data: ReviewRequestCreationDto
+    ): Promise<CreationResponseDto> {
+        const sourceCode = await firstValueFrom(this.sourceCodeService.get(data.sourceUrl));
+        const response = await this.reviewRequestDtoService.create(data, user);
+        const reviewRequestDocument = await this.reviewRequestDocumentService.get(response.id);
+        this.sourceCodeDocumentService.create(reviewRequestDocument, sourceCode);
 
-        return this.sourceCodeDocumentService.create(reviewRequestDocument, sourceCode);
+        return response;
     }
 }

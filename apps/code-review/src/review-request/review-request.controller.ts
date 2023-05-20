@@ -111,11 +111,7 @@ export class ReviewRequestController {
         @Req() request: AuthorizedRequest,
         @Body() reviewDataRequest: ReviewRequestCreationDto
     ): Promise<CreationResponseDto> {
-        const response = await this.reviewRequestDtoService.create(reviewDataRequest, request.user);
-
-        await this.sourceCodeService.downloadAndSaveToDb(response.id);
-
-        return response;
+        return this.sourceCodeService.downloadAndSaveToDb(request.user, reviewDataRequest);
     }
 
     @Patch(`:id`)

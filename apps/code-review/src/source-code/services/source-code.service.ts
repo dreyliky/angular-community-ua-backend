@@ -28,7 +28,7 @@ export class SourceCodeService {
             retry({
                 delay: (error, retryCount) => {
                     // Error might be from parser or from stackblitz (status in different fields)
-                    const status = error.status ?? error.response.status;
+                    const status = error?.status ?? error?.response?.status;
 
                     if (status === HttpStatus.NOT_FOUND) {
                         return throwError(
