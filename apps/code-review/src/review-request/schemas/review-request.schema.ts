@@ -16,7 +16,7 @@ export class ReviewRequest {
     @Prop()
     public description: string;
 
-    @Prop({ type: String, enum: ReviewStatus, default: ReviewStatus.Opened })
+    @Prop({ type: Number, enum: ReviewStatus, default: ReviewStatus.Opened })
     public status?: ReviewStatus;
 
     @Prop()

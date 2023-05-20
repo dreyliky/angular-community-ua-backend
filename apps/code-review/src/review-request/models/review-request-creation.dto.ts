@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { isSourceUrlValid } from '../decorators';
 
 export class ReviewRequestCreationDto {
     @ApiProperty()
+    @IsString()
     @IsNotEmpty()
     public readonly description: string;
 

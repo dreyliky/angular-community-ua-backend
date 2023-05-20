@@ -8,14 +8,19 @@ import {
     Param,
     Patch,
     Post,
+    Query,
     Req,
     UseGuards,
     UsePipes,
     ValidationPipe
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ReviewRequestStatusEnum } from './enums';
-import { ReviewRequestCreationDto, ReviewRequestDto } from './models';
+import {
+    ReviewRequestCreationDto,
+    ReviewRequestDto,
+    ReviewRequestFiltersDto,
+    ReviewRequestUpdateDto
+} from './models';
 import {
     ReviewRequestDocumentService,
     ReviewRequestDtoService,
@@ -58,25 +63,21 @@ export class ReviewRequestController {
         return this.reviewRequestDtoService.getAllMy(request.user.tgId);
     }
 
-    @Get(`/status/:status`)
+    @Get(`/filter`)
+    @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true, whitelist: true }))
     @ApiOperation({
-        summary: 'Get all review requests with specific status'
+        summary: 'Get multiple review requests filtered by fields'
     })
     @ApiResponse({
-        description: `Returns code review requests`,
+        description: `Returns filtered code review requests`,
         status: HttpStatus.OK,
         type: ReviewRequestDto,
         isArray: true
     })
-    @ApiParam({
-        name: 'status',
-        description: 'Status type to filter review requests by',
-        enum: ReviewRequestStatusEnum
-    })
-    public getAllWithStatus(
-        @Param('status') status: ReviewRequestStatusEnum
+    public getMultipleFiltered(
+        @Query() filters: ReviewRequestFiltersDto
     ): Promise<ReviewRequestDto[]> {
-        return this.reviewRequestDtoService.getAllWithStatus(status);
+        return this.reviewRequestDtoService.getMultipleFiltered(filters);
     }
 
     @Get(`:id`)
@@ -117,9 +118,10 @@ export class ReviewRequestController {
         return response;
     }
 
-    @Patch(`:id/status/:statusId`)
+    @Patch(`:id`)
     @UseGuards(JwtAuthGuard)
-    @ApiOperation({ summary: 'Update code review request status' })
+    @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true, whitelist: true }))
+    @ApiOperation({ summary: 'Update review request' })
     @ApiResponse({
         status: HttpStatus.OK,
         type: Boolean
@@ -129,17 +131,12 @@ export class ReviewRequestController {
         description: 'Specifies which code review request should be updated',
         type: 'string'
     })
-    @ApiParam({
-        name: 'statusId',
-        description: 'Changes the status of code review request (Opened - 1 | Closed - 2)',
-        enum: ReviewRequestStatusEnum
-    })
     @ApiBearerAuth()
-    public async updateStatus(
+    public async edit(
         @Param('id') id: string,
-        @Param('statusId') status: ReviewRequestStatusEnum
+        @Body() data: ReviewRequestUpdateDto
     ): Promise<boolean> {
-        await this.reviewRequestDocumentService.editStatus(id, status);
+        await this.reviewRequestDocumentService.edit(id, data);
 
         return true;
     }

@@ -1,33 +1,36 @@
 import { UserDto } from '@acua/shared/m-user';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Transform, Type } from 'class-transformer';
+import { IsEnum, IsString } from 'class-validator';
 import { ReviewRequestStatusEnum } from '../enums';
 
 @Exclude()
 export class ReviewRequestDto {
+    @ApiProperty()
     @Expose({ name: '_id' })
     @Transform(({ obj: document }) => document._id.toString())
-    @ApiProperty()
     public readonly id: string;
 
+    @ApiProperty()
     @Expose()
     @Type(() => UserDto)
-    @ApiProperty()
     public readonly user: UserDto;
 
-    @Expose()
     @ApiProperty()
+    @Expose()
+    @IsString()
     public readonly description: string;
 
-    @Expose()
     @ApiProperty({ enum: ReviewRequestStatusEnum })
+    @Expose()
+    @IsEnum(ReviewRequestStatusEnum)
     public readonly status: ReviewRequestStatusEnum;
 
-    @Expose()
     @ApiProperty()
+    @Expose()
     public readonly sourceUrl: string;
 
-    @Expose()
     @ApiProperty()
+    @Expose()
     public readonly date: Date;
 }

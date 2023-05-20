@@ -10,8 +10,11 @@ import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, FilterQuery, LeanDocument, Model, Query } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
-import { ReviewRequestStatusEnum } from '../enums';
-import { ReviewRequestCreationDto } from '../models';
+import {
+    ReviewRequestCreationDto,
+    ReviewRequestFiltersDto,
+    ReviewRequestUpdateDto
+} from '../models';
 import { ReviewRequest, ReviewRequestDocument } from '../schemas';
 
 @Injectable()
@@ -38,8 +41,8 @@ export class ReviewRequestDocumentService {
         return this.find().exec();
     }
 
-    public getAllWithStatus(status: ReviewRequestStatusEnum): Promise<ReviewRequestDocument[]> {
-        return this.find({ status }).exec();
+    public getMultipleFiltered(data: ReviewRequestFiltersDto): Promise<ReviewRequestDocument[]> {
+        return this.find(data).exec();
     }
 
     public async getAllMy(userTgId: number): Promise<LeanDocument<ReviewRequest>[]> {
@@ -68,10 +71,10 @@ export class ReviewRequestDocumentService {
         return createdModel.save();
     }
 
-    public async editStatus(id: string, status: ReviewRequestStatusEnum): Promise<unknown> {
+    public async edit(id: string, data: ReviewRequestUpdateDto): Promise<unknown> {
         await this.get(id);
 
-        return this.codeReviewRequestModel.updateOne({ _id: id }, { status }).exec();
+        return this.codeReviewRequestModel.updateOne({ _id: id }, data).exec();
     }
 
     private find(filters?: FilterQuery<ReviewRequest>): Query<any, ReviewRequestDocument> {
