@@ -26,9 +26,9 @@ jobs:
         run: |
           cp ~/envs/3000/.env dist/apps/main/.env
           cp ~/envs/3001/.env dist/apps/code-review/.env
-          cp ~/envs/4002/.env dist/apps/m-telegram-bot/.env
           cp ~/envs/5001/.env dist/apps/m-token/.env
           cp ~/envs/5002/.env dist/apps/m-user/.env
+          cp ~/envs/5003/.env dist/apps/m-telegram-bot/.env
       - name: Setup SSL
         run: |
           cp ~/cert/certificate.crt dist/apps/main/certificate.crt
