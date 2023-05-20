@@ -10,7 +10,6 @@ import {
     SourceCodeService,
     SourceUrlService
 } from './services';
-import { SourceCodeController } from './source-code.controller';
 import { SourceUrlController } from './source-url.controller';
 
 @Module({
@@ -18,7 +17,7 @@ import { SourceUrlController } from './source-url.controller';
         HttpModule,
         MongooseModule.forFeature([{ name: SourceCode.name, schema: SourceCodeSchema }])
     ],
-    controllers: [SourceCodeController, SourceUrlController],
+    controllers: [SourceUrlController],
     providers: [
         SourceCodeService,
         SourceUrlService,
