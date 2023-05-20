@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { ENVIRONMENT_KEY } from './core';
+import { ENVIRONMENT_KEY } from './data';
 
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {

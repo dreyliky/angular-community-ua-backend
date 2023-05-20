@@ -1,4 +1,3 @@
-import { ENVIRONMENT_KEY } from '@m-telegram-bot/core';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
@@ -8,6 +7,7 @@ import {
     MessageLanguageHandler,
     MessageNotFromAcuaGroupHandler
 } from '../classes';
+import { ENVIRONMENT_KEY } from '../data';
 import { MessageHandler } from '../interfaces';
 
 @Injectable()

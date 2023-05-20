@@ -3,7 +3,7 @@ import * as TelegramBot from 'node-telegram-bot-api';
 import { MessageHandlerFactory } from './services';
 
 @Injectable()
-export class TelegramBotService {
+export class AppService {
     constructor(
         private readonly bot: TelegramBot,
         private readonly messageHandlerFactory: MessageHandlerFactory

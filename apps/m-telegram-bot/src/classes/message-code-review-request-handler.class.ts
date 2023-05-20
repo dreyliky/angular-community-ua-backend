@@ -1,7 +1,7 @@
-import { ENVIRONMENT_KEY } from '@m-telegram-bot/core';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
 import * as TelegramBot from 'node-telegram-bot-api';
+import { ENVIRONMENT_KEY } from '../data';
 import { MessageHandler } from '../interfaces';
 
 export class MessageCodeReviewRequestHandler implements MessageHandler {
