@@ -1,8 +1,14 @@
 import { CreationResponseDto } from '@acua/shared';
-import { ProjectEntity, ReviewRequestCreationDto } from '@acua/shared/code-review';
+import {
+    ProjectEntity,
+    ReviewRequestCreationDto,
+    ReviewRequestDto
+} from '@acua/shared/code-review';
+import { TelegramBotMS } from '@acua/shared/m-telegram-bot';
 import { AuthorizedUser } from '@acua/shared/m-user';
 import { Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
+import { plainToInstance } from 'class-transformer';
 import { firstValueFrom } from 'rxjs';
 import {
     SourceCodeDocumentService,
@@ -29,13 +35,15 @@ export class ReviewRequestSourceCodeService {
     constructor(
         private readonly moduleRef: ModuleRef,
         private readonly reviewRequestDtoService: ReviewRequestDtoService,
-        private readonly reviewRequestDocumentService: ReviewRequestDocumentService
+        private readonly reviewRequestDocumentService: ReviewRequestDocumentService,
+        private readonly telegramBotMS: TelegramBotMS
     ) {}
 
     public get(reviewRequestId: string): Promise<ProjectEntity[]> {
         return this.sourceCodeDtoService.get(reviewRequestId);
     }
 
+    // FIXME: Refactor
     public async downloadAndSaveToDb(
         user: AuthorizedUser,
         data: ReviewRequestCreationDto
@@ -43,7 +51,10 @@ export class ReviewRequestSourceCodeService {
         const sourceCode = await firstValueFrom(this.sourceCodeService.get(data.sourceUrl));
         const response = await this.reviewRequestDtoService.create(data, user);
         const reviewRequestDocument = await this.reviewRequestDocumentService.get(response.id);
-        this.sourceCodeDocumentService.create(reviewRequestDocument, sourceCode);
+        const reviewDto = plainToInstance(ReviewRequestDto, reviewRequestDocument.toObject());
+
+        await this.sourceCodeDocumentService.create(reviewRequestDocument, sourceCode);
+        this.telegramBotMS.onReviewRequestCreated(reviewDto);
 
         return response;
     }

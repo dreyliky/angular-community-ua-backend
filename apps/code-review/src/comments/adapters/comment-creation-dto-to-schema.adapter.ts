@@ -4,7 +4,7 @@ import { Schema } from '@acua/shared/mongo';
 export function adaptCommentCreationDtoToSchema(
     data: CommentCreationDto,
     reviewRequest: Schema.Cr.ReviewRequest,
-    user: Schema.User
+    user: Schema.UserDoc
 ): Partial<Schema.Cr.ReviewRequestComment> {
     return {
         ...data,

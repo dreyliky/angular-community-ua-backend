@@ -3,29 +3,18 @@ import {
     ReviewRequestFiltersDto,
     ReviewRequestUpdateDto
 } from '@acua/shared/code-review';
-import {
-    AuthorizedUser,
-    CommandEnum as M_UserCommand,
-    USER_MICROSERVICE
-} from '@acua/shared/m-user';
+import { AuthorizedUser, UserMS } from '@acua/shared/m-user';
 import { Schema } from '@acua/shared/mongo';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
-import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, FilterQuery, LeanDocument, Model, Query } from 'mongoose';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class ReviewRequestDocumentService {
-    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(USER_MICROSERVICE, {
-        strict: false
-    });
-
     constructor(
         @InjectModel(Schema.Cr.ReviewRequest.name)
         private readonly codeReviewRequestModel: Model<Schema.Cr.ReviewRequestDoc>,
-        private readonly moduleRef: ModuleRef
+        private readonly userService: UserMS
     ) {}
 
     public get(id: string): Promise<Schema.Cr.ReviewRequestDoc> {
@@ -47,9 +36,7 @@ export class ReviewRequestDocumentService {
     }
 
     public async getAllMy(userTgId: number): Promise<LeanDocument<Schema.Cr.ReviewRequest>[]> {
-        const user = await firstValueFrom(
-            this.userMicroservice.send<Schema.UserDoc>(M_UserCommand.GetByTgId, userTgId)
-        );
+        const user = await this.userService.getByTgId(userTgId);
         const reviewRequestDocuments = await this.find({ user: user._id }).lean().exec();
 
         reviewRequestDocuments.forEach((document) => (document.user = user));
@@ -61,11 +48,9 @@ export class ReviewRequestDocumentService {
         reviewDataRequest: ReviewRequestCreationDto,
         user: AuthorizedUser
     ): Promise<Document> {
-        const userDocument = await firstValueFrom(
-            this.userMicroservice.send<Schema.User>(M_UserCommand.GetByTgId, user.tgId)
-        );
+        const userDocument = await this.userService.getByTgId(user.tgId);
         const createdModel = new this.codeReviewRequestModel(<Schema.Cr.ReviewRequest>{
-            user: userDocument,
+            user: userDocument as Schema.User,
             ...reviewDataRequest
         });
 

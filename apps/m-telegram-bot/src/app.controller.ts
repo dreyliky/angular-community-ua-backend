@@ -1,17 +1,21 @@
+import { ReviewRequestDto } from '@acua/shared/code-review';
 import { CommandEnum } from '@acua/shared/m-telegram-bot';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
-import { ReviewRequestDto } from './interfaces';
+import { ReviewRequestMessageService } from './services';
 
 @Controller()
 export class AppController {
-    constructor(private readonly appService: AppService) {}
+    constructor(
+        private readonly appService: AppService,
+        private readonly reviewRequestMessageService: ReviewRequestMessageService
+    ) {}
 
     @MessagePattern(CommandEnum.ReviewRequestCreated)
-    public onReviewRequestCreated(data: ReviewRequestDto): Promise<string> {
-        console.log(data);
+    public onReviewRequestCreated(data: ReviewRequestDto): boolean {
+        this.reviewRequestMessageService.create(data);
 
-        return null;
+        return true;
     }
 }

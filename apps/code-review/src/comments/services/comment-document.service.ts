@@ -1,25 +1,15 @@
 import { CommentCreationDto, CommentEditingDto } from '@acua/shared/code-review';
-import {
-    AuthorizedUser,
-    CommandEnum as M_UserCommand,
-    USER_MICROSERVICE
-} from '@acua/shared/m-user';
+import { AuthorizedUser, UserMS } from '@acua/shared/m-user';
 import { Schema } from '@acua/shared/mongo';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, Model } from 'mongoose';
-import { firstValueFrom } from 'rxjs';
 import { ReviewRequestDocumentService } from '../../review-request/services';
 import { adaptCommentCreationDtoToSchema } from '../adapters';
 
 @Injectable()
 export class CommentDocumentService {
-    private readonly userMicroservice = this.moduleRef.get<ClientProxy>(USER_MICROSERVICE, {
-        strict: false
-    });
-
     private readonly reviewRequestService = this.moduleRef.get(ReviewRequestDocumentService, {
         strict: false
     });
@@ -27,6 +17,7 @@ export class CommentDocumentService {
     constructor(
         @InjectModel(Schema.Cr.ReviewRequestComment.name)
         private readonly commentModel: Model<Schema.Cr.ReviewRequestCommentDoc>,
+        private readonly userService: UserMS,
         private readonly moduleRef: ModuleRef
     ) {}
 
@@ -53,9 +44,7 @@ export class CommentDocumentService {
         reviewRequestId: string,
         userTgId: number
     ): Promise<Document> {
-        const userDocument = await firstValueFrom(
-            this.userMicroservice.send<Schema.User>(M_UserCommand.GetByTgId, userTgId)
-        );
+        const userDocument = await this.userService.getByTgId(userTgId);
         const reviewRequestDocument = await this.reviewRequestService.get(reviewRequestId);
         const comment = adaptCommentCreationDtoToSchema(data, reviewRequestDocument, userDocument);
         const commentModel = new this.commentModel(comment);
