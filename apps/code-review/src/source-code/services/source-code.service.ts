@@ -1,10 +1,10 @@
+import { ProjectEntity, validateSourceUrl } from '@acua/common/code-review';
 import { HttpStatus, Injectable, NotFoundException, RequestTimeoutException } from '@nestjs/common';
 import { Observable, map, retry, throwError, timer } from 'rxjs';
 import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from '../adapters';
 import { StackblitzApi } from '../api';
-import { sortProjectEntitiesRecursively, validateSourceUrl } from '../helpers';
+import { sortProjectEntitiesRecursively } from '../helpers';
 import { StackblitzProjectParser } from '../parsers';
-import { ProjectEntity } from '../types';
 
 @Injectable()
 export class SourceCodeService {

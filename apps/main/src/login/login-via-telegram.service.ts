@@ -2,9 +2,9 @@ import {
     CommandEnum as M_TokenCommand,
     TOKEN_MICROSERVICE,
     TokenPayload
-} from '@acua/shared/m-token';
-import { CommandEnum as M_UserCommand, USER_MICROSERVICE } from '@acua/shared/m-user';
-import { User } from '@acua/shared/m-user/schemas';
+} from '@acua/common/m-token';
+import { CommandEnum as M_UserCommand, USER_MICROSERVICE } from '@acua/common/m-user';
+import { User } from '@acua/shared/mongo';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';

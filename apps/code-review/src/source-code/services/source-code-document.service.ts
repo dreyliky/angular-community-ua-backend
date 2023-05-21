@@ -1,23 +1,25 @@
+import { ProjectEntity } from '@acua/common/code-review';
+import { CrReviewRequestDocument, CrSourceCode, CrSourceCodeDocument } from '@acua/shared/mongo';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, Model } from 'mongoose';
-import { ReviewRequestDocument } from '../../review-request/schemas';
-import { SourceCode, SourceCodeDocument } from '../schemas';
-import { ProjectEntity } from '../types';
 
 @Injectable()
 export class SourceCodeDocumentService {
     constructor(
-        @InjectModel(SourceCode.name)
-        private readonly sourceCodeModel: Model<SourceCodeDocument>
+        @InjectModel(CrSourceCode.name)
+        private readonly sourceCodeModel: Model<CrSourceCodeDocument>
     ) {}
 
-    public get(reviewRequestId: string): Promise<SourceCodeDocument> {
+    public get(reviewRequestId: string): Promise<CrSourceCodeDocument> {
         return this.sourceCodeModel.findOne({ reviewRequest: reviewRequestId }).exec();
     }
 
-    public create(reviewRequest: ReviewRequestDocument, data: ProjectEntity[]): Promise<Document> {
-        const createdModel = new this.sourceCodeModel(<SourceCode>{
+    public create(
+        reviewRequest: CrReviewRequestDocument,
+        data: ProjectEntity[]
+    ): Promise<Document> {
+        const createdModel = new this.sourceCodeModel(<CrSourceCode>{
             reviewRequest,
             data
         });

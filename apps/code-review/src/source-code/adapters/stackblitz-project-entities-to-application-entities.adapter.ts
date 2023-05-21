@@ -1,9 +1,13 @@
 /* eslint-disable max-lines-per-function */
-import { ProjectEntityTypeEnum } from '../enums';
+import {
+    ProjectEntity,
+    ProjectEntityTypeEnum,
+    ProjectFile,
+    ProjectFolder,
+    StackblitzEntity,
+    StackblitzFile
+} from '@acua/common/code-review';
 import { isForbiddenFile } from '../helpers';
-import { StackblitzEntity, StackblitzFile } from '../interfaces';
-import { ProjectFile, ProjectFolder } from '../models';
-import { ProjectEntity } from '../types';
 
 export function adaptStackblitzEntitiesToProjectEntities(
     data: StackblitzEntity[]

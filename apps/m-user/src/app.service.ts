@@ -1,4 +1,4 @@
-import { User, UserDocument } from '@acua/shared/m-user/schemas';
+import { User, UserDocument } from '@acua/shared/mongo';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';

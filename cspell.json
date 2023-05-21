@@ -10,7 +10,9 @@
         "commitlint",
         "acua",
         "nestjs",
-        "Parens"
+        "Parens",
+        "tgbot",
+        "mtgbot"
     ],
     "import": [],
     "words": [

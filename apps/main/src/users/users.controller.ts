@@ -1,6 +1,6 @@
+import { JwtAuthGuard } from '@acua/common/m-token';
+import { UserDto } from '@acua/common/m-user';
 import { AuthorizedRequest } from '@acua/shared';
-import { JwtAuthGuard } from '@acua/shared/m-token';
-import { UserDto } from '@acua/shared/m-user';
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpStatusCode } from 'axios';

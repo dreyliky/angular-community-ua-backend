@@ -1,21 +1,20 @@
 import {
+    ReviewRequestCreationDto,
+    ReviewRequestFiltersDto,
+    ReviewRequestUpdateDto
+} from '@acua/common/code-review';
+import {
     AuthorizedUser,
     CommandEnum as M_UserCommand,
     USER_MICROSERVICE
-} from '@acua/shared/m-user';
-import { User, UserDocument } from '@acua/shared/m-user/schemas';
+} from '@acua/common/m-user';
+import { CrReviewRequest, CrReviewRequestDocument, User, UserDocument } from '@acua/shared/mongo';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, FilterQuery, LeanDocument, Model, Query } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
-import {
-    ReviewRequestCreationDto,
-    ReviewRequestFiltersDto,
-    ReviewRequestUpdateDto
-} from '../models';
-import { ReviewRequest, ReviewRequestDocument } from '../schemas';
 
 @Injectable()
 export class ReviewRequestDocumentService {
@@ -24,12 +23,12 @@ export class ReviewRequestDocumentService {
     });
 
     constructor(
-        @InjectModel(ReviewRequest.name)
-        private readonly codeReviewRequestModel: Model<ReviewRequestDocument>,
+        @InjectModel(CrReviewRequest.name)
+        private readonly codeReviewRequestModel: Model<CrReviewRequestDocument>,
         private readonly moduleRef: ModuleRef
     ) {}
 
-    public get(id: string): Promise<ReviewRequestDocument> {
+    public get(id: string): Promise<CrReviewRequestDocument> {
         try {
             return this.codeReviewRequestModel.findOne({ _id: id }).populate('user').exec();
         } catch {
@@ -37,15 +36,15 @@ export class ReviewRequestDocumentService {
         }
     }
 
-    public getAll(): Promise<ReviewRequestDocument[]> {
+    public getAll(): Promise<CrReviewRequestDocument[]> {
         return this.find().exec();
     }
 
-    public getMultipleFiltered(data: ReviewRequestFiltersDto): Promise<ReviewRequestDocument[]> {
+    public getMultipleFiltered(data: ReviewRequestFiltersDto): Promise<CrReviewRequestDocument[]> {
         return this.find(data).exec();
     }
 
-    public async getAllMy(userTgId: number): Promise<LeanDocument<ReviewRequest>[]> {
+    public async getAllMy(userTgId: number): Promise<LeanDocument<CrReviewRequest>[]> {
         const user = await firstValueFrom(
             this.userMicroservice.send<UserDocument>(M_UserCommand.GetByTgId, userTgId)
         );
@@ -63,7 +62,7 @@ export class ReviewRequestDocumentService {
         const userDocument = await firstValueFrom(
             this.userMicroservice.send<User>(M_UserCommand.GetByTgId, user.tgId)
         );
-        const createdModel = new this.codeReviewRequestModel(<ReviewRequest>{
+        const createdModel = new this.codeReviewRequestModel(<CrReviewRequest>{
             user: userDocument,
             ...reviewDataRequest
         });
@@ -85,7 +84,7 @@ export class ReviewRequestDocumentService {
         return this.codeReviewRequestModel.updateOne({ _id: id }, data).exec();
     }
 
-    private find(filters?: FilterQuery<ReviewRequest>): Query<any, ReviewRequestDocument> {
+    private find(filters?: FilterQuery<CrReviewRequest>): Query<any, CrReviewRequestDocument> {
         return this.codeReviewRequestModel.find(filters).populate('user').sort({ date: 'desc' });
     }
 }

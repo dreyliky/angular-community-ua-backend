@@ -1,7 +1,7 @@
 import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ProjectFile, ProjectFolder } from '../../source-code/models';
-import { ProjectEntity } from '../../source-code/types';
+import { ProjectFile, ProjectFolder } from '../../../../../libs/common/src/code-review/dto';
+import { ProjectEntity } from '../../../../../libs/common/src/code-review/types';
 import { ReviewRequestSourceCodeService } from '../services';
 
 @ApiTags('Source Code')

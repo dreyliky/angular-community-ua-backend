@@ -1,1 +1,1 @@
-export * from './message-handler.factory';
+export * from './review-request-message.service';

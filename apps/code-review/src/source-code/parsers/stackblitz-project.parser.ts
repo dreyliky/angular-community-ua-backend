@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-concat */
+import { StackblitzFile, StackblitzFolder, StackblitzInfo } from '@acua/common/code-review';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { StackblitzFile, StackblitzFolder, StackblitzInfo } from '../interfaces';
 
 @Injectable()
 export class StackblitzProjectParser {

@@ -1,5 +1,5 @@
+import { ProjectEntity } from '@acua/common/code-review';
 import { Injectable } from '@nestjs/common';
-import { ProjectEntity } from '../types';
 import { SourceCodeDocumentService } from './source-code-document.service';
 
 @Injectable()

@@ -1,9 +1,9 @@
-import { UserDto } from '@acua/shared/m-user';
-import { ReviewRequestDto } from '../models';
-import { ReviewRequestDocument } from '../schemas';
+import { ReviewRequestDto } from '@acua/common/code-review';
+import { UserDto } from '@acua/common/m-user';
+import { CrReviewRequestDocument } from '@acua/shared/mongo';
 
 export function adaptReviewRequestDocumentToDto(
-    data: ReviewRequestDocument,
+    data: CrReviewRequestDocument,
     user: UserDto
 ): ReviewRequestDto {
     return {

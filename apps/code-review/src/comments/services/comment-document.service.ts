@@ -1,9 +1,14 @@
+import { CommentCreationDto, CommentEditingDto } from '@acua/common/code-review';
 import {
     AuthorizedUser,
     CommandEnum as M_UserCommand,
     USER_MICROSERVICE
-} from '@acua/shared/m-user';
-import { User } from '@acua/shared/m-user/schemas';
+} from '@acua/common/m-user';
+import {
+    CrReviewRequestComment as Comment,
+    CrReviewRequestCommentDocument as CommentDocument,
+    User
+} from '@acua/shared/mongo';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
@@ -12,8 +17,6 @@ import { Document, Model } from 'mongoose';
 import { firstValueFrom } from 'rxjs';
 import { ReviewRequestDocumentService } from '../../review-request/services';
 import { adaptCommentCreationDtoToSchema } from '../adapters';
-import { CommentCreationDto, CommentEditingDto } from '../models';
-import { Comment, CommentDocument } from '../schemas';
 
 @Injectable()
 export class CommentDocumentService {

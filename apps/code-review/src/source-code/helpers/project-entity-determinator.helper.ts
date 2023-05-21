@@ -1,6 +1,9 @@
-import { ProjectEntityTypeEnum } from '../enums';
-import { ProjectFile, ProjectFolder } from '../models';
-import { ProjectEntity } from '../types';
+import {
+    ProjectEntity,
+    ProjectEntityTypeEnum,
+    ProjectFile,
+    ProjectFolder
+} from '@acua/common/code-review';
 
 export function isProjectFile(entity: ProjectEntity): entity is ProjectFile {
     return entity.type === ProjectEntityTypeEnum.File;

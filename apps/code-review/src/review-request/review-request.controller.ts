@@ -1,5 +1,11 @@
+import {
+    ReviewRequestCreationDto,
+    ReviewRequestDto,
+    ReviewRequestFiltersDto,
+    ReviewRequestUpdateDto
+} from '@acua/common/code-review';
+import { JwtAuthGuard } from '@acua/common/m-token';
 import { AuthorizedRequest, CreationResponseDto } from '@acua/shared';
-import { JwtAuthGuard } from '@acua/shared/m-token';
 import {
     Body,
     Controller,
@@ -15,12 +21,6 @@ import {
     ValidationPipe
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import {
-    ReviewRequestCreationDto,
-    ReviewRequestDto,
-    ReviewRequestFiltersDto,
-    ReviewRequestUpdateDto
-} from './models';
 import {
     ReviewRequestDocumentService,
     ReviewRequestDtoService,

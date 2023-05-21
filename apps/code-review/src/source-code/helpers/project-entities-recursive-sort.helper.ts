@@ -1,4 +1,4 @@
-import { ProjectEntity } from '../types';
+import { ProjectEntity } from '@acua/common/code-review';
 import { isProjectFile, isProjectFolder } from './project-entity-determinator.helper';
 
 export function sortProjectEntitiesRecursively(entities: ProjectEntity[]): ProjectEntity[] {

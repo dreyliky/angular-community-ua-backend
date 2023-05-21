@@ -1,5 +1,5 @@
-import { CommandEnum, USER_MICROSERVICE, UserDto } from '@acua/shared/m-user';
-import { User } from '@acua/shared/m-user/schemas';
+import { CommandEnum, USER_MICROSERVICE, UserDto } from '@acua/common/m-user';
+import { User } from '@acua/shared/mongo';
 import { Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';

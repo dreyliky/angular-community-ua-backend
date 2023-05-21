@@ -1,5 +1,11 @@
+import {
+    CommentAmountDictionaryDto,
+    CommentCreationDto,
+    CommentDto,
+    CommentEditingDto
+} from '@acua/common/code-review';
+import { JwtAuthGuard } from '@acua/common/m-token';
 import { AuthorizedRequest, CreationResponseDto, RequiredQuery } from '@acua/shared';
-import { JwtAuthGuard } from '@acua/shared/m-token';
 import {
     Body,
     Controller,
@@ -23,8 +29,6 @@ import {
     ApiResponse,
     ApiTags
 } from '@nestjs/swagger';
-import { CommentAmountDictionaryDto } from './interfaces';
-import { CommentCreationDto, CommentDto, CommentEditingDto } from './models';
 import { CommentDocumentService, CommentDtoService } from './services';
 import { COMMENT_AMOUNT_RESPONSE_EXAMPLE } from './swagger-examples';
 

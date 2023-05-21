@@ -1,5 +1,5 @@
-import { CommandEnum, UserDto } from '@acua/shared/m-user';
-import { User, UserDocument } from '@acua/shared/m-user/schemas';
+import { CommandEnum, UserDto } from '@acua/common/m-user';
+import { User, UserDocument } from '@acua/shared/mongo';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { Types } from 'mongoose';

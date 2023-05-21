@@ -1,4 +1,4 @@
-import { User } from '@acua/shared/m-user/schemas';
+import { User } from '@acua/shared/mongo';
 import { TelegramLoginDto } from '../models';
 
 export function adaptTelegramResponseToUser(

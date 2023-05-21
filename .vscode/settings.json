@@ -29,5 +29,8 @@
         "scss"
     ],
     "cSpell.language": "en,uk",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#10456a"
+    }
 }

@@ -1,20 +1,17 @@
+import { TokenMicroserviceModule } from '@acua/common/m-token';
+import { UserMicroserviceModule } from '@acua/common/m-user';
+import { EnvModule } from '@acua/shared/env';
 import { LoggerModule } from '@acua/shared/logger';
-import { TokenMicroserviceModule } from '@acua/shared/m-token';
-import { UserMicroserviceModule } from '@acua/shared/m-user';
 import { MongoModule } from '@acua/shared/mongo';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { LoginModule } from './login';
 import { UsersModule } from './users';
 
 @Module({
     imports: [
-        ConfigModule.forRoot({
-            envFilePath: [`${__dirname}/.env`],
-            isGlobal: true
-        }),
+        EnvModule,
         LoggerModule,
-        MongoModule,
+        MongoModule.forRoot(),
         LoginModule,
         UsersModule,
         UserMicroserviceModule,

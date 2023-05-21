@@ -1,9 +1,8 @@
+import { MongoModule } from '@acua/shared/mongo';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { StackblitzApi } from './api';
 import { StackblitzProjectParser } from './parsers';
-import { SourceCode, SourceCodeSchema } from './schemas';
 import {
     SourceCodeDocumentService,
     SourceCodeDtoService,
@@ -13,10 +12,7 @@ import {
 import { SourceUrlController } from './source-url.controller';
 
 @Module({
-    imports: [
-        HttpModule,
-        MongooseModule.forFeature([{ name: SourceCode.name, schema: SourceCodeSchema }])
-    ],
+    imports: [HttpModule, MongoModule.forFeature()],
     controllers: [SourceUrlController],
     providers: [
         SourceCodeService,

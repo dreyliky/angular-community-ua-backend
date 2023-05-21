@@ -1,5 +1,5 @@
-import { UserDto } from '@acua/shared/m-user';
-import { User } from '@acua/shared/m-user/schemas';
+import { UserDto } from '@acua/common/m-user';
+import { User } from '@acua/shared/mongo';
 
 export function adaptUserToUserDto(user: User): UserDto {
     return {
