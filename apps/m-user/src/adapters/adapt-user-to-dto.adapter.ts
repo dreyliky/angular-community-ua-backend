@@ -1,7 +1,7 @@
 import { UserDto } from '@acua/common/m-user';
-import { User } from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 
-export function adaptUserToUserDto(user: User): UserDto {
+export function adaptUserToUserDto(user: Schema.User): UserDto {
     return {
         tgId: user.tgId,
         firstName: user.firstName,

@@ -1,11 +1,11 @@
 import { CommentCreationDto } from '@acua/common/code-review';
-import { CrReviewRequest, CrReviewRequestComment, User } from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 
 export function adaptCommentCreationDtoToSchema(
     data: CommentCreationDto,
-    reviewRequest: CrReviewRequest,
-    user: User
-): Partial<CrReviewRequestComment> {
+    reviewRequest: Schema.Cr.ReviewRequest,
+    user: Schema.User
+): Partial<Schema.Cr.ReviewRequestComment> {
     return {
         ...data,
         reviewer: user,

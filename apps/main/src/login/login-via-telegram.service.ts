@@ -4,7 +4,7 @@ import {
     TokenPayload
 } from '@acua/common/m-token';
 import { CommandEnum as M_UserCommand, USER_MICROSERVICE } from '@acua/common/m-user';
-import { User } from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
@@ -48,7 +48,7 @@ export class LoginViaTelegramService {
         const encryptedToken: string = await firstValueFrom(
             this.tokenMicroservice.send(M_TokenCommand.Encrypt, accessToken)
         );
-        const userData: User = adaptTelegramResponseToUser(data, encryptedToken);
+        const userData: Schema.User = adaptTelegramResponseToUser(data, encryptedToken);
 
         await firstValueFrom(this.userMicroservice.send(M_UserCommand.Create, userData));
 

@@ -1,3 +1,3 @@
-export * from './code-review';
-export * from './m-telegram-bot';
+export * as Cr from './cr';
+export * as TgBot from './m-tgbot';
 export * from './main';

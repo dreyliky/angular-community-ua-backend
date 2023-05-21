@@ -1,5 +1,5 @@
 import { CommandEnum, USER_MICROSERVICE, UserDto } from '@acua/common/m-user';
-import { User } from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 import { Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
@@ -15,7 +15,7 @@ export class UsersService {
 
     public getMe(userTgId: number): Promise<UserDto> {
         const userDto$ = this.userMicroservice
-            .send<User>(CommandEnum.GetByTgId, userTgId)
+            .send<Schema.User>(CommandEnum.GetByTgId, userTgId)
             .pipe(
                 switchMap((userDocument) =>
                     this.userMicroservice.send<UserDto>(CommandEnum.AdaptToDto, userDocument)

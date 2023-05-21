@@ -1,8 +1,8 @@
 import { CommentAmountDictionaryDto } from '@acua/common/code-review';
-import { CrReviewRequestCommentDocument } from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 
 export function adaptCommentDocumentsToAmountDictionary(
-    commentDocuments: CrReviewRequestCommentDocument[]
+    commentDocuments: Schema.Cr.ReviewRequestCommentDoc[]
 ): CommentAmountDictionaryDto {
     const result: CommentAmountDictionaryDto = {};
 

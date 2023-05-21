@@ -1,10 +1,10 @@
-import { User } from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 import { TelegramLoginDto } from '../models';
 
 export function adaptTelegramResponseToUser(
     dataResponse: TelegramLoginDto,
     encryptedToken: string
-): User {
+): Schema.User {
     return {
         tgId: dataResponse.id,
         firstName: dataResponse.first_name,

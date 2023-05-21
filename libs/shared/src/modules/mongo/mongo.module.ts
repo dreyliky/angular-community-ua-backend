@@ -1,29 +1,21 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { DynamicModule, Module, Type } from '@nestjs/common';
+import { ModelDefinition, MongooseModule, SchemaFactory } from '@nestjs/mongoose';
 import { MONGO_CONFIG } from './constants';
-import {
-    CrReviewRequest,
-    CrReviewRequestComment,
-    CrReviewRequestCommentSchema,
-    CrReviewRequestSchema,
-    CrSourceCode,
-    CrSourceCodeSchema,
-    MtgbotReviewRequestTgMessageRef,
-    MtgbotReviewRequestTgMessageRefSchema,
-    User,
-    UserSchema
-} from './schemas';
+import { Cr, TgBot, User } from './schemas';
 
-const MONGOOSE_WITH_MODELS_DEF = MongooseModule.forFeature([
-    { name: User.name, schema: UserSchema },
-    { name: CrReviewRequestComment.name, schema: CrReviewRequestCommentSchema },
-    { name: CrReviewRequest.name, schema: CrReviewRequestSchema },
-    { name: CrSourceCode.name, schema: CrSourceCodeSchema },
-    {
-        name: MtgbotReviewRequestTgMessageRef.name,
-        schema: MtgbotReviewRequestTgMessageRefSchema
-    }
-]);
+const SCHEMAS: Type<unknown>[] = [
+    User,
+    Cr.ReviewRequestComment,
+    Cr.ReviewRequest,
+    Cr.SourceCode,
+    TgBot.ReviewRequestTgMessageRef
+];
+
+const SCHEMA_MODELS_DEF: ModelDefinition[] = SCHEMAS.map((schema) => {
+    return { name: schema.name, schema: SchemaFactory.createForClass(schema) };
+});
+
+const MONGOOSE_WITH_MODELS_DEF = MongooseModule.forFeature(SCHEMA_MODELS_DEF);
 
 @Module({})
 export class MongoModule {

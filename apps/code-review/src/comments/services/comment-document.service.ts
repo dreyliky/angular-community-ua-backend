@@ -4,11 +4,7 @@ import {
     CommandEnum as M_UserCommand,
     USER_MICROSERVICE
 } from '@acua/common/m-user';
-import {
-    CrReviewRequestComment as Comment,
-    CrReviewRequestCommentDocument as CommentDocument,
-    User
-} from '@acua/shared/mongo';
+import { Schema } from '@acua/shared/mongo';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
@@ -29,12 +25,12 @@ export class CommentDocumentService {
     });
 
     constructor(
-        @InjectModel(Comment.name)
-        private readonly commentModel: Model<CommentDocument>,
+        @InjectModel(Schema.Cr.ReviewRequestComment.name)
+        private readonly commentModel: Model<Schema.Cr.ReviewRequestCommentDoc>,
         private readonly moduleRef: ModuleRef
     ) {}
 
-    public getAll(reviewRequestId: string): Promise<CommentDocument[]> {
+    public getAll(reviewRequestId: string): Promise<Schema.Cr.ReviewRequestCommentDoc[]> {
         return this.commentModel
             .find({ reviewRequest: reviewRequestId })
             .populate('reviewer')
@@ -45,7 +41,7 @@ export class CommentDocumentService {
         reviewRequestId: string,
         fileFullPath: string,
         lineNumber: number
-    ): Promise<CommentDocument[]> {
+    ): Promise<Schema.Cr.ReviewRequestCommentDoc[]> {
         return this.commentModel
             .find({ reviewRequest: reviewRequestId, fileFullPath, lineNumber })
             .populate('reviewer')
@@ -58,7 +54,7 @@ export class CommentDocumentService {
         userTgId: number
     ): Promise<Document> {
         const userDocument = await firstValueFrom(
-            this.userMicroservice.send<User>(M_UserCommand.GetByTgId, userTgId)
+            this.userMicroservice.send<Schema.User>(M_UserCommand.GetByTgId, userTgId)
         );
         const reviewRequestDocument = await this.reviewRequestService.get(reviewRequestId);
         const comment = adaptCommentCreationDtoToSchema(data, reviewRequestDocument, userDocument);
@@ -98,7 +94,10 @@ export class CommentDocumentService {
         return await this.commentModel.deleteOne({ _id: commentId }).exec();
     }
 
-    private validateIsUserRelated(comment: CommentDocument, user: AuthorizedUser): void {
+    private validateIsUserRelated(
+        comment: Schema.Cr.ReviewRequestCommentDoc,
+        user: AuthorizedUser
+    ): void {
         if (comment.reviewer.tgId !== user.tgId) {
             throw new ForbiddenException();
         }
