@@ -3,7 +3,7 @@ import {
     ProjectEntityTypeEnum,
     ProjectFile,
     ProjectFolder
-} from '@acua/common/code-review';
+} from '@acua/shared/code-review';
 
 export function isProjectFile(entity: ProjectEntity): entity is ProjectFile {
     return entity.type === ProjectEntityTypeEnum.File;

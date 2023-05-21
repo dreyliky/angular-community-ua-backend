@@ -1,10 +1,10 @@
+import { CreationResponseDto } from '@acua/shared';
 import {
     CommentAmountDictionaryDto,
     CommentCreationDto,
     CommentDto
-} from '@acua/common/code-review';
-import { AuthorizedUser } from '@acua/common/m-user';
-import { CreationResponseDto } from '@acua/shared';
+} from '@acua/shared/code-review';
+import { AuthorizedUser } from '@acua/shared/m-user';
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { adaptCommentDocumentsToAmountDictionary } from '../adapters';

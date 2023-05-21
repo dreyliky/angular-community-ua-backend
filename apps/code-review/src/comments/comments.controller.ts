@@ -1,11 +1,12 @@
+import { CreationResponseDto, RequiredQuery } from '@acua/shared';
 import {
     CommentAmountDictionaryDto,
     CommentCreationDto,
     CommentDto,
     CommentEditingDto
-} from '@acua/common/code-review';
-import { JwtAuthGuard } from '@acua/common/m-token';
-import { AuthorizedRequest, CreationResponseDto, RequiredQuery } from '@acua/shared';
+} from '@acua/shared/code-review';
+import { JwtAuthGuard } from '@acua/shared/m-token';
+import { AuthorizedRequest } from '@acua/shared/m-user';
 import {
     Body,
     Controller,

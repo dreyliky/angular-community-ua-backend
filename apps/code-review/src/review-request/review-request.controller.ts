@@ -1,11 +1,12 @@
+import { CreationResponseDto } from '@acua/shared';
 import {
     ReviewRequestCreationDto,
     ReviewRequestDto,
     ReviewRequestFiltersDto,
     ReviewRequestUpdateDto
-} from '@acua/common/code-review';
-import { JwtAuthGuard } from '@acua/common/m-token';
-import { AuthorizedRequest, CreationResponseDto } from '@acua/shared';
+} from '@acua/shared/code-review';
+import { JwtAuthGuard } from '@acua/shared/m-token';
+import { AuthorizedRequest } from '@acua/shared/m-user';
 import {
     Body,
     Controller,

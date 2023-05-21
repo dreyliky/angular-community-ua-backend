@@ -1,4 +1,4 @@
-import { isGithubUrl } from '@acua/common/code-review';
+import { isGithubUrl } from '@acua/shared/code-review';
 
 export function normalizeSourceUrl(sourceUrl: string): string {
     if (isGithubUrl(sourceUrl)) {

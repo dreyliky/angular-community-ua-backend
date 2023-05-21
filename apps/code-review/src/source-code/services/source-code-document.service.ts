@@ -1,4 +1,4 @@
-import { ProjectEntity } from '@acua/common/code-review';
+import { ProjectEntity } from '@acua/shared/code-review';
 import { Schema } from '@acua/shared/mongo';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';

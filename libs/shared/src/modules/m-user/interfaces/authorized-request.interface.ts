@@ -1,4 +1,4 @@
-import { AuthorizedUser } from '@acua/common/m-user';
+import { AuthorizedUser } from '@acua/shared/m-user';
 import { Request } from 'express';
 
 export interface AuthorizedRequest extends Request {

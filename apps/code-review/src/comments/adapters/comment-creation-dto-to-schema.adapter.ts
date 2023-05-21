@@ -1,4 +1,4 @@
-import { CommentCreationDto } from '@acua/common/code-review';
+import { CommentCreationDto } from '@acua/shared/code-review';
 import { Schema } from '@acua/shared/mongo';
 
 export function adaptCommentCreationDtoToSchema(

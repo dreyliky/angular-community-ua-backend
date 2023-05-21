@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-concat */
-import { StackblitzFile, StackblitzFolder, StackblitzInfo } from '@acua/common/code-review';
+import { StackblitzFile, StackblitzFolder, StackblitzInfo } from '@acua/shared/code-review';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()

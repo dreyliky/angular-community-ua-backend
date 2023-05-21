@@ -1,5 +1,5 @@
-import { ReviewRequestDto } from '@acua/common/code-review';
-import { UserDto } from '@acua/common/m-user';
+import { ReviewRequestDto } from '@acua/shared/code-review';
+import { UserDto } from '@acua/shared/m-user';
 import { Schema } from '@acua/shared/mongo';
 
 export function adaptReviewRequestDocumentToDto(

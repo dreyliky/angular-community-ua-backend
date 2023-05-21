@@ -6,7 +6,7 @@ import {
     ProjectFolder,
     StackblitzEntity,
     StackblitzFile
-} from '@acua/common/code-review';
+} from '@acua/shared/code-review';
 import { isForbiddenFile } from '../helpers';
 
 export function adaptStackblitzEntitiesToProjectEntities(

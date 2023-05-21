@@ -1,4 +1,4 @@
-import { ProjectEntity } from '@acua/common/code-review';
+import { ProjectEntity } from '@acua/shared/code-review';
 import { Injectable } from '@nestjs/common';
 import { SourceCodeDocumentService } from './source-code-document.service';
 

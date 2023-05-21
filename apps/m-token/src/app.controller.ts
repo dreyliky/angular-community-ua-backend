@@ -1,4 +1,4 @@
-import { CommandEnum, TokenPayload } from '@acua/common/m-token';
+import { CommandEnum, TokenPayload } from '@acua/shared/m-token';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';

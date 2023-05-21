@@ -1,4 +1,4 @@
-import { ProjectEntity } from '@acua/common/code-review';
+import { ProjectEntity } from '@acua/shared/code-review';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { ReviewRequest } from './review-request.schema';

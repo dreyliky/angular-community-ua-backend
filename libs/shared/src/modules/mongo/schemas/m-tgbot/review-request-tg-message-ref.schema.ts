@@ -1,4 +1,4 @@
-import { UserDto } from '@acua/common/m-user';
+import { UserDto } from '@acua/shared/m-user';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { User } from '../main';

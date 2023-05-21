@@ -1,4 +1,4 @@
-import { UserDto } from '@acua/common/m-user';
+import { UserDto } from '@acua/shared/m-user';
 
 export interface ReviewRequestDto {
     readonly id: string;

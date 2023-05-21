@@ -2,12 +2,12 @@ import {
     ReviewRequestCreationDto,
     ReviewRequestFiltersDto,
     ReviewRequestUpdateDto
-} from '@acua/common/code-review';
+} from '@acua/shared/code-review';
 import {
     AuthorizedUser,
     CommandEnum as M_UserCommand,
     USER_MICROSERVICE
-} from '@acua/common/m-user';
+} from '@acua/shared/m-user';
 import { Schema } from '@acua/shared/mongo';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';

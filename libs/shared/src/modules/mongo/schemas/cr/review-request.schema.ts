@@ -1,4 +1,4 @@
-import { ReviewRequestStatusEnum } from '@acua/common/code-review';
+import { ReviewRequestStatusEnum } from '@acua/shared/code-review';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { IsNotEmpty } from 'class-validator';
 import { HydratedDocument, SchemaTypes, now } from 'mongoose';

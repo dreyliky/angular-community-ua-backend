@@ -1,4 +1,4 @@
-import { UserDto } from '@acua/common/m-user';
+import { UserDto } from '@acua/shared/m-user';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Transform, Type } from 'class-transformer';
 

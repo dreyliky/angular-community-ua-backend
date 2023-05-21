@@ -1,4 +1,4 @@
-import { ProjectEntity, validateSourceUrl } from '@acua/common/code-review';
+import { ProjectEntity, validateSourceUrl } from '@acua/shared/code-review';
 import { HttpStatus, Injectable, NotFoundException, RequestTimeoutException } from '@nestjs/common';
 import { Observable, map, retry, throwError, timer } from 'rxjs';
 import { adaptStackblitzEntitiesToProjectEntities, normalizeSourceUrl } from '../adapters';

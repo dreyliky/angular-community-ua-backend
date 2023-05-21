@@ -29,9 +29,6 @@
       ],
       "@acua/shared/*": [
         "libs/shared/src/modules/*"
-      ],
-      "@acua/common/*": [
-        "libs/common/src/*"
       ]
     }
   }

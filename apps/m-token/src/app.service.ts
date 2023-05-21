@@ -1,4 +1,4 @@
-import { TokenPayload } from '@acua/common/m-token';
+import { TokenPayload } from '@acua/shared/m-token';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';

@@ -1,4 +1,4 @@
-import { CommandEnum } from '@acua/common/m-telegram-bot';
+import { CommandEnum } from '@acua/shared/m-telegram-bot';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';

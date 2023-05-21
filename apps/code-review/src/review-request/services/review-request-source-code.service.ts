@@ -1,6 +1,6 @@
-import { ProjectEntity, ReviewRequestCreationDto } from '@acua/common/code-review';
-import { AuthorizedUser } from '@acua/common/m-user';
 import { CreationResponseDto } from '@acua/shared';
+import { ProjectEntity, ReviewRequestCreationDto } from '@acua/shared/code-review';
+import { AuthorizedUser } from '@acua/shared/m-user';
 import { Injectable } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { firstValueFrom } from 'rxjs';

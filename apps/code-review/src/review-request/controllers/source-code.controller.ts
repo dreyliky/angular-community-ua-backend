@@ -1,7 +1,6 @@
+import { ProjectEntity, ProjectFile, ProjectFolder } from '@acua/shared/code-review';
 import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ProjectFile, ProjectFolder } from '../../../../../libs/common/src/code-review/dto';
-import { ProjectEntity } from '../../../../../libs/common/src/code-review/types';
 import { ReviewRequestSourceCodeService } from '../services';
 
 @ApiTags('Source Code')

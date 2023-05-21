@@ -1,4 +1,4 @@
-import { CommentAmountDictionaryDto } from '@acua/common/code-review';
+import { CommentAmountDictionaryDto } from '@acua/shared/code-review';
 import { Schema } from '@acua/shared/mongo';
 
 export function adaptCommentDocumentsToAmountDictionary(

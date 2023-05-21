@@ -1,4 +1,4 @@
-import { validateSourceUrl } from '@acua/common/code-review';
+import { validateSourceUrl } from '@acua/shared/code-review';
 import { Injectable } from '@nestjs/common';
 import { normalizeSourceUrl } from '../adapters';
 
