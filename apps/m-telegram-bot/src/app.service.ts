@@ -7,7 +7,9 @@ export class AppService {
     constructor(
         private readonly bot: TelegramBot,
         private readonly messageHandlerFactory: MessageHandlerFactory
-    ) {
+    ) {}
+
+    public init(): void {
         this.initMessageObserver();
     }
 

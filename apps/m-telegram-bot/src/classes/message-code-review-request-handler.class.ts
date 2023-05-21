@@ -16,7 +16,11 @@ export class MessageCodeReviewRequestHandler implements MessageHandler {
 
     public handle(message: TelegramBot.Message): void {
         this.bot.deleteMessage(message.chat.id, message.message_id.toString());
-        this.sendMessageAboutReviewRequest(message);
+        this.sendMessageAboutReviewRequest(message); // Temporary hardcode
+        // TODO: Send http req for review-request creation with user bearer token in headers
+        // Send http req to get review request info by createdReviewRequestId
+        // Create ReviewRequestMessageModel
+        // Send message to chat by passing model to ReviewRequestMessageService
     }
 
     private sendMessageAboutReviewRequest(message: TelegramBot.Message): void {
