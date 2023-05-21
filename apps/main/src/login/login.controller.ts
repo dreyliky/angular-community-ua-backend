@@ -1,8 +1,8 @@
 import { HttpExceptionDto } from '@acua/shared';
 import { Body, Controller, HttpStatus, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LoginResponseDto, TelegramLoginDto } from './dto';
 import { LoginViaTelegramService } from './login-via-telegram.service';
-import { LoginResponseDto, TelegramLoginDto } from './models';
 
 @Controller('login')
 @ApiTags('Login')

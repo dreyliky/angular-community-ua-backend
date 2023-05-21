@@ -16,7 +16,7 @@ import {
     adaptTelegramResponseToUser,
     convertTelegramLoginResponseToHashRawValue
 } from './adapters';
-import { LoginResponseDto, TelegramLoginDto } from './models';
+import { LoginResponseDto, TelegramLoginDto } from './dto';
 
 @Injectable()
 export class LoginViaTelegramService {

@@ -1,5 +1,5 @@
 import { Schema } from '@acua/shared/mongo';
-import { TelegramLoginDto } from '../models';
+import { TelegramLoginDto } from '../dto';
 
 export function adaptTelegramResponseToUser(
     dataResponse: TelegramLoginDto,
