@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
 import * as TelegramBot from 'node-telegram-bot-api';
 import { ENVIRONMENT_KEY } from '../../data';
-import { ReviewRequestMessageModel } from '../models';
+import { ReviewRequestMessage } from '../models';
 import { ReviewRequestMessageDocService } from './message-doc.service';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class ReviewRequestMessageService {
     ) {}
 
     public async create(reviewRequest: ReviewRequestDto): Promise<unknown> {
-        const { text, keyboard } = new ReviewRequestMessageModel({
+        const { text, keyboard } = new ReviewRequestMessage({
             reviewRequest,
             reviewPageUrl: this.reviewPageUrl,
             commentAmount: 0,

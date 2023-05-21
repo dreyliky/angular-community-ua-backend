@@ -8,7 +8,7 @@ interface Options {
     reviewerAmount: number;
 }
 
-export class ReviewRequestMessageModel {
+export class ReviewRequestMessage {
     public readonly text: string =
         `Користувач @${this.options.reviewRequest.user.username} ` +
         `очікує Код-Ревью у спільноти.\n\n` +
