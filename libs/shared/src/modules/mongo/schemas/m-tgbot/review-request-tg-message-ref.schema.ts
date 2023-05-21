@@ -1,7 +1,5 @@
-import { UserDto } from '@acua/shared/m-user';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
-import { ReviewRequestDto } from '../../../code-review';
 import { ReviewRequest } from '../cr';
 import { User } from '../main';
 
@@ -11,13 +9,13 @@ export class ReviewRequestTgMessageRef {
     public tgMessageId: number;
 
     @Prop({ type: SchemaTypes.ObjectId, ref: ReviewRequest.name })
-    public reviewRequest: ReviewRequestDto;
+    public reviewRequest: ReviewRequest;
 
     @Prop({ type: SchemaTypes.ObjectId, ref: User.name })
-    public user: UserDto;
+    public user: User;
 
     @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: User.name }], default: [] })
-    public reviewers: UserDto[];
+    public reviewers: User[];
 
     @Prop({ type: Number, default: 0 })
     public commentAmount: number;
