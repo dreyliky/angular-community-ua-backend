@@ -5,6 +5,7 @@ import { MessageHandler } from '../interfaces';
 export class MessageNotFromAcuaGroupHandler implements MessageHandler {
     constructor(public readonly moduleRef: ModuleRef) {}
 
-    // eslint-disable-next-line no-empty-function, @typescript-eslint/no-empty-function
-    public handle(message: Message): void {}
+    public async handle(message: Message): Promise<unknown> {
+        return message;
+    }
 }

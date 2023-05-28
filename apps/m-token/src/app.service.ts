@@ -53,6 +53,6 @@ export class AppService {
             return bearerToken.split(' ')[1];
         }
 
-        return null;
+        return bearerToken;
     }
 }

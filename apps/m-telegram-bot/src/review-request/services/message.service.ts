@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { ModuleRef } from '@nestjs/core';
 import * as TelegramBot from 'node-telegram-bot-api';
 import { ENVIRONMENT_KEY } from '../../data';
-import { ReviewRequestMessage } from '../models';
+import { ReviewRequestMessageInfo } from '../models';
 import { ReviewRequestMessageDocService } from './message-doc.service';
 
 @Injectable()
@@ -23,9 +23,9 @@ export class ReviewRequestMessageService {
         private readonly moduleRef: ModuleRef
     ) {}
 
-    public async create(reviewRequest: ReviewRequestDto): Promise<unknown> {
-        const { text, keyboard } = new ReviewRequestMessage({
-            reviewRequest,
+    public async create(reviewRequestDto: ReviewRequestDto): Promise<unknown> {
+        const { text, keyboard } = new ReviewRequestMessageInfo({
+            reviewRequestDto,
             reviewPageUrl: this.reviewPageUrl,
             commentAmount: 0,
             reviewerAmount: 0
@@ -35,6 +35,6 @@ export class ReviewRequestMessageService {
             reply_markup: keyboard
         });
 
-        return this.messageDocService.create(message.message_id, reviewRequest);
+        return this.messageDocService.create(message.message_id, reviewRequestDto);
     }
 }

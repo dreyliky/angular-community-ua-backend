@@ -26,10 +26,6 @@ export class AppController {
     public async decode(bearerToken: string): Promise<Pick<TokenPayload, 'tgId'> | null> {
         const token = this.appService.extractToken(bearerToken);
 
-        if (!token) {
-            return null;
-        }
-
         try {
             await this.appService.verify(token);
         } catch {

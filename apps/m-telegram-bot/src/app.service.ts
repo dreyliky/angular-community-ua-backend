@@ -17,7 +17,7 @@ export class AppService {
         this.bot.addListener('message', (message: TelegramBot.Message) => {
             const messageHandler = this.messageHandlerFactory.create(message);
 
-            messageHandler.handle(message);
+            messageHandler.handle(message).catch((error) => console.error(error));
         });
     }
 }

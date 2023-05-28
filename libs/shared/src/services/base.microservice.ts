@@ -9,10 +9,14 @@ export abstract class BaseMicroservice {
 
     constructor(protected readonly msToken: any, protected readonly moduleRef: ModuleRef) {}
 
-    protected trySend<T>(event: any, data: any): Promise<T | null> {
+    protected send<T>(event: any, data: any): Promise<T> {
+        return firstValueFrom(this.microService.send(event, data));
+    }
+
+    protected trySend<T>(event: any, data: any): Promise<T | void> {
         try {
             // eslint-disable-next-line no-empty-function, @typescript-eslint/no-empty-function
-            return firstValueFrom(this.microService.send(event, data)).catch(() => {});
+            return this.send<T>(event, data).catch(() => {});
         } catch (error) {
             return Promise.resolve(null);
         }

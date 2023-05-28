@@ -9,7 +9,7 @@ export class MessageLanguageHandler implements MessageHandler {
 
     constructor(public readonly moduleRef: ModuleRef) {}
 
-    public handle(message: TelegramBot.Message): void {
+    public async handle(message: TelegramBot.Message): Promise<void> {
         const textAtLowerCase = message.text.toLowerCase();
         const isRussianText = this.russianLanguageRegExp.test(textAtLowerCase);
 

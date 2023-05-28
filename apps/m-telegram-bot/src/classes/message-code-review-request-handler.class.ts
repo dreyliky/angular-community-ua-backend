@@ -1,49 +1,90 @@
-import { ConfigService } from '@nestjs/config';
+import { ReviewRequestCreationDto } from '@acua/shared/code-review';
+import { TokenMS } from '@acua/shared/m-token';
+import { BadRequestException } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
+import { validateSync } from 'class-validator';
 import * as TelegramBot from 'node-telegram-bot-api';
-import { ENVIRONMENT_KEY } from '../data';
 import { MessageHandler } from '../interfaces';
+import { ReviewRequestApi, parseMessageTextToReviewRequestCreationDto } from '../review-request';
 
 export class MessageCodeReviewRequestHandler implements MessageHandler {
     private readonly bot = this.moduleRef.get(TelegramBot);
-    private readonly config = this.moduleRef.get(ConfigService, {
-        strict: false
-    });
-
-    private readonly reviewPageUrl = this.config.get(ENVIRONMENT_KEY.AcuaWebOverviewPageUrl);
+    private readonly tokenMS = this.moduleRef.get(TokenMS);
+    private readonly reviewRequestApi = this.moduleRef.get(ReviewRequestApi);
 
     constructor(public readonly moduleRef: ModuleRef) {}
 
-    public handle(message: TelegramBot.Message): void {
+    public async handle(message: TelegramBot.Message): Promise<unknown> {
+        await this.sendMessageAboutProcessingRequest(message);
         this.bot.deleteMessage(message.chat.id, message.message_id.toString());
-        this.sendMessageAboutReviewRequest(message); // Temporary hardcode
-        // TODO: Send http req for review-request creation with user bearer token in headers
-        // Send http req to get review request info by createdReviewRequestId
-        // Create ReviewRequestMessageModel
-        // Send message to chat by passing model to ReviewRequestMessageService
+
+        const creationDto = await this.messageToReviewRequestCreationDto(message);
+        const userBearerToken = await this.tokenMS.sign({
+            tgId: message.from.id,
+            username: message.from.username
+        });
+        const reviewRequestId = await this.reviewRequestApi.create(creationDto, userBearerToken);
+
+        return this.reviewRequestApi.getById(reviewRequestId);
     }
 
-    private sendMessageAboutReviewRequest(message: TelegramBot.Message): void {
-        this.bot.sendMessage(
-            message.chat.id,
-            `Користувач @${message.from.username} очікує Код-Ревью у спільноти.`,
+    private async messageToReviewRequestCreationDto(
+        message: TelegramBot.Message
+    ): Promise<ReviewRequestCreationDto> {
+        const creationDto = parseMessageTextToReviewRequestCreationDto(message.text);
+
+        if (!!validateSync(creationDto).length) {
+            await this.sendWarnMessageAboutIncorrectText(message);
+
+            throw new BadRequestException(`Incorrect Message Text!`);
+        }
+
+        return creationDto;
+    }
+
+    // eslint-disable-next-line max-lines-per-function
+    private async sendWarnMessageAboutIncorrectText(
+        initialMessage: TelegramBot.Message
+    ): Promise<unknown> {
+        const messageDeleteDelay = 20000;
+        const { chat, message_id } = await this.bot.sendMessage(
+            initialMessage.chat.id,
+            `@${initialMessage.from.username}, відхилено. Будь ласка, вкажіть посилання на ` +
+                `*Github* або *Stackblitz* для створення запиту на Код-Ревью.\n\n` +
+                `_Приклад повідомлення:_\n\n` +
+                `*Подивіться мою бібліотеку для роботи зі стейтами, як вам?*\n` +
+                `https://github.com/Nillcon248/ngx-base-state`,
             {
-                message_thread_id: message.message_thread_id,
-                reply_markup: this.createKeyboardWithAppLink('123-review-id')
+                message_thread_id: initialMessage.message_thread_id,
+                parse_mode: 'Markdown',
+                disable_web_page_preview: true,
+                disable_notification: true
             }
         );
+
+        setTimeout(
+            () => this.bot.deleteMessage(chat.id, message_id.toString()),
+            messageDeleteDelay
+        );
+
+        return message_id;
     }
 
-    private createKeyboardWithAppLink(reviewRequestId: string): TelegramBot.InlineKeyboardMarkup {
-        return {
-            inline_keyboard: [
-                [
-                    {
-                        text: 'Почати Код-Ревью',
-                        url: `${this.reviewPageUrl}/${reviewRequestId}`
-                    }
-                ]
-            ]
-        };
+    private async sendMessageAboutProcessingRequest(
+        initialMessage: TelegramBot.Message
+    ): Promise<unknown> {
+        const messageDeleteDelay = 7000;
+        const { chat, message_id } = await this.bot.sendMessage(
+            initialMessage.chat.id,
+            `@${initialMessage.from.username} опрацьовую запит на Код-Ревью...`,
+            { message_thread_id: initialMessage.message_thread_id, disable_notification: true }
+        );
+
+        setTimeout(
+            () => this.bot.deleteMessage(chat.id, message_id.toString()),
+            messageDeleteDelay
+        );
+
+        return message_id;
     }
 }
