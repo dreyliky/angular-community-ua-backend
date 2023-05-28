@@ -54,7 +54,7 @@ export class ReviewRequestSourceCodeService {
         const reviewDto = plainToInstance(ReviewRequestDto, reviewRequestDocument.toObject());
 
         await this.sourceCodeDocumentService.create(reviewRequestDocument, sourceCode);
-        this.telegramBotMS.onReviewRequestCreated(reviewDto);
+        this.telegramBotMS.notifyReviewRequestCreated(reviewDto);
 
         return response;
     }
